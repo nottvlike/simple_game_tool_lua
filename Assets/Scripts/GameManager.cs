@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour {
 		Instance = this;
 		foreach (Character c in Characters) 
 		{
-			c.Instance = Instantiate( c.PlayerPrefab , c.HomeSpawn.position , c.HomeSpawn.rotation) as GameObject;		
+			c.Instance = Instantiate( c.PlayerPrefab , c.HomeSpawn.position , c.HomeSpawn.rotation) as GameObject;
+			c.Instance.GetComponent<PlayerController>().LocalCharacter = c;
 		}
 		ChangeCharacterStart( Characters[PlayerPrefs.GetInt ("SelectedChar")]);
 	}
@@ -51,7 +52,9 @@ public class GameManager : MonoBehaviour {
 
 	void ChangeCharacter( Character c)
 	{
-		Debug.Log ( Vector3.Distance (Characters [SelectedCharacter].Instance.transform.position, c.Instance.transform.position));
+//		Debug.Log ( Vector3.Distance (Characters [SelectedCharacter].Instance.transform.position, c.Instance.transform.position));
+		c.Instance.GetComponent<AI> ().DoneHome = false;
+//		c.Instance.GetComponent<PlayerController> ().Go ();
 		if (Mathf.Round (Vector3.Distance (Characters [SelectedCharacter].Instance.transform.position, c.Instance.transform.position)) > 10) {
 			SequenceManager.Instance.StartCoroutine ("DoCharSwitch", c);
 			CanShowSelected = false;
@@ -60,7 +63,11 @@ public class GameManager : MonoBehaviour {
 			LastCharacter = SelectedCharacter;
 			SelectedCharacter = Characters.IndexOf (c);
 			Characters [LastCharacter].Instance.GetComponent<PlayerController> ().CanPlay = false;
+//			Characters [LastCharacter].Instance.GetComponent<PlayerController> ().Go();
+			Characters [LastCharacter].Instance.GetComponent<AI> ().goBack();
 			Characters [SelectedCharacter].Instance.GetComponent<PlayerController> ().CanPlay = true;
+//			Characters [SelectedCharacter].Instance.GetComponent<PlayerController> ().Go();
+			Characters [SelectedCharacter].Instance.GetComponent<AI> ().goHead();
 			PlayerPrefs.SetInt ("SelectedChar" , SelectedCharacter);
 		}
 		else {
@@ -68,7 +75,11 @@ public class GameManager : MonoBehaviour {
 			LastCharacter = SelectedCharacter;
 			SelectedCharacter = Characters.IndexOf (c);
 			Characters [LastCharacter].Instance.GetComponent<PlayerController> ().CanPlay = false;
+			Characters [LastCharacter].Instance.GetComponent<PlayerController> ().Go();
+			Characters [LastCharacter].Instance.GetComponent<AI> ().goBack();
 			Characters [SelectedCharacter].Instance.GetComponent<PlayerController> ().CanPlay = true;
+			Characters [SelectedCharacter].Instance.GetComponent<PlayerController> ().Go();
+			Characters [SelectedCharacter].Instance.GetComponent<AI> ().goHead();
 			PlayerPrefs.SetInt ("SelectedChar" , SelectedCharacter);
 			SmoothFollow flow = Camera.main.GetComponent ("SmoothFollow") as SmoothFollow;
 			flow.target = c.Instance.transform;

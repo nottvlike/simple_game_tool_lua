@@ -19,7 +19,7 @@ public class SequenceManager : MonoBehaviour {
 				CharSwitch.Follower.height = CharSwitch.Height;
 				while(Mathf.Round (CharSwitch.Follower.transform.position.y) != CharSwitch.Height )
 				{
-					yield return new WaitForEndOfFrame();
+					yield return new WaitForEndOfFrame(); 
 				}
 			}
 			if( i == 1 )
