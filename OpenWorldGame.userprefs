@@ -1,11 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AI.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Heros/Axe/Axe_Animation.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="18" Column="12" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="66" Column="81" />
-      <File FileName="Assets/Scripts/SequenceManager.cs" Line="22" Column="41" />
-      <File FileName="Assets/Scripts/AI.cs" Line="176" Column="41" />
+      <File FileName="Assets/Scripts/Heros/Axe/Axe_Animation.cs" Line="61" Column="3" />
+      <File FileName="Assets/Scripts/Heros/Axe/Axe.cs" Line="55" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
