@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Game/Prefabs/Axe.txt">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Game/Main.txt">
     <Files>
-      <File FileName="Assets/Resources/Game/Prefabs/Axe.txt" Line="22" Column="2" />
+      <File FileName="Assets/Resources/Game/Prefabs/Axe.txt" Line="18" Column="50" />
+      <File FileName="Assets/Plugins/Slua_Managed/LuaState.cs" Line="676" Column="1" />
+      <File FileName="Assets/Resources/Game/Main.txt" Line="22" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
