@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_8;UNITY_4_6;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_IL2CPP;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;UNITY5_SCRIPTING_IN_UNITY4;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_0_0;UNITY_5_0;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_OBSOLETE_API_UPDATING;ENABLE_SPRITES;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_MULTIPLE_DISPLAYS;ENABLE_WWW;ENABLE_PHYSICS_PHYSX3;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_CACHING;ENABLE_FRAME_DEBUGGER;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_TERRAIN;INCLUDE_WP8SUPPORT;INCLUDE_IL2CPP;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;PLATFORM_SUPPORTS_MONO;INCLUDE_DYNAMIC_GI;ENABLE_PLUGIN_INSPECTOR;RENDER_SOFTWARE_CURSOR;ENABLE_PHYSICS;ENABLE_NEW_HIERARCHY;UNITY_ANDROID_API;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_HOME_SCREEN;ENABLE_EGL;INCLUDE_GI;ENABLE_AUDIO;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -50,8 +50,46 @@
      <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\SmoothFollow.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\SmoothLookAt.js" />
      <Compile Include="Assets\Standard Assets\Scripts\General Scripts\DragRigidbody.js" />
+     <None Include="Assets\Resources\Game\Behavior\actions\Succeeder.txt" />
+     <None Include="Assets\Slua\Resources\module\some.txt" />
+     <None Include="Assets\Slua\Resources\main.txt" />
+     <None Include="Assets\Resources\Game\Behavior\composites\Sequence.txt" />
+     <None Include="Assets\Slua\Resources\circle\circle.txt" />
+     <None Include="Assets\Resources\Game\Behavior\decorators\Repeater.txt" />
+     <None Include="Assets\Resources\Game\Behavior\actions\Runner.txt" />
+     <None Include="Assets\Resources\Game\Behavior\decorators\RepeatUntilFailure.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\Blackboard.txt" />
+     <None Include="Assets\Resources\Game\Behavior\decorators\MaxTime.txt" />
+     <None Include="Assets\Resources\Game\Behavior\composites\MemPriority.txt" />
+     <None Include="Assets\Resources\Game\Behavior\decorators\RepeatUntilSuccess.txt" />
+     <None Include="Assets\Resources\Game\Behavior\actions\Error.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\Action.txt" />
+     <None Include="Assets\Resources\Game\Behavior\b3.txt" />
+     <None Include="Assets\Resources\Game\Behavior\actions\Failer.txt" />
+     <None Include="Assets\Resources\Game\Behavior\composites\MemSequence.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\BaseNode.txt" />
+     <None Include="Assets\Resources\Game\Behavior\decorators\Inverter.txt" />
+     <None Include="Assets\Slua\Resources\perf.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\Decorator.txt" />
+     <None Include="Assets\Slua\Resources\delegate.txt" />
+     <None Include="Assets\Resources\Game\Behavior\composites\Priority.txt" />
+     <None Include="Assets\Resources\Game\Behavior\decorators\Limiter.txt" />
+     <None Include="Assets\Resources\Game\Behavior\tests.txt" />
+     <None Include="Assets\Resources\Game\Util\Class.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\Tick.txt" />
+     <None Include="Assets\Resources\Game\Prefabs\EarthShaker.txt" />
+     <None Include="Assets\Resources\Game\Prefabs\Axe.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\BehaviorTree.txt" />
+     <None Include="Assets\Resources\Game\Behavior\actions\Wait.txt" />
+     <None Include="Assets\Slua\Resources\valuetype.txt" />
+     <None Include="Assets\Slua\Resources\varobj.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\Composite.txt" />
+     <None Include="Assets\Resources\Game\Prefabs\Doom.txt" />
+     <None Include="Assets\Slua\Resources\custom.txt" />
+     <None Include="Assets\Resources\Game\Main.txt" />
+     <None Include="Assets\Resources\Game\Behavior\core\Condition.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.8/Standalone/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

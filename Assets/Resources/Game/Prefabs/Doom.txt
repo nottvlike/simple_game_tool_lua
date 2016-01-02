@@ -1,0 +1,36 @@
+local doom = Class()
+
+function doom:ctor(parent)
+	self.AnimIdle = "mdldecompiler.qc_skeleton|idle"
+	self.AnimRun = "mdldecompiler.qc_skeleton|run"
+	self.AnimAttackNormal = "mdldecompiler.qc_skeleton|attack_main"
+	self.AnimDeath = "mdldecompiler.qc_skeleton|death"
+
+	local prefabRes = Resources.Load("Prefabs/Doom")
+
+	if parent then
+		local transform = parent:GetComponent(Transform)
+		self.instance = GameObject.Instantiate(prefabRes, transform.position, transform.rotation)
+	end
+end
+
+function doom:init()
+	self.model = self.instance.transform:Find("model")
+	self.animation = self.model:GetComponent(Animation)
+	self.rigidbody = self.instance:GetComponent(Rigidbody)
+	self.transform = self.instance:GetComponent(Transform)
+	
+	self.rigidbody.velocity = Vector3(-1.5,0,0)
+	self.transform:Rotate(Vector3(0,-90,0))
+	
+	self.animation:Play(self.AnimRun)
+end
+
+function doom:fixedUpdate()
+	--self.rigidbody.velocity = Vector3(-0.2,0,0)
+end
+
+function doom:update()
+end
+
+return doom

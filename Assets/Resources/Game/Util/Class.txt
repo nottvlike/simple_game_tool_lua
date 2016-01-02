@@ -1,0 +1,42 @@
+local _class = {}
+
+Class = function(super)
+	local classType = {}
+	classType.ctor = false
+	classType.super = super
+	classType.new = function(...)
+		local obj = {}
+		local create
+		create = function(c, ...)
+			if c.super then
+				create(c.super, ...)
+			end
+
+			if c.ctor then
+				c.ctor(c, ...)
+			end
+		end
+		create(classType, ...)
+		setmetatable(obj, {__index = _class[classType]})
+		return obj
+	end
+
+	local vtbl = {}
+	_class[classType] = vtbl
+
+	setmetatable(classType, {__newindex=function(t, k, v)
+		vtbl[k] = v
+	end})
+
+	if super then
+		setmetatable(vtbl, {__index= function(t, k)
+			local ret = _class[super][k]
+			--vtbl[k] = ret
+			return ret
+		end
+		})
+	end
+
+	return classType
+
+end
