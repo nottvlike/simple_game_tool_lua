@@ -37,23 +37,29 @@ unity3d常用的lua插件有slua,ulua和nlua，选择slua的主要原因是官�
 出处：http://blog.codingnow.com/cloud/LuaOO/
 
 ######createUUID()
+
 出处：http://blog.163.com/chatter@126/blog/static/127665661201501313123285/
 
 ####Lua回调系统设计
 
-lua脚本无法想C#那样以组件的形式添加到GameObject上，因此Unity3d里的大部分事件无法监听到。lua回调系统便是为了为了解决这个问题而设计的，主要包含以下几个类：
+lua脚本无法像C#那样以组件的形式添加到GameObject上，因此Unity3d里的大部分事件无法监听到。lua回调系统便是为了为了解决这个问题而设计的，主要包含以下几个类：
+
 *	LuaEventManager，用来注册各种unity3d事件，将绑定了luafunction的c#脚本以组件形式添加到gameobject身上；
 *	LuaBaseEvent，基类，所有绑定luafunction的C#脚本都需要继承这个类
 *	LuaAnimationEvent，AnimationClip可以添加一些回调函数，在播放动画时会调用相应的函数。
 
 <br/>
 ##行为树模块
+
 ####Behavior3介绍
+
 Behavior3是偶然在网上找到一个行为树的代码实现，作者只实现了几个基本的composite,decorators和actions,不过提供了一个web应用来设计行为树，我试了下还是很方便的。
+
 详细信息：https://github.com/behavior3/behavior3editor
 
 ####Behavior3lua
 作者提供了python和js版本的实现接口，所以我实现了大部分lua版本的接口。
+
 详细信息：https://github.com/nottvlike/behavior3lua
 
 <br/>
