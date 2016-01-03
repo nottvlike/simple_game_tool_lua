@@ -16,6 +16,9 @@ namespace SLua {
 				Lua_System_Collections_Generic_Dictionary_2_int_string.reg,
 				Lua_System_String.reg,
 				Lua_CameraMove.reg,
+				Lua_LuaEventManager.reg,
+				Lua_LuaBaseEvent.reg,
+				Lua_LuaAnimationEvent.reg,
 			};
 			return list;
 		}

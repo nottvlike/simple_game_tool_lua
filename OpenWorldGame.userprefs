@@ -1,10 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Game/Main.txt">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Slua/LuaObject/Custom/Lua_Deleg.cs">
     <Files>
-      <File FileName="Assets/Resources/Game/Prefabs/Axe.txt" Line="18" Column="50" />
-      <File FileName="Assets/Plugins/Slua_Managed/LuaState.cs" Line="676" Column="1" />
-      <File FileName="Assets/Resources/Game/Main.txt" Line="22" Column="30" />
+      <File FileName="Assets/Resources/Scripts/Lua/LuaManager.cs" Line="33" Column="1" />
+      <File FileName="Assets/Resources/Scripts/GameStart.cs" Line="8" Column="17" />
+      <File FileName="Assets/Resources/Scripts/Lua/LuaAnimationEvent.cs" Line="7" Column="38" />
+      <File FileName="Assets/Resources/Scripts/Lua/LuaEventManager.cs" Line="6" Column="2" />
+      <File FileName="Assets/Resources/Scripts/Base/LuaBaseEvent.cs" Line="22" Column="34" />
+      <File FileName="Assets/Resources/Scripts/Base/Singleton.cs" Line="1" Column="1" />
+      <File FileName="Assets/Slua/Editor/CustomExport.cs" Line="39" Column="42" />
+      <File FileName="Assets/Resources/Game/Prefabs/Axe.txt" Line="28" Column="30" />
+      <File FileName="Assets/Resources/Scripts/Heros/Axe/Axe_Animation.cs" Line="1" Column="1" />
+      <File FileName="Assets/Slua/Resources/delegate.txt" Line="1" Column="1" />
+      <File FileName="Assets/Slua/Resources/main.txt" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Slua_Managed/Unity/Lua_UnityEngine_AnimationEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Slua_Managed/Unity/Lua_UnityEngine_Animation.cs" Line="1" Column="1" />
+      <File FileName="Assets/Slua/LuaObject/Custom/Lua_LuaEventManager.cs" Line="64" Column="26" />
+      <File FileName="Assets/Slua/LuaObject/Custom/Lua_Deleg.cs" Line="22" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

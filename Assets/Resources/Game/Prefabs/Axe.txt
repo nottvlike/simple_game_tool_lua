@@ -20,10 +20,27 @@ function axe:init()
 	self.rigidbody = self.instance:GetComponent(Rigidbody)
 	self.transform = self.instance:GetComponent(Transform)
 	
+	--Test : add animation finished callback
+		local animClip = self.animation:GetClip(self.AnimRun)
+		local animationEvent = AnimationEvent()
+		animationEvent.time = animClip.length * 2 / 3
+		animationEvent.functionName = "onAnimationFinished"
+		LuaEventManager.addAnimCallback(self.model.gameObject, function()
+			self:onAnimationFinished()	
+		end)
+		animClip:AddEvent(animationEvent)
+	--
+	
 	self.rigidbody.velocity = Vector3(-1.5,0,0)
 	self.transform:Rotate(Vector3(0,-90,0))
 	
 	self.animation:Play(self.AnimRun)
+end
+
+function axe:onAnimationFinished()
+	print("onAnimationFinished")
+	self.animation:Play(self.AnimIdle)
+	self.rigidbody.velocity = Vector3(0,0,0)
 end
 
 function axe:fixedUpdate()
