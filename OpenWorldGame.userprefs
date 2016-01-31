@@ -1,22 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Game/Prefabs/Axe.txt">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Lua/LuaManager.cs">
     <Files>
-      <File FileName="Assets/Resources/Scripts/Lua/LuaManager.cs" Line="33" Column="1" />
-      <File FileName="Assets/Resources/Scripts/GameStart.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Scripts/Lua/LuaAnimationEvent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Scripts/Lua/LuaEventManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Scripts/Base/LuaBaseEvent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Scripts/Base/Singleton.cs" Line="1" Column="1" />
-      <File FileName="Assets/Slua/Editor/CustomExport.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Game/Prefabs/Axe.txt" Line="43" Column="37" />
-      <File FileName="Assets/Resources/Scripts/Heros/Axe/Axe_Animation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Slua/Resources/delegate.txt" Line="1" Column="1" />
-      <File FileName="Assets/Slua/Resources/main.txt" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/Slua_Managed/Unity/Lua_UnityEngine_AnimationEvent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/Slua_Managed/Unity/Lua_UnityEngine_Animation.cs" Line="1" Column="1" />
-      <File FileName="Assets/Slua/LuaObject/Custom/Lua_LuaEventManager.cs" Line="27" Column="43" />
-      <File FileName="Assets/Slua/LuaObject/Custom/Lua_Deleg.cs" Line="22" Column="1" />
+      <File FileName="Assets/Scripts/Update/UpdateManager.cs" Line="98" Column="3" />
+      <File FileName="Assets/Scripts/Resource/PrefabRequest.cs" Line="69" Column="78" />
+      <File FileName="Assets/Scripts/Base/FileManager.cs" Line="13" Column="10" />
+      <File FileName="Assets/Editor/Custom Editor/AssetBundleEditor.cs" Line="61" Column="147" />
+      <File FileName="Assets/Scripts/Lua/LuaManager.cs" Line="8" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

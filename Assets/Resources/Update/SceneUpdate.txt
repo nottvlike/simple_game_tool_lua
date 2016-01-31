@@ -1,0 +1,77 @@
+local sceneUpdate = {}
+
+local prefabName = "SceneUpdate"
+local canvas = nil
+local gameObject = nil
+
+function sceneUpdate.init(obj)
+	--canvas = GameObject.Find("Canvas")
+	--transform = canvas:GetComponent(Transform)
+	gameObject = GameObject.Instantiate(obj, Vector3.zero, Vector3.zero)
+	--gameObject.transform.parent = canvas.transform
+	transform = gameObject.transform
+	
+	sceneUpdate.initUI()
+end
+
+function sceneUpdate.initUI()
+	local slider = transform:Find("Panel/Slider"):GetComponent(UI.Slider)
+	local text = transform:Find("Panel/Text"):GetComponent(UI.Text)
+
+	local targetPath = string.format("%s/UpdateTest.txt", Application.persistentDataPath)
+	local url = string.format("file:///%s/UpdateTest.txt", UpdateManager.UpdateTest)
+
+	local value = 0
+	local UpdateProcessBar = function(fileName, state, percent)
+		if state == 0 then
+			text.text = string.format("下载文件: %s，已完成%d%%", fileName, value/percent * 100)
+		elseif state == 1 then
+			text.text = string.format("下载完成: %s，已完成%d%%", fileName, value/percent * 100)
+		elseif state == 2 then
+			text.text = string.format("移动文件: %s，已完成%d%%", fileName, value/percent * 100)
+		elseif state == 3 then
+			value = value +1
+			text.text = string.format("加载完成: %s，已完成%d%%", fileName, value/percent * 100)
+		end
+		slider.value = value/percent
+
+		if value >= percent then
+			gameObject:SetActive(false)
+			sceneUpdate.goTest()
+		end
+	end
+	
+	UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeText, function(str)
+		print(str)
+		local updateTest = assert(loadstring(str))()
+
+		UpdateManager.getInstance().onUpdateStateChanged = function(fileName, state)
+			updateProcessBar(fileName, state, #(updateTest.Configs) + #(updateTest.Prefabs) + #(updateTest.Scripts))
+		end
+
+		for i = 1, #(updateTest.Configs) do
+			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Configs[i])
+			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Configs[i])
+			UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeText, nil)
+		end
+
+		for i = 1, #(updateTest.Prefabs) do
+			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Prefabs[i])
+			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Prefabs[i])
+			UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeAssetBundle, nil)
+		end
+
+		for i = 1, #(updateTest.Scripts) do
+			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Scripts[i])
+			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Scripts[i])
+			UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeText, nil)
+		end
+	end)
+end
+
+function sceneUpdate.goTest()
+	local Test = require 'Script.Main'
+	Test()
+end
+
+return sceneUpdate

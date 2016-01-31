@@ -1,0 +1,16 @@
+require 'Script.Utils.Class'
+require 'Script.Utils.GlobalFunctions'
+
+local axe = require 'Script.Prefab.Character.Axe'
+local doom = require 'Script.Prefab.Character.Doom'
+
+return function()
+	ResourceManager.getInstance():init("")
+
+	local player = GameObject.Find("PlayerPawn")
+	local enemy = GameObject.Find("EnemyPawn")
+	local camera = GameObject.Find("Main Camera")
+	local cameraMove = camera:GetComponent(CameraMove)
+	local test1 = axe.new(player)
+	test1:run()
+end

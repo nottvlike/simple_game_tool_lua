@@ -205,6 +205,18 @@ namespace SLua
 			}));
         }
 
+		public object startDoString(string script)
+		{
+			if (script != null)
+			{
+				luaState.doString(script);
+				LuaFunction func = (LuaFunction)luaState["main"];
+				if(func!=null)
+					return func.call();
+			}
+			return null;
+		}
+
 		public object start(string main)
 		{
 			if (main != null)

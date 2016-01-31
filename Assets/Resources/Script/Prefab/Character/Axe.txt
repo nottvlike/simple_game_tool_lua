@@ -1,0 +1,18 @@
+local Creature = require 'Script.Base.Creature.Creature'
+local axe = Class("Axe", Creature)
+
+function axe:ctor(parent)
+	Creature.ctor(self, parent)
+
+	self.animations = {
+		idle = "mdldecompiler.qc_skeleton|idle",
+		run = "mdldecompiler.qc_skeleton|run",
+		normalAttack = "mdldecompiler.qc_skeleton|attack_main",
+		death = "mdldecompiler.qc_skeleton|death"
+	}
+	self.prefabName = "Axe"
+
+	self:init()
+end
+
+return axe

@@ -1,0 +1,9 @@
+local joystick = {}
+
+joystick.__index = joystick
+
+function joystick:onTouchDown()
+
+end
+
+return joystick

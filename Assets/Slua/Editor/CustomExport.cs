@@ -33,14 +33,17 @@ namespace SLua
             add(typeof(System.Func<int>), null);
             add(typeof(System.Action<int, string>), null);
             add(typeof(System.Action<int, Dictionary<int, object>>), null);
-            add(typeof(List<int>), "ListInt");
-            add(typeof(Dictionary<int, string>), "DictIntStr");
-            add(typeof(string), "String");
 			add(typeof(CameraMove), "CameraMove");
-			add(typeof(LuaEventManager), "LuaEventManager");
+			add(typeof(JoystickManager), "JoystickManager");
 			add(typeof(LuaBaseEvent), "LuaBaseEvent");
-			add(typeof(LuaAnimationEvent), "LuaAnimationEvent");
-
+			add(typeof(LuaEventManager), "LuaEventManager");
+			add(typeof(LuaFixedUpdateEvent), "LuaFixedUpdateEvent");
+			add(typeof(LuaUpdateEvent), "LuaUpdateEvent");
+			add(typeof(LuaCollisionTrigger2DEvent), "LuaCollisionTrigger2DEvent");
+			add(typeof(LuaManager), "LuaManager");
+			add(typeof(ResourceManager), "ResourceManager");
+			add(typeof(UpdateManager), "UpdateManager");
+			add(typeof(FileManager), "FileManager");
             // add your custom class here
             // add( type, typename)
             // type is what you want to export

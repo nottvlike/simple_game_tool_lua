@@ -1,0 +1,42 @@
+local creature = Class("Creature")
+
+function creature:ctor(parent)
+	self.parent = parent
+	self.animations = {}
+	self.prefabPath = ""
+	self.targetPos = Vector3.zero
+end
+
+function creature:init()
+	if self.parent then
+		ResourceManager.getInstance():singleLineLoadAsync(self.prefabName, function(obj)
+			local transform = self.parent:GetComponent(Transform)
+			self.gameObject = GameObject.Instantiate(obj, transform.position, transform.rotation)
+
+			self.model = self.gameObject.transform:Find("model")
+			self.animation = self.model:GetComponent(Animation)
+			self.rigidbody = self.gameObject:GetComponent(Rigidbody)
+			self.transform = self.gameObject:GetComponent(Transform)
+		end)
+	end
+end
+
+function creature:turnBody(targetPos)
+	local angle = Vector3ToDeg(targetPos)
+
+	if angle ~= 0 then
+		self.transform:Rotate(0,angle,0)
+	end
+end
+
+function creature:run()
+	local targetPos = Vector3(3, 0, 6)
+
+	local animRun = self.animations.run
+	self.animation:Play(animRun)
+	self.rigidbody.velocity = targetPos
+	
+	self:turnBody(targetPos)
+end
+
+return creature

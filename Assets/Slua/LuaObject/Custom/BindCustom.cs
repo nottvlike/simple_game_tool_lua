@@ -5,20 +5,17 @@ namespace SLua {
 	public class BindCustom {
 		public static Action<IntPtr>[] GetBindList() {
 			Action<IntPtr>[] list= {
-				Lua_Custom.reg,
-				Lua_Deleg.reg,
-				Lua_foostruct.reg,
-				Lua_SLuaTest.reg,
-				Lua_System_Collections_Generic_List_1_int.reg,
-				Lua_XXList.reg,
-				Lua_AbsClass.reg,
-				Lua_HelloWorld.reg,
-				Lua_System_Collections_Generic_Dictionary_2_int_string.reg,
-				Lua_System_String.reg,
 				Lua_CameraMove.reg,
-				Lua_LuaEventManager.reg,
+				Lua_JoystickManager.reg,
 				Lua_LuaBaseEvent.reg,
-				Lua_LuaAnimationEvent.reg,
+				Lua_LuaEventManager.reg,
+				Lua_LuaFixedUpdateEvent.reg,
+				Lua_LuaUpdateEvent.reg,
+				Lua_LuaCollisionTrigger2DEvent.reg,
+				Lua_LuaManager.reg,
+				Lua_ResourceManager.reg,
+				Lua_UpdateManager.reg,
+				Lua_FileManager.reg,
 			};
 			return list;
 		}

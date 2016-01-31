@@ -1,0 +1,22 @@
+local joystickMgr = require 'Script.Manager.JoystickManager'
+
+local test = Class("Test")
+
+function test:Ctor()
+	self.prefabName = "Ground"
+
+	ResourceManager.GetInstance():SingleLineLoadAsync(self.prefabName, function(obj)
+		self.gameObject = GameObject.Instantiate(obj, Vector3.zero, Vector3.zero)
+		self.transform = self.gameObject:GetComponent(Transform)
+
+		self:Init()
+	end)
+end
+
+function test:Init()
+	local parent = self.transform:Find("EnemySpawnLoc")
+	local enemyParent = self.transform:Find("SpawnLoc")
+	joystickMgr.SetMainPlayer(player, enemy)
+end
+
+return test

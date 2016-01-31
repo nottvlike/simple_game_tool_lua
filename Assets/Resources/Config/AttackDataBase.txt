@@ -1,0 +1,42 @@
+local attackDataBase = {
+	["01_Ichigo_Attack1"] = {
+		isTrigger = false,
+
+		damageFactor = 1,
+		spDamageFactor = 1,
+		extraTenacityDamage = 0,
+
+		maxHitCount = 1,
+		minHitInterval = 0.1,
+
+		hitForce = 500,
+		hitDirection = 85,
+		isForwardToHitDirection = false,
+		stiffnessTime = 0.2,
+		isFloatingHit = false,
+		floatingHitForce = 1500,
+		floatingHitValue = 5,
+		isFallDownHit = false,
+
+		hitEffect = "FX_CutHitted_1",
+		hitEffectRandomDirection = Vector3(0, 360, 0.35),
+
+		soundWordEffect = "",
+
+		hitSound = "",
+		weaponType = 0,
+		hitStrengthType = 0,
+
+		specialStateMask = 0,
+
+		timeScale = 0,
+		timeScaleLerpTime = 0,
+		timeScaleDelay = 0.08,
+
+		shakeTime = 0,
+		shakeFrequency = 30,
+		shakeAmplitude = Vector2.zero,
+	},
+}
+
+return attackDataBase

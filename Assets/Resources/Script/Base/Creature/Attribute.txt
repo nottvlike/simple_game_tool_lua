@@ -1,0 +1,71 @@
+local attribute = Class("Attribute")
+
+BaseAttribute = {
+	"HP",			--生命
+	"MP",			--魔法
+	"Stamina",  	--耐力值
+	"ATK",		--攻击力
+	"DEF",		--防御力
+}
+
+AdvanceAttribute = {
+	"Crit"		--暴击
+}
+
+AllAttribute = {
+	BaseAttribute = BaseAttribute,
+	AdvanceAttribute = AdvanceAttribute
+}
+
+function attribute:ctor(parent)
+	self.buffs = {}
+
+	for _,attr in pairs(AllAttribute) do
+		for i = 1,table.getn(attr) do
+			local attrName = attr[i]
+			self[attrName] = 0
+		end
+	end
+
+	self:init()
+end
+
+function attribute:init()
+	--TODO:从配置中或者服务器上获取属性信息
+end
+
+function attribute:addBuff(buff)
+	table.insert(self.buffs, buff)
+
+	local extraAttr = buff.attribute
+	for i,v in pairs(extraAttr) do
+		if self[i] then
+			self[i] = self[i] + v
+		else	
+			print("Warning : " .. i .. " not found")
+		end
+	end
+end
+
+function attribute:deleteBuff(buff)
+	for i = #(self.buffs), 1, -1 do
+		if self.buffs[i] == buff then
+			table.remove(self.buffs, i)
+		end
+	end
+
+	local extraAttr = buff.attribute
+	for i,v in pairs(extraAttr) do
+		if self[i] then
+			self[i] = self[i] - v
+		else	
+			print("Warning : " .. i .. " not found")
+		end
+	end
+end
+
+function attribute:onHurt()
+
+end
+
+return attribute
