@@ -7,7 +7,7 @@ public class LuaCollisionTrigger2DEvent : LuaBaseEvent {
     {
         if (_luaFunc != null)
         {
-            _luaFunc.call("OnTriggerEnter2D", col);
+            _luaFunc.call("onTriggerEnter2D", col);
         }
     }
 
@@ -15,7 +15,7 @@ public class LuaCollisionTrigger2DEvent : LuaBaseEvent {
     {
         if (_luaFunc != null)
         {
-            _luaFunc.call("OnTriggerStay2D", col);
+            _luaFunc.call("onTriggerStay2D", col);
         }
     }
 
@@ -23,7 +23,7 @@ public class LuaCollisionTrigger2DEvent : LuaBaseEvent {
     {
         if (_luaFunc != null)
         {
-            _luaFunc.call("OnTriggerExit2D", col);
+            _luaFunc.call("onTriggerExit2D", col);
         }
     }
 }

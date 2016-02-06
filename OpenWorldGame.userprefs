@@ -1,16 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Lua/LuaManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Resource/PrefabRequest.cs">
     <Files>
-      <File FileName="Assets/Scripts/Update/UpdateManager.cs" Line="98" Column="3" />
-      <File FileName="Assets/Scripts/Resource/PrefabRequest.cs" Line="69" Column="78" />
-      <File FileName="Assets/Scripts/Base/FileManager.cs" Line="13" Column="10" />
-      <File FileName="Assets/Editor/Custom Editor/AssetBundleEditor.cs" Line="61" Column="147" />
-      <File FileName="Assets/Scripts/Lua/LuaManager.cs" Line="8" Column="34" />
+      <File FileName="Assets/Scripts/Lua/LuaManager.cs" Line="8" Column="35" />
+      <File FileName="Assets/Scripts/Update/UpdateManager.cs" Line="118" Column="10" />
+      <File FileName="Assets/Scripts/Resource/PrefabRequest.cs" Line="73" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/nottvlike/Documents/github/OpenWorldGame/Assets/Scripts/Resource/ResourceManager.cs" line="66" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

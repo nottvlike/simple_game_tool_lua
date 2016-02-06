@@ -5,10 +5,7 @@ local canvas = nil
 local gameObject = nil
 
 function sceneUpdate.init(obj)
-	--canvas = GameObject.Find("Canvas")
-	--transform = canvas:GetComponent(Transform)
 	gameObject = GameObject.Instantiate(obj, Vector3.zero, Vector3.zero)
-	--gameObject.transform.parent = canvas.transform
 	transform = gameObject.transform
 	
 	sceneUpdate.initUI()
@@ -20,18 +17,19 @@ function sceneUpdate.initUI()
 
 	local targetPath = string.format("%s/UpdateTest.txt", Application.persistentDataPath)
 	local url = string.format("file:///%s/UpdateTest.txt", UpdateManager.UpdateTest)
-
+	local allSize = 0
+	local downSize = 0
 	local value = 0
-	local UpdateProcessBar = function(fileName, state, percent)
+	local updateProcessBar = function(fileName, state, percent)
 		if state == 0 then
-			text.text = string.format("下载文件: %s，已完成%d%%", fileName, value/percent * 100)
+			text.text = string.format("下载文件: %s，下载%0.02fKb/%0.02fKb, 已完成%d%%", fileName, downSize, allSize, value/percent * 100)
 		elseif state == 1 then
-			text.text = string.format("下载完成: %s，已完成%d%%", fileName, value/percent * 100)
+			text.text = string.format("下载文件: %s，下载%0.02fKb/%0.02fKb, 已完成%d%%", fileName, downSize, allSize, value/percent * 100)
 		elseif state == 2 then
-			text.text = string.format("移动文件: %s，已完成%d%%", fileName, value/percent * 100)
+			text.text = string.format("下载文件: %s，下载%0.02fKb/%0.02fKb, 已完成%d%%", fileName, downSize, allSize, value/percent * 100)
 		elseif state == 3 then
 			value = value +1
-			text.text = string.format("加载完成: %s，已完成%d%%", fileName, value/percent * 100)
+			text.text = string.format("下载文件: %s，下载%0.02fKb/%0.02fKb, 已完成%d%%", fileName, downSize, allSize, value/percent * 100)
 		end
 		slider.value = value/percent
 
@@ -41,30 +39,35 @@ function sceneUpdate.initUI()
 		end
 	end
 	
-	UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeText, function(str)
-		print(str)
+	UpdateManager.GetInstance():Download(url, targetPath, DownloadFileType.TypeText, function(str)
 		local updateTest = assert(loadstring(str))()
-
-		UpdateManager.getInstance().onUpdateStateChanged = function(fileName, state)
+		allSize = updateTest.UpdateSize
+		UpdateManager.GetInstance().OnUpdateStateChanged = function(fileName, state)
 			updateProcessBar(fileName, state, #(updateTest.Configs) + #(updateTest.Prefabs) + #(updateTest.Scripts))
 		end
 
 		for i = 1, #(updateTest.Configs) do
-			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Configs[i])
-			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Configs[i])
-			UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeText, nil)
+			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Configs[i].name)
+			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Configs[i].name)
+			UpdateManager.GetInstance():Download(url, targetPath, DownloadFileType.TypeText, function()
+				downSize = downSize + updateTest.Configs[i].size
+			end)
 		end
 
 		for i = 1, #(updateTest.Prefabs) do
-			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Prefabs[i])
-			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Prefabs[i])
-			UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeAssetBundle, nil)
+			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Prefabs[i].name)
+			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Prefabs[i].name)
+			UpdateManager.GetInstance():Download(url, targetPath, DownloadFileType.TypeAssetBundle, function()
+				downSize = downSize + updateTest.Prefabs[i].size
+			end)
 		end
 
 		for i = 1, #(updateTest.Scripts) do
-			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Scripts[i])
-			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Scripts[i])
-			UpdateManager.getInstance():download(url, targetPath, DownloadFileType.TypeText, nil)
+			local targetPath = string.format("%s%s", Application.persistentDataPath, updateTest.Scripts[i].name)
+			local url = string.format("file:///%s%s", UpdateManager.UpdateTest, updateTest.Scripts[i].name)
+			UpdateManager.GetInstance():Download(url, targetPath, DownloadFileType.TypeText, function()
+				downSize = downSize + updateTest.Scripts[i].size
+			end)
 		end
 	end)
 end

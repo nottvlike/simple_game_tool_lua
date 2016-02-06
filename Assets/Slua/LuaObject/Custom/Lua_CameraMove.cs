@@ -5,12 +5,12 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_CameraMove : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int setTarget(IntPtr l) {
+	static public int SetTarget(IntPtr l) {
 		try {
 			CameraMove self=(CameraMove)checkSelf(l);
 			UnityEngine.GameObject a1;
 			checkType(l,2,out a1);
-			self.setTarget(a1);
+			self.SetTarget(a1);
 			pushValue(l,true);
 			return 1;
 		}
@@ -20,7 +20,7 @@ public class Lua_CameraMove : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"CameraMove");
-		addMember(l,setTarget);
+		addMember(l,SetTarget);
 		createTypeMetatable(l,null, typeof(CameraMove),typeof(UnityEngine.MonoBehaviour));
 	}
 }

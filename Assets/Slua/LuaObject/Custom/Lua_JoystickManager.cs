@@ -18,14 +18,14 @@ public class Lua_JoystickManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int registerEvent(IntPtr l) {
+	static public int RegisterEvent(IntPtr l) {
 		try {
 			JoystickManager self=(JoystickManager)checkSelf(l);
 			JoystickManager.JoystickEventType a1;
 			checkEnum(l,2,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,3,out a2);
-			self.registerEvent(a1,a2);
+			self.RegisterEvent(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -47,7 +47,7 @@ public class Lua_JoystickManager : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"JoystickManager");
-		addMember(l,registerEvent);
+		addMember(l,RegisterEvent);
 		addMember(l,GetInstance_s);
 		createTypeMetatable(l,constructor, typeof(JoystickManager),typeof(Singleton<JoystickManager>));
 	}

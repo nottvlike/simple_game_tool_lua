@@ -18,7 +18,7 @@ public class Lua_UpdateManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int download(IntPtr l) {
+	static public int Download(IntPtr l) {
 		try {
 			UpdateManager self=(UpdateManager)checkSelf(l);
 			System.String a1;
@@ -29,7 +29,7 @@ public class Lua_UpdateManager : LuaObject {
 			checkEnum(l,4,out a3);
 			UpdateManager.OnScriptDownloadFinishedEvent a4;
 			LuaDelegation.checkDelegate(l,5,out a4);
-			self.download(a1,a2,a3,a4);
+			self.Download(a1,a2,a3,a4);
 			pushValue(l,true);
 			return 1;
 		}
@@ -38,9 +38,9 @@ public class Lua_UpdateManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int getInstance_s(IntPtr l) {
+	static public int GetInstance_s(IntPtr l) {
 		try {
-			var ret=UpdateManager.getInstance();
+			var ret=UpdateManager.GetInstance();
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -104,8 +104,8 @@ public class Lua_UpdateManager : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UpdateManager");
-		addMember(l,download);
-		addMember(l,getInstance_s);
+		addMember(l,Download);
+		addMember(l,GetInstance_s);
 		addMember(l,"UpdateTest",get_UpdateTest,null,false);
 		addMember(l,"OnUpdateStateChanged",null,set_OnUpdateStateChanged,true);
 		addMember(l,"State",get_State,set_State,true);

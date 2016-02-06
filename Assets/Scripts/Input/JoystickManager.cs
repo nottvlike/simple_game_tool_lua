@@ -45,7 +45,7 @@ public class JoystickManager : Singleton<JoystickManager>
         return Instance;
     }
 
-    public void registerEvent(JoystickEventType type, LuaFunction luaFunc)
+    public void RegisterEvent(JoystickEventType type, LuaFunction luaFunc)
     {
         switch(type)
         {

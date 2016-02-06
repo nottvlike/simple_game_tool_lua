@@ -20,7 +20,7 @@ public class CameraMove : MonoBehaviour {
 		}
 	}
 
-	public void setTarget(GameObject obj)
+	public void SetTarget(GameObject obj)
 	{
 		_followObj = obj;
 		distanceX = transform.position.x - _followObj.transform.position.x;

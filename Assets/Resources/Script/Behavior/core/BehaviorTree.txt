@@ -1,22 +1,22 @@
-require 'Script.BehaviorTree.core.Tick'
+require 'Script.Behavior.core.Tick'
 
-local behaviorTree = b3.Class("BehaviorTree")
-b3.BehaviorTree = behaviorTree
+local BehaviorTree = b3.Class("BehaviorTree")
+b3.BehaviorTree = BehaviorTree
 
-function behaviorTree:ctor()
+function BehaviorTree:ctor()
 	self.id 			= b3.createUUID()
-	self.title 			= "The behavior tree"
+	self.title 			= "The Behavior tree"
 	self.description 	= "Default description"
 	self.properties 	= {}
 	self.root			= nil
 	self.debug			= nil
 end
 
-function behaviorTree:initialize()
+function BehaviorTree:initialize()
 
 end
 
-function behaviorTree:load(data, names)
+function BehaviorTree:load(data, names)
 	names = names or {}
 
 	self.title 			= data.title or self.title
@@ -38,7 +38,7 @@ function behaviorTree:load(data, names)
 		else
 			print("Error : BehaviorTree.load : Invalid node name + " .. spec.name .. ".")
 		end
-		node = cls.new(spec.properties)
+		node = cls.new(spec.parameters)
 		node.id = spec.id or node.id
 		node.title = spec.title or node.title
 		node.description = spec.description or node.description
@@ -66,7 +66,7 @@ function behaviorTree:load(data, names)
 	self.root = nodes[data.root]
 end
 
-function behaviorTree:dump()
+function BehaviorTree:dump()
 	local data = {}
 	local customNames = {}
 
@@ -88,17 +88,17 @@ function behaviorTree:dump()
 	--TODO:
 end
 
-function behaviorTree:tick(target, blackboard)
+function BehaviorTree:tick(target, blackboard)
 	if not blackboard then
 		print("The blackboard parameter is obligatory and must be an instance of b3.Blackboard")
 	end
 
-	local tick = b3.tick.new()
+	local tick = b3.Tick.new()
 	tick.debug 		= self.debug
 	--tick.target		= target
 	tick.blackboard = blackboard
 	tick.tree 		= self
-	tick.global.target = target
+	tick.global = target
 
 	--TICK NODE
 	local state = self.root:_execute(tick)

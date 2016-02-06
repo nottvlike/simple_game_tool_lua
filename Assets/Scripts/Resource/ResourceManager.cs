@@ -41,7 +41,7 @@ public class ResourceManager : Singleton<ResourceManager>
             _state = value;
             if (_state != ResourceLoadStateType.Loading)
             {
-                startSingleLineLoad();
+                StartSingleLineLoad();
             }
         }
         get { return _state; }
@@ -55,12 +55,12 @@ public class ResourceManager : Singleton<ResourceManager>
         }
     }
 
-    public static ResourceManager getInstance()
+    public static ResourceManager GetInstance()
     {
         return Instance;
     }
 
-    public void init(string json)
+    public void Init(string json)
     {
         if (!_isInit)
         {
@@ -70,12 +70,12 @@ public class ResourceManager : Singleton<ResourceManager>
                 _isAssetBundle = true;
             }
 
-            loadConfigurationConfig();
-            loadAssetBundleConfig();
+            LoadConfigurationConfig();
+            LoadAssetBundleConfig();
         }
     }
 
-    void loadConfigurationConfig()
+    void LoadConfigurationConfig()
     {
         string config = "";
         if (LuaManager.DEBUG)
@@ -85,7 +85,7 @@ public class ResourceManager : Singleton<ResourceManager>
         }
         else
         {
-            config = FileManager.loadFileWithString(LuaManager.getConfigPath() + "/" + CONFIG_FILE + ".txt");
+            config = FileManager.LoadFileWithString(LuaManager.GetConfigPath() + "/" + CONFIG_FILE + ".txt");
         }
 
         JsonData jsonData = JsonMapper.ToObject(config);
@@ -103,9 +103,9 @@ public class ResourceManager : Singleton<ResourceManager>
         }
     }
 
-    void loadAssetBundleConfig()
+    void LoadAssetBundleConfig()
     {
-        var txt = loadConfigFile(ASSETBUNDLE_CONFIG);
+        var txt = LoadConfigFile(ASSETBUNDLE_CONFIG);
         JsonData jsonData = JsonMapper.ToObject(txt);
         if (jsonData["Prefabs"].IsArray)
         {
@@ -113,17 +113,17 @@ public class ResourceManager : Singleton<ResourceManager>
             {
                 var jsonObj = jsonData["Prefabs"][i];
                 var req = new PrefabRequest();
-                req.init(jsonObj["PrefabName"].ToString(), jsonObj["PrefabPath"].ToString(), jsonObj["ResourcePath"].ToString(), _isAssetBundle);
+                req.Init(jsonObj["PrefabName"].ToString(), jsonObj["PrefabPath"].ToString(), jsonObj["ResourcePath"].ToString(), _isAssetBundle);
                 _prefabRequestDict.Add(jsonObj["PrefabName"].ToString(), req);
             }
         }
     }
 
-    public string loadConfigFile(string configName)
+    public string LoadConfigFile(string configName)
     {
         ConfigRequest configReq = null;
 
-        if (!hasConfigRequest(configName, out configReq))
+        if (!HasConfigRequest(configName, out configReq))
         {
             return "";
         }
@@ -135,12 +135,12 @@ public class ResourceManager : Singleton<ResourceManager>
         }
         else
         {
-            return FileManager.loadFileWithString(LuaManager.getConfigPath() + "/" + configReq.ConfigResourcePath + ".txt");
+            return FileManager.LoadFileWithString(LuaManager.GetConfigPath() + "/" + configReq.ConfigResourcePath + ".txt");
         }
     }
 
     //线性载入prefab，牺牲载入时间，保证prefab载入的速度和内存占用
-    public void singleLineLoadAsync(string prefabName, LuaFunction func)
+    public void SingleLineLoadAsync(string prefabName, LuaFunction func)
     {
         var prefabLoad = new SingleLineResource();
         prefabLoad.PrefabName = prefabName;
@@ -148,18 +148,18 @@ public class ResourceManager : Singleton<ResourceManager>
         prefabLoad.Id = Time.realtimeSinceStartup;
         _prefabLoadList.Add(prefabLoad);
 
-        startSingleLineLoad();
+        StartSingleLineLoad();
     }
 
-    public void loadAssetBundleByPath(string path, string prefabName, LuaFunction func)
+    public void LoadAssetBundleByPath(string path, string prefabName, LuaFunction func)
     {
         var req = new PrefabRequest();
-        req.init(prefabName, path, path, true);
+        req.Init(prefabName, path, path, true);
 
-        req.loadAsync(func);
+        req.LoadAsync(func);
     }
 
-    void startSingleLineLoad()
+    void StartSingleLineLoad()
     {
         if (_prefabLoadList.Count <= 0)
         {
@@ -173,17 +173,17 @@ public class ResourceManager : Singleton<ResourceManager>
 
         _state = ResourceLoadStateType.Loading;
         var res = _prefabLoadList[_prefabLoadList.Count - 1];
-        loadAsync(res.PrefabName, res.CallBack);
+        LoadAsync(res.PrefabName, res.CallBack);
 
         _prefabLoadList.Remove(res);
     }
 
-    void loadAsync(string prefabName, LuaFunction func)
+    void LoadAsync(string prefabName, LuaFunction func)
     {
         PrefabRequest prefabReq = null;
-        if (hasPrefabRequest(prefabName, out prefabReq))
+        if (HasPrefabRequest(prefabName, out prefabReq))
         {
-            prefabReq.loadAsync(func);
+            prefabReq.LoadAsync(func);
         }
         else
         {
@@ -192,22 +192,22 @@ public class ResourceManager : Singleton<ResourceManager>
         }
     }
 
-    public bool hasPrefabRequest(string prefabName, out PrefabRequest prefabRequest)
+    public bool HasPrefabRequest(string prefabName, out PrefabRequest prefabRequest)
     {
         return _prefabRequestDict.TryGetValue(prefabName, out prefabRequest);
     }
 
-    public bool hasConfigRequest(string configName, out ConfigRequest configRequest)
+    public bool HasConfigRequest(string configName, out ConfigRequest configRequest)
     {
         return _configRequestDict.TryGetValue(configName, out configRequest);
     }
 
-    public void clear()
+    public void Clear()
     {
         //暂时先用foreach,clear毕竟不是很长使用
         foreach (KeyValuePair<string, PrefabRequest> obj in _prefabRequestDict)
         {
-            obj.Value.clearPrefab();
+            obj.Value.ClearPrefab();
         }
     }
 }

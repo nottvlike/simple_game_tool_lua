@@ -9,7 +9,7 @@ end
 
 function creature:init()
 	if self.parent then
-		ResourceManager.getInstance():singleLineLoadAsync(self.prefabName, function(obj)
+		ResourceManager.GetInstance():SingleLineLoadAsync(self.prefabName, function(obj)
 			local transform = self.parent:GetComponent(Transform)
 			self.gameObject = GameObject.Instantiate(obj, transform.position, transform.rotation)
 

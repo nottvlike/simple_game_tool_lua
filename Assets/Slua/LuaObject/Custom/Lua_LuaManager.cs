@@ -18,10 +18,10 @@ public class Lua_LuaManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int init(IntPtr l) {
+	static public int Init(IntPtr l) {
 		try {
 			LuaManager self=(LuaManager)checkSelf(l);
-			self.init();
+			self.Init();
 			pushValue(l,true);
 			return 1;
 		}
@@ -30,9 +30,9 @@ public class Lua_LuaManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int getInstance_s(IntPtr l) {
+	static public int GetInstance_s(IntPtr l) {
 		try {
-			var ret=LuaManager.getInstance();
+			var ret=LuaManager.GetInstance();
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -42,9 +42,9 @@ public class Lua_LuaManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int getAssetBundlePath_s(IntPtr l) {
+	static public int GetAssetBundlePath_s(IntPtr l) {
 		try {
-			var ret=LuaManager.getAssetBundlePath();
+			var ret=LuaManager.GetAssetBundlePath();
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -54,9 +54,9 @@ public class Lua_LuaManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int getScriptPath_s(IntPtr l) {
+	static public int GetScriptPath_s(IntPtr l) {
 		try {
-			var ret=LuaManager.getScriptPath();
+			var ret=LuaManager.GetScriptPath();
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -66,9 +66,9 @@ public class Lua_LuaManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int getConfigPath_s(IntPtr l) {
+	static public int GetConfigPath_s(IntPtr l) {
 		try {
-			var ret=LuaManager.getConfigPath();
+			var ret=LuaManager.GetConfigPath();
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -103,11 +103,11 @@ public class Lua_LuaManager : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"LuaManager");
-		addMember(l,init);
-		addMember(l,getInstance_s);
-		addMember(l,getAssetBundlePath_s);
-		addMember(l,getScriptPath_s);
-		addMember(l,getConfigPath_s);
+		addMember(l,Init);
+		addMember(l,GetInstance_s);
+		addMember(l,GetAssetBundlePath_s);
+		addMember(l,GetScriptPath_s);
+		addMember(l,GetConfigPath_s);
 		addMember(l,"DEBUG",get_DEBUG,set_DEBUG,false);
 		createTypeMetatable(l,constructor, typeof(LuaManager),typeof(Singleton<LuaManager>));
 	}

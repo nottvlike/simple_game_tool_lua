@@ -4,13 +4,25 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-public class AssetBundleCustom {
+public class UpdateModuleMessage
+{
+    public string Content;
+    public int Size;
+}
 
-    static Dictionary<string, List<string>> _assetBundleDict = new Dictionary<string,List<string>>();
+public class AssetBundleRequest
+{
+	public string Name;
+	public int Size;
+	public List<string> PrefabList; 
+}
+
+public class AssetBundleEditor {
+
+	static Dictionary<string, AssetBundleRequest> _assetBundleDict = new Dictionary<string, AssetBundleRequest>();
     static Dictionary<string, int> _assetBundleCrc = new Dictionary<string, int>();
 
-    [MenuItem("Custom Editor/Create AssetBunldes Selected")]
-    static void CreateAssetBunldesSelected()
+    public static void CreateAssetBunldesSelected()
     {
         //获取在Project视图中选择的所有游戏对象
         Object[] SelectedAsset = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
@@ -20,15 +32,12 @@ public class AssetBundleCustom {
         }
     }
 
-    [MenuItem("Custom Editor/CreateAssetBunldesAll")]
-    static void CreateAssetBunldesAll()
+    public static void CreateAssetBunldesAll()
     {
-		var isDebug = LuaManager.DEBUG;
-		LuaManager.DEBUG = true;
 
         InitAssetBundleDict();
         _assetBundleCrc.Clear();
-        foreach (KeyValuePair<string, List<string>> obj in _assetBundleDict)
+        foreach (KeyValuePair<string, AssetBundleRequest> obj in _assetBundleDict)
         {
             var fullPath = UpdateManager.UpdateTest + "/" + obj.Key;
             if (File.Exists(fullPath))
@@ -36,29 +45,84 @@ public class AssetBundleCustom {
                 File.Delete(fullPath);
             }
 
-            if (obj.Value.Count > 0)
+            if (obj.Value.PrefabList.Count > 0)
             {
-                Object[] resources = new Object[obj.Value.Count];
-                for (int i = 0; i < obj.Value.Count; ++i)
+				Object[] resources = new Object[obj.Value.PrefabList.Count];
+				for (int i = 0; i < obj.Value.PrefabList.Count; ++i)
                 {
-                    resources[i] = Resources.Load(obj.Value[i]);
+					resources[i] = Resources.Load(obj.Value.PrefabList[i]);
                 }
 
                 BuildAssetBundle(fullPath, resources);
             }
         }
+    }
 
-		LuaManager.DEBUG = isDebug;
+    public static void GenerateVersionContent()
+    {
+        var version = "3.1.3";
+        var content = "";
+        var fileContent = "";
+        var fileSize = 0;
+
+        UpdateModuleMessage module = null;
+        GenerateAssetBundleVersionContent(out module);
+        fileContent += module.Content;
+        fileSize += module.Size;
+
+        module = null;
+        LuaScriptEditor.GenerateScriptVersionContent(out module);
+        fileContent += module.Content;
+        fileSize += module.Size;
+
+        module = null;
+        ConfigEditor.GenerateConfigVersionContent(out module);
+        fileContent += module.Content;
+        fileSize += module.Size;
+
+        content += "return {\n";
+        content += "\tVersion = \"" + version + "\",\n";
+        content += "\tUpdateURL = " + "\"" + UpdateManager.UpdateTest + "\",\n";
+        
+        content += "\tUpdateSize = " + fileSize + ",\n";
+        content += fileContent;
+
+        content += "}\n";
+
+        FileManager.CreateFileWithString(UpdateManager.UpdateTest + "/" + "UpdateTest.txt", content);
+    }
+
+    static void GenerateAssetBundleVersionContent(out UpdateModuleMessage assetModule)
+    {
+        assetModule = new UpdateModuleMessage();
+
+        InitAssetBundleDict();
+        string content = "";
+        int moduleSize = 0;
+        content += "\tPrefabs = {\n";
+        foreach (KeyValuePair<string, AssetBundleRequest> obj in _assetBundleDict)
+        {
+            var fullPath = UpdateManager.UpdateTest + "/" + obj.Key;
+            content += "\t\t{\n";
+            content += "\t\t\tname=\"" + obj.Key + "\",\n";
+			var asset = new FileInfo(fullPath);
+			content += "\t\t\tsize=" + Mathf.Ceil(FileManager.GetFileSize(FileSizeUnitType.Type_Kb, asset.Length)) + ",\n";
+            content += "\t\t},\n";
+			moduleSize += (int)Mathf.Ceil(FileManager.GetFileSize(FileSizeUnitType.Type_Kb, asset.Length));
+        }
+        content += "\t},\n";
+        assetModule.Content = content;
+        assetModule.Size = moduleSize;
     }
 
     static void BuildAssetBundle(string path, Object[] resources)
     {
         BuildTarget buildTarget = BuildTarget.Android;
-
-        FileManager.createDirectory(System.IO.Path.GetDirectoryName(path));
+        Debug.Log("BuildAssetBundle " + path);
+        FileManager.CreateDirectory(System.IO.Path.GetDirectoryName(path));
 
         if (BuildPipeline.BuildAssetBundle(null, resources, path, 
-            BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets | BuildAssetBundleOptions.UncompressedAssetBundle, buildTarget))
+            BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.UncompressedAssetBundle, buildTarget))
         {
             Debug.Log(path + "资源打包成功");
         }
@@ -73,7 +137,7 @@ public class AssetBundleCustom {
 
     static void InitAssetBundleDict()
     {
-        ResourceManager.Instance.init("");
+		ResourceManager.GetInstance ().Init ("");
         var _prefabDict = ResourceManager.Instance.PrefabRequestDict;
 
         foreach (KeyValuePair<string, PrefabRequest> obj in _prefabDict)
@@ -81,16 +145,18 @@ public class AssetBundleCustom {
             var target = obj.Value.AssetBundlePath;
             var resource = obj.Value.ResourcePath;
 
-            List<string> resourceList = null;
-            if (_assetBundleDict.TryGetValue(target, out resourceList))
+			AssetBundleRequest req = null;
+			if (_assetBundleDict.TryGetValue(target, out req))
             {
-                resourceList.Add(resource);
+				req.PrefabList.Add(resource);
             }
             else
             {
-                resourceList = new List<string>();
-                resourceList.Add(resource);
-                _assetBundleDict.Add(target, resourceList);
+				AssetBundleRequest reqAsset = new AssetBundleRequest();
+				reqAsset.Name = obj.Value.PrefabName;
+				reqAsset.PrefabList = new List<string>();
+				reqAsset.PrefabList.Add(resource);
+				_assetBundleDict.Add(target, reqAsset);
             }
         }
     }

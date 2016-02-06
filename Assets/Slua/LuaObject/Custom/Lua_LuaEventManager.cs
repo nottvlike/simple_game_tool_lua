@@ -18,13 +18,13 @@ public class Lua_LuaEventManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int addFixedUpdateEvent_s(IntPtr l) {
+	static public int AddFixedUpdateEvent_s(IntPtr l) {
 		try {
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,2,out a2);
-			LuaEventManager.addFixedUpdateEvent(a1,a2);
+			LuaEventManager.AddFixedUpdateEvent(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -33,13 +33,13 @@ public class Lua_LuaEventManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int addUpdateEvent_s(IntPtr l) {
+	static public int AddUpdateEvent_s(IntPtr l) {
 		try {
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,2,out a2);
-			LuaEventManager.addUpdateEvent(a1,a2);
+			LuaEventManager.AddUpdateEvent(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -48,13 +48,13 @@ public class Lua_LuaEventManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int addAnimationEvent_s(IntPtr l) {
+	static public int AddAnimationEvent_s(IntPtr l) {
 		try {
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,2,out a2);
-			LuaEventManager.addAnimationEvent(a1,a2);
+			LuaEventManager.AddAnimationEvent(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -63,13 +63,13 @@ public class Lua_LuaEventManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int addCollisionTrigger2DEvent_s(IntPtr l) {
+	static public int AddCollisionTrigger2DEvent_s(IntPtr l) {
 		try {
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,2,out a2);
-			LuaEventManager.addCollisionTrigger2DEvent(a1,a2);
+			LuaEventManager.AddCollisionTrigger2DEvent(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -79,10 +79,10 @@ public class Lua_LuaEventManager : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"LuaEventManager");
-		addMember(l,addFixedUpdateEvent_s);
-		addMember(l,addUpdateEvent_s);
-		addMember(l,addAnimationEvent_s);
-		addMember(l,addCollisionTrigger2DEvent_s);
+		addMember(l,AddFixedUpdateEvent_s);
+		addMember(l,AddUpdateEvent_s);
+		addMember(l,AddAnimationEvent_s);
+		addMember(l,AddCollisionTrigger2DEvent_s);
 		createTypeMetatable(l,constructor, typeof(LuaEventManager));
 	}
 }

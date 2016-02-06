@@ -6,7 +6,7 @@ end
 
 local Update={}
 
-local disableUpdate = true
+local disableUpdate = false
 
 UpdateFileStateType = {
     BeginDownLoad = 0,
@@ -36,43 +36,43 @@ function main()
 
 	local prefabPath = "/AssetBunle/UI/Update/SceneUpdate.assetbundle"
 	local prefabName = "SceneUpdate"
-	local prefabFullPath = string.format("%s%s", LuaManager.getAssetBundlePath(), prefabPath)
+	local prefabFullPath = string.format("%s%s", LuaManager.GetAssetBundlePath(), prefabPath)
 	local sceneUpdatePath = "Update/SceneUpdate.txt"
-	local sceneUpdateFullPath = string.format("%s/%s", LuaManager.getAssetBundlePath(), sceneUpdatePath)
+	local sceneUpdateFullPath = string.format("%s/%s", LuaManager.GetAssetBundlePath(), sceneUpdatePath)
 
 	local loadUpdateScene = function()
-		if not FileManager.isFileExist(prefabFullPath) then
-			UpdateManager.getInstance():download(
+--		if not FileManager.IsFileExist(prefabFullPath) then
+			UpdateManager.GetInstance():Download(
 				string.format("file:///%s%s", UpdateManager.UpdateTest, prefabPath),
-				string.format("%s%s", LuaManager.getConfigPath(), prefabPath),
+				string.format("%s%s", LuaManager.GetConfigPath(), prefabPath),
 				DownloadFileType.TypeAssetBundle,
 				function()
-					ResourceManager.getInstance():loadAssetBundleByPath(prefabPath, prefabName, function(obj)
+					ResourceManager.GetInstance():LoadAssetBundleByPath(prefabPath, prefabName, function(obj)
 						print("load finished")
 						local SceneUpdate = require 'Update.SceneUpdate'
 						SceneUpdate.init(obj)
 					end)
 				end
 			)
-		else
-			ResourceManager.getInstance():loadAssetBundleByPath(prefabPath, prefabName, function(obj)
-				print("load finished")
-				local SceneUpdate = require 'Update.SceneUpdate'
-				SceneUpdate.init(obj)
-			end)
-		end		
+--		else
+--			ResourceManager.GetInstance():LoadAssetBundleByPath(prefabPath, prefabName, function(obj)
+--				print("load finished")
+--				local SceneUpdate = require 'Update.SceneUpdate'
+--				SceneUpdate.init(obj)
+--			end)
+--		end		
 	end
 	
-	if not FileManager.isFileExist(sceneUpdateFullPath) then
-		UpdateManager.getInstance():download(
+--	if not FileManager.IsFileExist(sceneUpdateFullPath) then
+		UpdateManager.GetInstance():Download(
 			string.format("file:///%s/%s", UpdateManager.UpdateTest, sceneUpdatePath),
-			string.format("%s/%s", LuaManager.getConfigPath(), sceneUpdatePath),
+			string.format("%s/%s", LuaManager.GetConfigPath(), sceneUpdatePath),
 			DownloadFileType.TypeText,
 			function()
 				loadUpdateScene()
 			end
 		)
-	else
-		loadUpdateScene()
-	end
+--	else
+--		loadUpdateScene()
+--	end
 end

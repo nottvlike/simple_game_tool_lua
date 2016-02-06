@@ -53,17 +53,17 @@ public class UpdateManager : Singleton<UpdateManager>
 
             if (value == UpdateFileStateType.Finished)
             {
-                startDownloadFile();
+                StartDownloadFile();
             }
         }
     }
 
-    public static UpdateManager getInstance()
+    public static UpdateManager GetInstance()
     {
         return Instance;
     }
 
-    public void download(string url, string targetPath, DownloadFileType fileType, OnScriptDownloadFinishedEvent downloadedEvent = null)
+    public void Download(string url, string targetPath, DownloadFileType fileType, OnScriptDownloadFinishedEvent downloadedEvent = null)
     {
         var file = new DownloadFileRequest();
         file.Id = System.DateTime.Now.Millisecond;
@@ -73,10 +73,10 @@ public class UpdateManager : Singleton<UpdateManager>
         file.onScriptDownloaded = downloadedEvent;
         _downloadFileList.Add(file);
 
-		startDownloadFile();
+		StartDownloadFile();
     }
 
-    void startDownloadFile()
+    void StartDownloadFile()
     {
         if (State != UpdateFileStateType.Finished)
             return;
@@ -87,17 +87,17 @@ public class UpdateManager : Singleton<UpdateManager>
         var req = _downloadFileList[0];
         _currentUpdateFilePath = req.filePath;
         State = UpdateFileStateType.BeginDownLoad;
-        StartCoroutine(downloadFile(req));
+        StartCoroutine(DownloadFile(req));
     }
 
-    IEnumerator downloadFile(DownloadFileRequest req)
+    IEnumerator DownloadFile(DownloadFileRequest req)
     {
         WWW www = new WWW(req.fileUrl);
         yield return www;
         State = UpdateFileStateType.FinishDownload;
 
         State = UpdateFileStateType.MoveFile;
-        moveFile(req, www.text, www.bytes, www.bytes.Length);
+        MoveFile(req, www.text, www.bytes, www.bytes.Length);
 
 		_downloadFileList.Remove(req);
         State = UpdateFileStateType.Finished;
@@ -108,15 +108,15 @@ public class UpdateManager : Singleton<UpdateManager>
 		}
     }
 
-    void moveFile(DownloadFileRequest req, string info, byte[] bytes, int length)
+    void MoveFile(DownloadFileRequest req, string info, byte[] bytes, int length)
     {
         if (req.fileType == DownloadFileType.TypeText)
         {
-            FileManager.createFileWithString(req.filePath, info);
+            FileManager.CreateFileWithString(req.filePath, info);
         }
         else if (req.fileType == DownloadFileType.TypeAssetBundle)
         {
-            FileManager.createFileWithBytes(req.filePath, bytes, length);
+            FileManager.CreateFileWithBytes(req.filePath, bytes, length);
         }
     }
 }

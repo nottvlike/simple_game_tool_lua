@@ -18,12 +18,12 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int init(IntPtr l) {
+	static public int Init(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
-			self.init(a1);
+			self.Init(a1);
 			pushValue(l,true);
 			return 1;
 		}
@@ -32,12 +32,12 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int loadConfigFile(IntPtr l) {
+	static public int LoadConfigFile(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
-			var ret=self.loadConfigFile(a1);
+			var ret=self.LoadConfigFile(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -47,14 +47,14 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int singleLineLoadAsync(IntPtr l) {
+	static public int SingleLineLoadAsync(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,3,out a2);
-			self.singleLineLoadAsync(a1,a2);
+			self.SingleLineLoadAsync(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -63,7 +63,7 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int loadAssetBundleByPath(IntPtr l) {
+	static public int LoadAssetBundleByPath(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
 			System.String a1;
@@ -72,7 +72,7 @@ public class Lua_ResourceManager : LuaObject {
 			checkType(l,3,out a2);
 			SLua.LuaFunction a3;
 			checkType(l,4,out a3);
-			self.loadAssetBundleByPath(a1,a2,a3);
+			self.LoadAssetBundleByPath(a1,a2,a3);
 			pushValue(l,true);
 			return 1;
 		}
@@ -81,13 +81,13 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int hasPrefabRequest(IntPtr l) {
+	static public int HasPrefabRequest(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			PrefabRequest a2;
-			var ret=self.hasPrefabRequest(a1,out a2);
+			var ret=self.HasPrefabRequest(a1,out a2);
 			pushValue(l,true);
 			pushValue(l,ret);
 			pushValue(l,a2);
@@ -98,13 +98,13 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int hasConfigRequest(IntPtr l) {
+	static public int HasConfigRequest(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			ConfigRequest a2;
-			var ret=self.hasConfigRequest(a1,out a2);
+			var ret=self.HasConfigRequest(a1,out a2);
 			pushValue(l,true);
 			pushValue(l,ret);
 			pushValue(l,a2);
@@ -115,10 +115,10 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int clear(IntPtr l) {
+	static public int Clear(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
-			self.clear();
+			self.Clear();
 			pushValue(l,true);
 			return 1;
 		}
@@ -127,9 +127,9 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int getInstance_s(IntPtr l) {
+	static public int GetInstance_s(IntPtr l) {
 		try {
-			var ret=ResourceManager.getInstance();
+			var ret=ResourceManager.GetInstance();
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -178,14 +178,14 @@ public class Lua_ResourceManager : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"ResourceManager");
-		addMember(l,init);
-		addMember(l,loadConfigFile);
-		addMember(l,singleLineLoadAsync);
-		addMember(l,loadAssetBundleByPath);
-		addMember(l,hasPrefabRequest);
-		addMember(l,hasConfigRequest);
-		addMember(l,clear);
-		addMember(l,getInstance_s);
+		addMember(l,Init);
+		addMember(l,LoadConfigFile);
+		addMember(l,SingleLineLoadAsync);
+		addMember(l,LoadAssetBundleByPath);
+		addMember(l,HasPrefabRequest);
+		addMember(l,HasConfigRequest);
+		addMember(l,Clear);
+		addMember(l,GetInstance_s);
 		addMember(l,"ResourceLoadState",get_ResourceLoadState,set_ResourceLoadState,true);
 		addMember(l,"PrefabRequestDict",get_PrefabRequestDict,null,true);
 		createTypeMetatable(l,constructor, typeof(ResourceManager),typeof(Singleton<ResourceManager>));

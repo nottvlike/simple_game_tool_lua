@@ -35,7 +35,7 @@ public class PrefabRequest{
         }
     }
 
-    public void init(string prefabName, string prefabPath, string resourcePath, bool isAssetBundle)
+    public void Init(string prefabName, string prefabPath, string resourcePath, bool isAssetBundle)
     {
         _prefabName = prefabName;
         _assetBundlePath = prefabPath;
@@ -43,7 +43,7 @@ public class PrefabRequest{
         _isAssetBundle = isAssetBundle;
     }
 
-    public void loadAsync(LuaFunction func)
+    public void LoadAsync(LuaFunction func)
     {
         if (func != null && _prefab != null)
         {
@@ -53,25 +53,24 @@ public class PrefabRequest{
 
         if (_isAssetBundle)
         {
-            ResourceManager.Instance.StartCoroutine(startLoadAssetBundleAsync(func));
+            ResourceManager.Instance.StartCoroutine(StartLoadAssetBundleAsync(func));
         }
         else
         {
-			startLoadResourceAsync(func);
+			StartLoadResourceAsync(func);
         }
     }
 
-    IEnumerator startLoadAssetBundleAsync(LuaFunction func)
+    IEnumerator StartLoadAssetBundleAsync(LuaFunction func)
     {
         AssetBundle bundle;
         AssetBundleRequest request;
 
-        string filepath = LuaManager.getAssetBundlePath() + _assetBundlePath;
+        string filepath = LuaManager.GetAssetBundlePath() + _assetBundlePath;
 
         WWW www = new WWW("file://" + filepath);
         yield return www;
         bundle = www.assetBundle;
-
         request = bundle.LoadAsync(_prefabName, typeof(GameObject));
         yield return request;
         _prefab = request.asset as GameObject;
@@ -84,7 +83,7 @@ public class PrefabRequest{
         ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
     }
 
-    void startLoadResourceAsync(LuaFunction func)
+    void StartLoadResourceAsync(LuaFunction func)
     {
         var obj = Resources.Load<GameObject>(_resourcePath);
 
@@ -94,7 +93,7 @@ public class PrefabRequest{
         }
 	}
 
-    public void clearPrefab()
+    public void ClearPrefab()
     {
         if (_prefab != null)
         {
@@ -102,9 +101,9 @@ public class PrefabRequest{
         }
     }
 
-    public void reset(string prefabName, string prefabPath, string resourcePath, bool isAssetBundle)
+    public void Reset(string prefabName, string prefabPath, string resourcePath, bool isAssetBundle)
     {
-        clearPrefab();
-        init(prefabName, prefabPath, resourcePath, isAssetBundle);
+        ClearPrefab();
+        Init(prefabName, prefabPath, resourcePath, isAssetBundle);
     }
 }

@@ -9,11 +9,11 @@ function test:Ctor()
 		self.gameObject = GameObject.Instantiate(obj, Vector3.zero, Vector3.zero)
 		self.transform = self.gameObject:GetComponent(Transform)
 
-		self:Init()
+		self:init()
 	end)
 end
 
-function test:Init()
+function test:init()
 	local parent = self.transform:Find("EnemySpawnLoc")
 	local enemyParent = self.transform:Find("SpawnLoc")
 	joystickMgr.SetMainPlayer(player, enemy)

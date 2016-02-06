@@ -3,42 +3,42 @@ using System.Collections;
 
 public class LuaAnimationEvent : LuaBaseEvent {
 
-	public void playSound(int type)
+	public void PlaySound(int type)
 	{
 		if (_luaFunc != null) {
 			_luaFunc.call("playSound", type);
 		}
 	}
 
-	public void playEffect(int type)
+	public void PlayEffect(int type)
 	{
 		if (_luaFunc != null) {
 			_luaFunc.call("playEffect", type);
 		}
 	}
 
-	public void fire(int type)
+	public void Fire(int type)
 	{
 		if (_luaFunc != null) {
 			_luaFunc.call("fire", type);
 		}
 	}
 
-	public void addAttackInstance(string name)
+	public void AddAttackInstance(string name)
 	{
 		if (_luaFunc != null) {
 			_luaFunc.call("addAttackInstance", name);
 		}
 	}
 	
-	public void removeAttackInstance(string name)
+	public void RemoveAttackInstance(string name)
 	{
 		if (_luaFunc != null) {
 			_luaFunc.call("removeAttackInstance", name);
 		}
 	}
 
-	public void animateFinished() {
+	public void AnimateFinished() {
 		if (_luaFunc != null) {
 			_luaFunc.call("animateFinished", transform.gameObject);
 		}
