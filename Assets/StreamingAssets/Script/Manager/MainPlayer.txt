@@ -1,0 +1,11 @@
+local mainPlayer = {}
+
+mainPlayer.__index = mainPlayer
+
+local player = nil
+
+function mainPlayer:setMainPlayer(value)
+	player = value
+end
+
+return mainPlayer

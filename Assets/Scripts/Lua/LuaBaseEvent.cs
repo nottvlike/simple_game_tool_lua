@@ -18,7 +18,9 @@ public class LuaBaseEvent : MonoBehaviour
             }
             else
             {
+#if LOG_DEBUG
                 Debug.LogWarning("LuaCallback has been registered!");
+#endif
             }
         }
     }

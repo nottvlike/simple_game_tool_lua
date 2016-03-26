@@ -1,43 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using SLua;
+
+public class KeyEvent
+{
+	public KeyCode Key;
+	public LuaFunction Func;
+}
 
 public class JoystickManager : Singleton<JoystickManager>
 {
-
-    LuaFunction _onKeyDown;
-    LuaFunction _onKeyUp;
-    bool _isKeyDown = false;
-    public enum JoystickEventType : int
-    {
-        None = 0,
-        KeyDown = 1,
-        KeyUp = 2
-    }
+	List<KeyEvent> _keyEventList = new List<KeyEvent> ();
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!_isKeyDown)
-            {
-                _isKeyDown = true;
-                if (_onKeyDown != null)
-                {
-                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    _onKeyDown.call(worldPos);
-                }
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0) && _isKeyDown)
-        {
-            _isKeyDown = false;
-            if (_onKeyUp != null)
-            {
-                _onKeyUp.call(Input.mousePosition);
-            }
-        }
+		if (_keyEventList.Count > 0) 
+		{
+			for (int i = 0; i < _keyEventList.Count; ++i)
+			{
+				var keyEvent = _keyEventList[i];
+				if (Input.GetKeyDown (keyEvent.Key))
+				{
+					keyEvent.Func.call("KeyDown");
+				}
+				if (Input.GetKeyUp (keyEvent.Key))
+				{
+					keyEvent.Func.call("KeyUp");
+				}
+			}
+		}
     }
 
     public static JoystickManager GetInstance() 
@@ -45,20 +37,24 @@ public class JoystickManager : Singleton<JoystickManager>
         return Instance;
     }
 
-    public void RegisterEvent(JoystickEventType type, LuaFunction luaFunc)
-    {
-        switch(type)
-        {
-            case JoystickEventType.None:
-                break;
-            case JoystickEventType.KeyDown:
-                if (_onKeyDown == null)
-                    _onKeyDown = luaFunc;
-                break;
-            case JoystickEventType.KeyUp:
-                if (_onKeyUp == null)
-                    _onKeyUp = luaFunc;
-                break;
-        }
-    }
+	public void AddKeyEvent (KeyCode key, LuaFunction func)
+	{
+		var keyEvent = new KeyEvent ();
+		keyEvent.Key = key;
+		keyEvent.Func = func;
+		_keyEventList.Add (keyEvent);
+	}
+
+	public void DeleteKeyEvent (KeyCode key)
+	{
+		for (int i = 0; i < _keyEventList.Count; ++i) 
+		{
+			var keyEvent = _keyEventList[i];
+			if(keyEvent.Key == key)
+			{
+				_keyEventList.Remove(keyEvent);
+				return;
+			}
+		}
+	}
 }

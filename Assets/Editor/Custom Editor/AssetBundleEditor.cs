@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#define RESOURCE_DEBUG
+
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
@@ -137,7 +139,7 @@ public class AssetBundleEditor {
 
     static void InitAssetBundleDict()
     {
-		ResourceManager.GetInstance ().Init ("");
+		ResourceManager.Instance.Init ("");
         var _prefabDict = ResourceManager.Instance.PrefabRequestDict;
 
         foreach (KeyValuePair<string, PrefabRequest> obj in _prefabDict)

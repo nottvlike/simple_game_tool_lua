@@ -10,6 +10,7 @@ public class PrefabRequest{
     string _resourcePath = "";
     GameObject _prefab = null;
     bool _isAssetBundle = false;
+	SingleLineResource _res = null;
 
     public string PrefabName
     {
@@ -43,25 +44,26 @@ public class PrefabRequest{
         _isAssetBundle = isAssetBundle;
     }
 
-    public void LoadAsync(LuaFunction func)
+    public void LoadAsync(SingleLineResource res)
     {
-        if (func != null && _prefab != null)
+		_res = res;
+		if (_res.CallBack != null && _prefab != null)
         {
-            func.call(_prefab);
+			LoadFinished ();
             return;
         }
 
         if (_isAssetBundle)
         {
-            ResourceManager.Instance.StartCoroutine(StartLoadAssetBundleAsync(func));
-        }
-        else
+			ResourceManager.Instance.StartCoroutine(StartLoadAssetBundleAsync());
+		}
+		else
         {
-			StartLoadResourceAsync(func);
+			ResourceManager.Instance.StartCoroutine(StartLoadResourceAsync());
         }
     }
 
-    IEnumerator StartLoadAssetBundleAsync(LuaFunction func)
+    IEnumerator StartLoadAssetBundleAsync()
     {
         AssetBundle bundle;
         AssetBundleRequest request;
@@ -76,21 +78,33 @@ public class PrefabRequest{
         _prefab = request.asset as GameObject;
         bundle.Unload(false);
 
-        if (func != null && _prefab != null)
-        {
-            func.call(_prefab);
-        }
-        ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
-    }
-
-    void StartLoadResourceAsync(LuaFunction func)
+		LoadFinished ();
+	}
+	
+	IEnumerator StartLoadResourceAsync()
     {
         var obj = Resources.Load<GameObject>(_resourcePath);
+		yield return new WaitForEndOfFrame ();
 
-		if (func != null && obj != null)
-        {
-			func.call(obj);
-        }
+		LoadFinished ();
+	}
+
+	public void LoadFinished()
+	{
+		ResourceManager.Instance.RemovePrefabLoadList (_res);
+
+		if (_res.CallBack != null && _prefab != null) 
+		{
+			_res.CallBack.call (_prefab);
+			_res = null;
+		} 
+		else 
+		{
+			Debug.LogWarning(string.Format("Warning : Failed to load prefab {0}", _res.PrefabName));
+			_res = null;
+		}
+
+		ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
 	}
 
     public void ClearPrefab()

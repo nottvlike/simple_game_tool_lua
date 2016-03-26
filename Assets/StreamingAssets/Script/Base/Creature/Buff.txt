@@ -1,0 +1,9 @@
+local buff = Class("Buff")
+
+function buff:ctor(parent)
+
+end
+
+function buff:init()
+
+end

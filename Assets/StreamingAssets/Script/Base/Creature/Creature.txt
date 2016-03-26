@@ -1,0 +1,121 @@
+local creature = Class("Creature")
+
+CreateDirectionType = {
+	Left = 1,
+	Up = 2,
+	Right = 3,
+	Down = 4
+}
+
+CreatureStateType = {
+	Idle = 1,
+	Run = 2,
+	Attack = 3,
+	RunAttack = 4,
+}
+
+function creature:ctor(parent)
+	self.parent = parent
+	self.animations = {}
+	self.prefabPath = ""
+	self.targetPos = Vector3.zero
+	self.rotation = 2
+	self.speed = 3
+	self.useVelocity = true
+	self.velocity = Vector3.zero
+	self.isAttack = false
+end
+
+function creature:init()
+	if self.parent then
+		ResourceManager.GetInstance():SingleLineLoadAsync(self.prefabName, function(obj)
+			local transform = self.parent:GetComponent(Transform)
+			self.gameObject = GameObject.Instantiate(obj, transform.position, transform.rotation)
+			self.animator = self.gameObject:GetComponent(Animator)
+			self.rigidbody = self.gameObject:GetComponent(Rigidbody)
+			self.transform = self.gameObject:GetComponent(Transform)
+			LuaEventManager.AddFixedUpdateEvent(self.gameObject, function()
+				self:fixedUpdate()
+			end)
+
+			self:initPrefab()
+		end)
+	else
+		print(string.format("Prefab %s parent not found!", self.prefabName))
+	end
+end
+
+function creature:initPrefab()
+
+end
+
+function creature:fixedUpdate()
+	if self.useVelocity then
+		self.rigidbody.velocity = self.velocity
+	end
+end
+
+function creature:turn(targetPos)
+	local angle = 0
+	if targetPos.x >= 0 then
+		angle = 90
+		if self.rotation < 4 then
+			self.rotation = self.rotation + 1
+		else
+			self.rotation = 1
+		end
+	else
+		angle = -90
+		if self.rotation > 1 then
+			self.rotation = self.rotation - 1
+		else
+			self.rotation = 4
+		end
+	end
+
+	self.transform:Rotate(0, angle, 0, Space.Self)
+	if self.velocity.x ~= 0 or self.velocity.z ~= 0 then
+		self.velocity = self:_getRunVec() * self.speed
+	end
+end
+
+function creature:_getRunVec()
+	local rotationGetVec = {
+		function()
+			return Vector3(-1, 0, 0)
+		end,
+		function()
+			return Vector3(0, 0, 1)
+		end,
+		function()
+			return Vector3(1, 0, 0)
+		end,
+		function()
+			return Vector3(0, 0, -1)
+		end
+	}
+	return rotationGetVec[self.rotation]()
+end
+
+function creature:run()
+	local targetPos = self:_getRunVec()
+
+	self.animator:SetBool("IsRun", true)
+	self.velocity = targetPos * self.speed
+end
+
+function creature:stop()
+	self.velocity = Vector3.zero
+	self.animator:SetBool("IsRun", false)
+end
+
+function creature:attack()
+	self.isAttack = not self.isAttack
+	self.animator:SetBool("IsAttack", self.isAttack)
+end
+
+function creature:cancelAttack()
+	self.animator:SetBool("IsAttack", false)
+end
+
+return creature

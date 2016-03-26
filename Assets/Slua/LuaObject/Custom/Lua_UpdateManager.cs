@@ -61,6 +61,19 @@ public class Lua_UpdateManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_UpdateTest(IntPtr l) {
+		try {
+			System.String v;
+			checkType(l,2,out v);
+			UpdateManager.UpdateTest=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_OnUpdateStateChanged(IntPtr l) {
 		try {
 			UpdateManager self=(UpdateManager)checkSelf(l);
@@ -106,7 +119,7 @@ public class Lua_UpdateManager : LuaObject {
 		getTypeTable(l,"UpdateManager");
 		addMember(l,Download);
 		addMember(l,GetInstance_s);
-		addMember(l,"UpdateTest",get_UpdateTest,null,false);
+		addMember(l,"UpdateTest",get_UpdateTest,set_UpdateTest,false);
 		addMember(l,"OnUpdateStateChanged",null,set_OnUpdateStateChanged,true);
 		addMember(l,"State",get_State,set_State,true);
 		createTypeMetatable(l,constructor, typeof(UpdateManager),typeof(Singleton<UpdateManager>));

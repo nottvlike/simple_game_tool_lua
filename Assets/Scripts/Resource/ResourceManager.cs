@@ -65,10 +65,10 @@ public class ResourceManager : Singleton<ResourceManager>
         if (!_isInit)
         {
             _isInit = true;
-            if (!LuaManager.DEBUG)
-            {
-                _isAssetBundle = true;
-            }
+#if RESOURCE_DEBUG
+#else
+			_isAssetBundle = true;
+#endif
 
             LoadConfigurationConfig();
             LoadAssetBundleConfig();
@@ -78,15 +78,15 @@ public class ResourceManager : Singleton<ResourceManager>
     void LoadConfigurationConfig()
     {
         string config = "";
-        if (LuaManager.DEBUG)
-        {
-            TextAsset text = Resources.Load<TextAsset>(CONFIG_FILE);
-            config = text.text;
-        }
-        else
-        {
-            config = FileManager.LoadFileWithString(LuaManager.GetConfigPath() + "/" + CONFIG_FILE + ".txt");
-        }
+
+		_configRequestDict.Clear ();
+
+#if RESOURCE_DEBUG
+		TextAsset text = Resources.Load<TextAsset>(CONFIG_FILE);
+		config = text.text;
+#else
+		config = FileManager.LoadFileWithString(LuaManager.GetConfigPath() + "/" + CONFIG_FILE + ".txt");
+#endif
 
         JsonData jsonData = JsonMapper.ToObject(config);
         if (jsonData["Configs"].IsArray)
@@ -105,6 +105,8 @@ public class ResourceManager : Singleton<ResourceManager>
 
     void LoadAssetBundleConfig()
     {
+		_prefabRequestDict.Clear ();
+
         var txt = LoadConfigFile(ASSETBUNDLE_CONFIG);
         JsonData jsonData = JsonMapper.ToObject(txt);
         if (jsonData["Prefabs"].IsArray)
@@ -127,16 +129,12 @@ public class ResourceManager : Singleton<ResourceManager>
         {
             return "";
         }
-
-        if (LuaManager.DEBUG)
-        {
-            TextAsset text = Resources.Load<TextAsset>(configReq.ConfigResourcePath);
-            return text.text;
-        }
-        else
-        {
-            return FileManager.LoadFileWithString(LuaManager.GetConfigPath() + "/" + configReq.ConfigResourcePath + ".txt");
-        }
+#if RESOURCE_DEBUG
+		TextAsset text = Resources.Load<TextAsset>(configReq.ConfigResourcePath);
+		return text.text;
+#else
+		return FileManager.LoadFileWithString(LuaManager.GetConfigPath() + "/" + configReq.ConfigResourcePath + ".txt");
+#endif
     }
 
     //线性载入prefab，牺牲载入时间，保证prefab载入的速度和内存占用
@@ -156,9 +154,12 @@ public class ResourceManager : Singleton<ResourceManager>
         var req = new PrefabRequest();
         req.Init(prefabName, path, path, true);
 
-        req.LoadAsync(func);
-    }
-
+		SingleLineResource res = new SingleLineResource ();
+		res.CallBack = func;
+		res.PrefabName = prefabName;
+		req.LoadAsync(res);
+	}
+	
     void StartSingleLineLoad()
     {
         if (_prefabLoadList.Count <= 0)
@@ -173,22 +174,26 @@ public class ResourceManager : Singleton<ResourceManager>
 
         _state = ResourceLoadStateType.Loading;
         var res = _prefabLoadList[_prefabLoadList.Count - 1];
-        LoadAsync(res.PrefabName, res.CallBack);
-
-        _prefabLoadList.Remove(res);
+        LoadAsync(res);
     }
 
-    void LoadAsync(string prefabName, LuaFunction func)
+	public void RemovePrefabLoadList (SingleLineResource res)
+	{
+		_prefabLoadList.Remove(res);
+	}
+
+	void LoadAsync(SingleLineResource res)
     {
         PrefabRequest prefabReq = null;
-        if (HasPrefabRequest(prefabName, out prefabReq))
+        if (HasPrefabRequest(res.PrefabName, out prefabReq))
         {
-            prefabReq.LoadAsync(func);
+            prefabReq.LoadAsync(res);
         }
         else
         {
-            if (LuaManager.DEBUG)
-                Debug.LogError(string.Format("PrefabRequest {0} not found!", prefabName));
+#if LOG_DEBUG
+                Debug.LogError(string.Format("PrefabRequest {0} not found!", res.PrefabName));
+#endif
         }
     }
 

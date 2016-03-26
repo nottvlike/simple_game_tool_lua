@@ -1,0 +1,11 @@
+local Creature = require 'Script.Base.Creature.Creature'
+local hornet = Class("Hornet", Creature)
+
+function hornet:ctor(parent)
+	Creature.ctor(self, parent)
+	self.prefabName = "MonsterHornet-Red"
+
+	self:init()
+end
+
+return hornet

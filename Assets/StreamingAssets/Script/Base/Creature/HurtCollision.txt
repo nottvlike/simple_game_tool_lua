@@ -1,0 +1,43 @@
+local hurtCollision = Class("Hurt")
+
+function hurtCollision:ctor(parent)
+    self.parent = parent
+
+    self.gameObject = parent.gameObject
+    self.transform = parent.transform
+    self.animator = parent.animator
+    self.attackHandler = parent.attackHandler
+
+    self:init()
+end
+
+function hurtCollision:init()
+    if not self.gameObject then
+        return
+    end
+
+    local hurtObj = self.transform:Find("AttackCollider")
+    LuaEventManager.addCollisionTrigger2DEvent(hurtObj.gameObject, function(funcName, col)
+        self:onCollisionTrigger2DEvent(funcName, col)
+    end)
+end
+
+function hurtCollision:onCollisionTrigger2DEvent(funcName, col)
+    if self[funcName] then
+        self[funcName](self, col)
+    end
+end
+
+function hurtCollision:onTriggerEnter2D(col)
+
+end
+
+function hurtCollision:onTriggerStay2D(col)
+    self.attackHandler:onHurt(col)
+end
+
+function hurtCollision:onTriggerExit2D(col)
+
+end
+
+return hurtCollision

@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+﻿#define LOG_DEBUG
+
+using UnityEngine;
 using System.Collections;
 using System.Text;
 using SLua;
 
 public class LuaManager : Singleton<LuaManager> {
 
-	public static bool DEBUG = false;
-	
 	LuaSvr l;
 	StringBuilder _sb = new StringBuilder();
 	const string START_SCRIPT = "Update/Update.txt";
@@ -18,11 +18,10 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	public static string GetAssetBundlePath()
 	{
-		if(!DEBUG)
-		{
-			return Application.persistentDataPath;
-		}
+#if RESOURCE_DEBUG
 		return "";
+#endif
+		return Application.streamingAssetsPath;
 	}
 	
 	public static string GetScriptPath()
@@ -37,10 +36,10 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	public void Init()
 	{
-		if (!DEBUG)
-		{
-			LuaState.loaderDelegate += LoaderDelegate;
-		}
+#if RESOURCE_DEBUG
+#else
+		LuaState.loaderDelegate += LoaderDelegate;
+#endif
 		
 		l = new LuaSvr();
 		l.init(null, Complete, false);
@@ -49,18 +48,15 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	void Complete()
 	{
-		if (DEBUG) 
-		{
-			l.start(START_SCRIPT.Replace(".txt", ""));
-		} 
-		else 
-		{
-			UpdateManager.Instance.Download (
-				string.Format ("file:///{0}/{1}", UpdateManager.UpdateTest, START_SCRIPT),
-				string.Format ("{0}/{1}", GetScriptPath (), START_SCRIPT),
-				UpdateManager.DownloadFileType.TypeText,
-				LoadLuaString);
-		}
+#if RESOURCE_DEBUG
+		l.start(START_SCRIPT.Replace(".txt", ""));
+#else
+		UpdateManager.Instance.Download (
+			string.Format ("file:///{0}/{1}", UpdateManager.UpdateTest, START_SCRIPT),
+			string.Format ("{0}/{1}", GetScriptPath (), START_SCRIPT),
+			UpdateManager.DownloadFileType.TypeText,
+			LoadLuaString);
+#endif
 	}
 	
 	void LoadLuaString(string str)

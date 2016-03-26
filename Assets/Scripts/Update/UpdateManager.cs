@@ -31,7 +31,8 @@ public class UpdateManager : Singleton<UpdateManager>
 
     public delegate void OnScriptDownloadFinishedEvent(string script);
     public delegate void OnUpdateStateChangedEvent(string filePath, UpdateFileStateType updateState);
-	public const string UpdateTest = "/Users/nottvlike/Documents/github/Update";
+//	public const string UpdateTest = "/Users/nottvlike/Documents/github/Update";
+	public static string UpdateTest = Application.streamingAssetsPath + "";
 
     public OnUpdateStateChangedEvent OnUpdateStateChanged = null;
     List<DownloadFileRequest> _downloadFileList = new List<DownloadFileRequest>();

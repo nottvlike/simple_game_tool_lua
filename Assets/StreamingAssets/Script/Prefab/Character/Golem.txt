@@ -1,0 +1,20 @@
+local Creature = require 'Script.Base.Creature.Creature'
+local joystick = require 'Script.Input.JoystickManager'
+
+local golem = Class("Golem", Creature)
+
+function golem:ctor(parent)
+	Creature.ctor(self, parent)
+	self.prefabName = "Golem"
+
+	self:init()
+end
+
+function golem:initPrefab()
+	local camera = GameObject.Find("Main Camera")
+	local cameraMove = camera:GetComponent(CameraMove)
+	cameraMove.Target = self.transform
+	joystick.setMainPlayer(self)
+end
+
+return golem

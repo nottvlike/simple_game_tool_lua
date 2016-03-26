@@ -108,8 +108,9 @@ public class FileManager {
 		}catch(Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
-			if (LuaManager.DEBUG)
-				Debug.Log("Failed to open file " + path + " Error : " + e.Message);
+#if LOG_DEBUG
+			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
+#endif
 			return;
 		}
 		string line = sr.ReadToEnd();
@@ -137,8 +138,9 @@ public class FileManager {
 		catch (Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
-			if (LuaManager.DEBUG)
-				Debug.Log("Failed to open file " + path + " Error : " + e.Message);
+#if LOG_DEBUG
+			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
+#endif
 			return "";
 		}
 		content = sr.ReadToEnd();
