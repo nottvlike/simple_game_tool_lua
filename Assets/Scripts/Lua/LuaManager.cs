@@ -1,4 +1,5 @@
 ﻿#define LOG_DEBUG
+//#define RESOURCE_DEBUG
 
 using UnityEngine;
 using System.Collections;

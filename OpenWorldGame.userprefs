@@ -1,17 +1,37 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Editor/Custom Editor/AssetBundleEditor.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Update/UpdateManager.cs">
     <Files>
-      <File FileName="Assets/Editor/Custom Editor/AssetBundleEditor.cs" Line="144" Column="3" />
+      <File FileName="Assets/Scripts/Lua/LuaAnimationEvent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Update/UpdateManager.cs" Line="35" Column="36" />
+      <File FileName="Assets/Scripts/Resource/ResourceManager.cs" Line="174" Column="17" />
+      <File FileName="Assets/Scripts/Resource/PrefabRequest.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Lua/LuaManager.cs" Line="20" Column="41" />
+      <File FileName="Assets/Editor/Custom Editor/AssetBundleEditor.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Scripts" expanded="True">
+              <Node name="Lua" expanded="True" />
+              <Node name="Resource" expanded="True" />
+              <Node name="Update" expanded="True">
+                <Node name="UpdateManager.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+          <Node name="Assembly-CSharp-Editor" expanded="True">
+            <Node name="Editor" expanded="True">
+              <Node name="Custom Editor" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/nottvlike/Documents/github/OpenWorldGame/Assets/Scripts/Resource/PrefabRequest.cs" line="49" />
-      <Breakpoint file="/Users/nottvlike/Documents/github/OpenWorldGame/Assets/Scripts/Resource/PrefabRequest.cs" line="68" />
-      <Breakpoint file="/Users/nottvlike/Documents/github/OpenWorldGame/Assets/Scripts/Resource/PrefabRequest.cs" line="78" />
-      <Breakpoint file="/Users/nottvlike/Documents/github/OpenWorldGame/Assets/Scripts/Resource/ResourceManager.cs" line="80" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

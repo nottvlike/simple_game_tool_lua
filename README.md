@@ -3,7 +3,7 @@
 	*	[1.1.Unity3d开发版本](#1.1)
 	*	[1.2.第三方插件](#1.2)
 *	[2.基本约定](#2)
-	*	[2.1.两中开发模式](#2.1)
+	*	[2.1.两种开发模式](#2.1)
 	*	[2.2.三个路径](*2.2)
 	*	[2.3.四类资源文件夹](*2.3)
 *	[3.主要模块介绍](#3)
@@ -43,16 +43,26 @@ Unity3d 5.0.1
 
 <h2 id="2">2.	基本约定</h2>
 <h3 id="2.1">2.1	两种开发模式</h3>
-区别目前仅在资源读取和是否有log这两个方面，开关是LuaManager.DEBUG:
+即Debug和Release模式，通过宏RESOURCE_DEBUG和LOG_DEBUG控制。
 
-*	DEBUG:	LuaManager.DEBUG = true时开启，使用Resources.Load()加载资源，只能使用Resources目录下的资源；
-*	RELEASE:	LuaManager.DEBUG = false时开启，使用www加载资源，只能使用persistentDataPath路径下的资源。
+RESOURCE_DEBUG设定是否使用Resources.Load()方法载入资源，在AssetBundleEditor.cs和LuaManager.cs文件中都有设置，在AssetBundleEditor.cs设置是因为将prefab打包成为assetbundle时需要使用Resources.Load()载入prefab，我这边第一次打开工程可以正常生成.assetbundle文件，运行几次程序之后，就会有报错，这个稍后修复。
+
+LOG_DEBUG意思是是否开启日志，这个我一般都留着。
+
+因为我没有上传资源文件(例如Resources，Animations，Animators，Models等文件夹)，只上传了.assetbundle文件，所以github上的工程默认就是Release模式。
+
+*	DEBUG:	#define RESOURCE_DEBUG 时开启，使用Resources.Load()加载资源，只能使用Resources目录下的资源；
+*	RELEASE:注释LuaManager.cs中的 #define RESOURCE_DEBUG 时开启，使用www加载资源，只能使用LuaManager.GetAssetBundlePath()路径下的资源。
 
 <h3 id="2.2">2.2	三种路径</h3>
 
 *	Resources路径：未做打包，加密等处理的原始资源，仅在DEBUG模式下使用；
-*	persistentDataPath路径：经过打包，加密处理后的资源，在RELEASE模式下使用，需要先下载；
+*	GetAssetBundlePath/GetScriptPath/GetConfigPath路径：经过打包，加密处理后的资源，在RELEASE模式下使用，需要先下载；
 *	Update路径：热更新地址，目前暂时使用文件系统内的一个文件夹代替
+
+我为了调试方便，将UpdateManager.UpdateTest和GetAssetBundlePath()都设置为Application.streamingAssetsPath，这样在热更时会从Application.streamingAssetsPath获取文件，下载到Application.streamingAssetsPath目录里面，然后再执行。我在mac上面测试没问题，windows具体没有测试过 。
+
+若是不想走热更新流程，将Update/Update.txt中的disableUpdate设置为true就行了，我这边改代码一般会改动Resources目录中的资源，然后自动打包将assetbundle,config,script,update拷贝到Application.streamingAssetsPath再执行，不过你们还是直接修改Application.streamingAssetsPath中的资源吧。
 
 <h3 id="2.3">2.3 四类资源文件夹</h3>
 

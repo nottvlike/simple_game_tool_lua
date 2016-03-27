@@ -154,10 +154,7 @@ public class ResourceManager : Singleton<ResourceManager>
         var req = new PrefabRequest();
         req.Init(prefabName, path, path, true);
 
-		SingleLineResource res = new SingleLineResource ();
-		res.CallBack = func;
-		res.PrefabName = prefabName;
-		req.LoadAsync(res);
+		req.LoadAsync(func);
 	}
 	
     void StartSingleLineLoad()
@@ -174,20 +171,16 @@ public class ResourceManager : Singleton<ResourceManager>
 
         _state = ResourceLoadStateType.Loading;
         var res = _prefabLoadList[_prefabLoadList.Count - 1];
-        LoadAsync(res);
+		_prefabLoadList.Remove(res);
+		LoadAsync(res.PrefabName, res.CallBack);
     }
 
-	public void RemovePrefabLoadList (SingleLineResource res)
-	{
-		_prefabLoadList.Remove(res);
-	}
-
-	void LoadAsync(SingleLineResource res)
+	void LoadAsync(string prefabName, LuaFunction func)
     {
         PrefabRequest prefabReq = null;
-        if (HasPrefabRequest(res.PrefabName, out prefabReq))
+		if (HasPrefabRequest(prefabName, out prefabReq))
         {
-            prefabReq.LoadAsync(res);
+            prefabReq.LoadAsync(func);
         }
         else
         {

@@ -10,7 +10,7 @@ public class PrefabRequest{
     string _resourcePath = "";
     GameObject _prefab = null;
     bool _isAssetBundle = false;
-	SingleLineResource _res = null;
+	LuaFunction _callBack = null;
 
     public string PrefabName
     {
@@ -44,10 +44,10 @@ public class PrefabRequest{
         _isAssetBundle = isAssetBundle;
     }
 
-    public void LoadAsync(SingleLineResource res)
+    public void LoadAsync(LuaFunction func)
     {
-		_res = res;
-		if (_res.CallBack != null && _prefab != null)
+		_callBack = func;
+		if (_callBack != null && _prefab != null)
         {
 			LoadFinished ();
             return;
@@ -91,17 +91,15 @@ public class PrefabRequest{
 
 	public void LoadFinished()
 	{
-		ResourceManager.Instance.RemovePrefabLoadList (_res);
-
-		if (_res.CallBack != null && _prefab != null) 
+		if (_callBack != null && _prefab != null) 
 		{
-			_res.CallBack.call (_prefab);
-			_res = null;
+			_callBack.call (_prefab);
+			_callBack = null;
 		} 
 		else 
 		{
-			Debug.LogWarning(string.Format("Warning : Failed to load prefab {0}", _res.PrefabName));
-			_res = null;
+			Debug.LogWarning(string.Format("Warning : Failed to load prefab {0}", _prefabName));
+			_callBack = null;
 		}
 
 		ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;

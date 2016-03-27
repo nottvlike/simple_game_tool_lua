@@ -81,20 +81,6 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RemovePrefabLoadList(IntPtr l) {
-		try {
-			ResourceManager self=(ResourceManager)checkSelf(l);
-			SingleLineResource a1;
-			checkType(l,2,out a1);
-			self.RemovePrefabLoadList(a1);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int HasPrefabRequest(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
@@ -196,7 +182,6 @@ public class Lua_ResourceManager : LuaObject {
 		addMember(l,LoadConfigFile);
 		addMember(l,SingleLineLoadAsync);
 		addMember(l,LoadAssetBundleByPath);
-		addMember(l,RemovePrefabLoadList);
 		addMember(l,HasPrefabRequest);
 		addMember(l,HasConfigRequest);
 		addMember(l,Clear);
