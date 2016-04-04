@@ -11,7 +11,7 @@ namespace SLua {
 				Lua_LuaEventManager.reg,
 				Lua_LuaFixedUpdateEvent.reg,
 				Lua_LuaUpdateEvent.reg,
-				Lua_LuaCollisionTrigger2DEvent.reg,
+				Lua_LuaCollisionTriggerEvent.reg,
 				Lua_LuaManager.reg,
 				Lua_ResourceManager.reg,
 				Lua_UpdateManager.reg,

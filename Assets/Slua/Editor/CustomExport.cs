@@ -39,7 +39,7 @@ namespace SLua
 			add(typeof(LuaEventManager), "LuaEventManager");
 			add(typeof(LuaFixedUpdateEvent), "LuaFixedUpdateEvent");
 			add(typeof(LuaUpdateEvent), "LuaUpdateEvent");
-			add(typeof(LuaCollisionTrigger2DEvent), "LuaCollisionTrigger2DEvent");
+			add(typeof(LuaCollisionTriggerEvent), "LuaCollisionTriggerEvent");
 			add(typeof(LuaManager), "LuaManager");
 			add(typeof(ResourceManager), "ResourceManager");
 			add(typeof(UpdateManager), "UpdateManager");

@@ -63,13 +63,13 @@ public class Lua_LuaEventManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddCollisionTrigger2DEvent_s(IntPtr l) {
+	static public int AddCollisionTriggerEvent_s(IntPtr l) {
 		try {
 			UnityEngine.GameObject a1;
 			checkType(l,1,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,2,out a2);
-			LuaEventManager.AddCollisionTrigger2DEvent(a1,a2);
+			LuaEventManager.AddCollisionTriggerEvent(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -82,7 +82,7 @@ public class Lua_LuaEventManager : LuaObject {
 		addMember(l,AddFixedUpdateEvent_s);
 		addMember(l,AddUpdateEvent_s);
 		addMember(l,AddAnimationEvent_s);
-		addMember(l,AddCollisionTrigger2DEvent_s);
+		addMember(l,AddCollisionTriggerEvent_s);
 		createTypeMetatable(l,constructor, typeof(LuaEventManager));
 	}
 }

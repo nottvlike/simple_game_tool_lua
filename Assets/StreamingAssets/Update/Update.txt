@@ -6,7 +6,7 @@ end
 
 local Update={}
 
-local disableUpdate = false
+local disableUpdate = true
 
 UpdateFileStateType = {
     BeginDownLoad = 0,

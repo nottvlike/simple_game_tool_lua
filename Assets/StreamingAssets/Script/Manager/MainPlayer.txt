@@ -4,7 +4,7 @@ mainPlayer.__index = mainPlayer
 
 local player = nil
 
-function mainPlayer:setMainPlayer(value)
+function mainPlayer.setMainPlayer(value)
 	player = value
 end
 

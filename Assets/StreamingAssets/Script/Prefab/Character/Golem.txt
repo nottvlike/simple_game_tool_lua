@@ -1,16 +1,21 @@
 local Creature = require 'Script.Base.Creature.Creature'
 local joystick = require 'Script.Input.JoystickManager'
+local hurtCollision = require 'Script.Base.Fight.HurtCollision'
+local attackHandler = require 'Script.Base.Fight.AttackHandler'
 
 local golem = Class("Golem", Creature)
 
-function golem:ctor(parent)
-	Creature.ctor(self, parent)
+function golem:ctor(parent, isMainPlayer)
+	Creature.ctor(self, parent, isMainPlayer)
 	self.prefabName = "Golem"
 
 	self:init()
 end
 
 function golem:initPrefab()
+	self.attackHandler = attackHandler.new(self)
+	self.hurtCollision = hurtCollision.new(self)
+
 	local camera = GameObject.Find("Main Camera")
 	local cameraMove = camera:GetComponent(CameraMove)
 	cameraMove.Target = self.transform

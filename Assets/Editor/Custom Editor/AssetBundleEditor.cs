@@ -124,7 +124,7 @@ public class AssetBundleEditor {
         FileManager.CreateDirectory(System.IO.Path.GetDirectoryName(path));
 
         if (BuildPipeline.BuildAssetBundle(null, resources, path, 
-            BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.UncompressedAssetBundle, buildTarget))
+											BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets, buildTarget))
         {
             Debug.Log(path + "资源打包成功");
         }

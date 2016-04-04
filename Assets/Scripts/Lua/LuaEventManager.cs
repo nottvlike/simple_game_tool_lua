@@ -26,8 +26,8 @@ public class LuaEventManager{
 		AddBaseCallback<LuaAnimationEvent>(obj, func);
 	}
 	
-	public static void AddCollisionTrigger2DEvent(GameObject obj, LuaFunction func)
+	public static void AddCollisionTriggerEvent(GameObject obj, LuaFunction func)
 	{
-		AddBaseCallback<LuaCollisionTrigger2DEvent>(obj, func);
+		AddBaseCallback<LuaCollisionTriggerEvent>(obj, func);
 	}
 }

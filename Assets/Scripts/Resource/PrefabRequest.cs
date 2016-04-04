@@ -83,7 +83,7 @@ public class PrefabRequest{
 	
 	IEnumerator StartLoadResourceAsync()
     {
-        var obj = Resources.Load<GameObject>(_resourcePath);
+		_prefab = Resources.Load<GameObject>(_resourcePath);
 		yield return new WaitForEndOfFrame ();
 
 		LoadFinished ();

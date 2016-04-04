@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//#define RESOURCE_DEBUG
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using SLua;

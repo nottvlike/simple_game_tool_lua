@@ -1,8 +1,7 @@
 require 'Script.Utils.Class'
 require 'Script.Utils.GlobalFunctions'
 
-local golem = require 'Script.Prefab.Character.Golem'
-local hornet = require 'Script.Prefab.Character.Hornet'
+local runTimeManager = require 'Script.Manager.RunTimeManager'
 
 return function()
 	ResourceManager.GetInstance():Init("")
@@ -10,15 +9,13 @@ return function()
 	ResourceManager.GetInstance():SingleLineLoadAsync("LevelTest", function(obj)
 		local level = GameObject.Instantiate(obj, Vector3.zero, Vector3.zero)
 		local levelTransform = level.transform
-		
+
 		local player = levelTransform:Find("CreatureSpawn/PlayerSpawn")
 		local enemy0 = levelTransform:Find("CreatureSpawn/EnemySpawn0")
 		local enemy1 = levelTransform:Find("CreatureSpawn/EnemySpawn1")
 
-		local test1 = golem.new(player)
-		hornet.new(enemy0)
-		hornet.new(enemy1)
-
-		--test1:run()
+		runTimeManager.createCreature("Golem", player, true)
+		runTimeManager.createCreature("Hornet", enemy0, false)
+		runTimeManager.createCreature("Hornet", enemy1, false)
 	end)
 end

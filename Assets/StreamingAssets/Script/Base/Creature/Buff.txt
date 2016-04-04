@@ -1,9 +1,9 @@
 local buff = Class("Buff")
 
-function buff:ctor(parent)
-
+function buff:ctor(attributes)
+	for i,v in pairs(attributes) do
+		self[i] = v
+	end
 end
 
-function buff:init()
-
-end
+return buff

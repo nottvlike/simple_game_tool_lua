@@ -1,30 +1,57 @@
 local attribute = Class("Attribute")
 
-BaseAttribute = {
-	"HP",			--生命
-	"MP",			--魔法
-	"Stamina",  	--耐力值
-	"ATK",		--攻击力
-	"DEF",		--防御力
-}
+AttributeDetail = {
+	["HP"] = function(target, value)	--生命
+		local attribute = target.attribute
+		if not attribute or not attribute["HP"] then
+			return
+		end
 
-AdvanceAttribute = {
-	"Crit"		--暴击
-}
+		if attribute["HP"] <= 0 or attribute["HP"] + value <= 0 then
+			target:dead()
+		end
 
-AllAttribute = {
-	BaseAttribute = BaseAttribute,
-	AdvanceAttribute = AdvanceAttribute
+		attribute["HP"] = attribute["HP"] + value
+	end,			
+	
+	["MP"] = function(target, value)	--魔法
+		local attribute = target.attribute
+		if not attribute or not attribute["MP"] then
+			return
+		end
+
+		if attribute["MP"] <= 0 or attribute["MP"] + value <= 0 then
+			return
+		end
+
+		attribute["MP"] = attribute["MP"] + value
+	end,
+
+	["ATK"] = function(target, value)	--攻击力
+		local attribute = target.attribute
+		if not attribute or not attribute["ATK"] then
+			return
+		end
+
+		attribute["ATK"] = attribute["ATK"] + value
+	end,		
+	
+	["DEF"] = function(target, value)	--防御力
+		local attribute = target.attribute
+		if not attribute or not attribute["DEF"] then
+			return
+		end
+
+		attribute["DEF"] = attribute["DEF"] + value
+	end,		
 }
 
 function attribute:ctor(parent)
+	self.parent = parent
 	self.buffs = {}
 
-	for _,attr in pairs(AllAttribute) do
-		for i = 1,table.getn(attr) do
-			local attrName = attr[i]
-			self[attrName] = 0
-		end
+	for name,attr in pairs(AttributeDetail) do
+		self[name] = 0
 	end
 
 	self:init()
@@ -32,15 +59,17 @@ end
 
 function attribute:init()
 	--TODO:从配置中或者服务器上获取属性信息
+
+	self["HP"] = 1000
 end
 
 function attribute:addBuff(buff)
 	table.insert(self.buffs, buff)
 
-	local extraAttr = buff.attribute
-	for i,v in pairs(extraAttr) do
-		if self[i] then
-			self[i] = self[i] + v
+	for i,v in pairs(buff) do
+		if AttributeDetail[i] then
+			--self[i] = self[i] + v
+			AttributeDetail[i](self.parent, v)
 		else	
 			print("Warning : " .. i .. " not found")
 		end
@@ -54,18 +83,14 @@ function attribute:deleteBuff(buff)
 		end
 	end
 
-	local extraAttr = buff.attribute
-	for i,v in pairs(extraAttr) do
+	for i,v in pairs(buff) do
 		if self[i] then
-			self[i] = self[i] - v
+			--self[i] = self[i] - v
+			AttributeDetail(self.parent, v * -1)
 		else	
 			print("Warning : " .. i .. " not found")
 		end
 	end
-end
-
-function attribute:onHurt()
-
 end
 
 return attribute

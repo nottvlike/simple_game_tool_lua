@@ -1,3 +1,7 @@
+local joystick = require 'Script.Input.JoystickManager'
+local attribute = require 'Script.Base.Creature.Attribute'
+local runTimeManager = require 'Script.Manager.RunTimeManager'
+
 local creature = Class("Creature")
 
 CreateDirectionType = {
@@ -14,7 +18,7 @@ CreatureStateType = {
 	RunAttack = 4,
 }
 
-function creature:ctor(parent)
+function creature:ctor(parent, isMainPlayer)
 	self.parent = parent
 	self.animations = {}
 	self.prefabPath = ""
@@ -24,6 +28,7 @@ function creature:ctor(parent)
 	self.useVelocity = true
 	self.velocity = Vector3.zero
 	self.isAttack = false
+	self.isMainPlayer = isMainPlayer
 end
 
 function creature:init()
@@ -38,6 +43,15 @@ function creature:init()
 				self:fixedUpdate()
 			end)
 
+			if self.isMainPlayer then
+				local camera = GameObject.Find("Main Camera")
+				local cameraMove = camera:GetComponent(CameraMove)
+				cameraMove.Target = self.transform
+				joystick.setMainPlayer(self)
+			end
+
+			self.attribute = attribute.new(self)
+			
 			self:initPrefab()
 		end)
 	else
@@ -116,6 +130,13 @@ end
 
 function creature:cancelAttack()
 	self.animator:SetBool("IsAttack", false)
+end
+
+function creature:dead()
+	--self.animator:SetBool("IsDead", true)
+	runTimeManager:deleteRole(self)
+	GameObject.Destroy(self.gameObject)
+	self = nil
 end
 
 return creature

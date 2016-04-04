@@ -1,0 +1,2 @@
+-define:RESOURCE_DEBUG
+-define:LOG_DEBUG
