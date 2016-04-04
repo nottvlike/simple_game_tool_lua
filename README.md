@@ -54,6 +54,9 @@ LOG_DEBUG意思是是否开启日志，这个我一般都留着。
 *	DEBUG:	#define RESOURCE_DEBUG 时开启，使用Resources.Load()加载资源，只能使用Resources目录下的资源；
 *	RELEASE:注释LuaManager.cs中的 #define RESOURCE_DEBUG 时开启，使用www加载资源，只能使用LuaManager.GetAssetBundlePath()路径下的资源。
 
+补充下，unity3d不能通过#define来设置全局宏定义（#define 宏只能用在定义宏的那个类里，其它文件的类就是undef的状态），设置全局宏定义的方法倒是还有两种，一个是smcs.rsp或者gmcs.rsp，另一个就是各个平台在playersetting里面设置symbols了，第一种方法我试过不行（应该是我哪里操作错了），第二种我只是在editor里调试用的，playersetting那个对我没用。我这边网速慢就不贴官方的地址了，在本地的unity3d文档里面搜下Platform Dependent Compilation就能够看到官方的介绍了，百度下应该也是可以的。
+
+
 <h3 id="2.2">2.2	三种路径</h3>
 
 *	Resources路径：未做打包，加密等处理的原始资源，仅在DEBUG模式下使用；
