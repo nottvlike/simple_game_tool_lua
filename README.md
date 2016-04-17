@@ -15,6 +15,7 @@
 		*	[3.2.2 Behavior3lua](#3.2.2)
 	*	[3.3.热更新模块](#3.3)
 	*	[3.4.资源管理模块](#3.4)	
+	*	[3.5.Buff系统](#3.5)
 *	[4.后序计划](#4)
 <br/>
 
@@ -124,12 +125,29 @@ Behavior3是偶然在网上找到一个行为树的代码实现，作者只实�
 
 详细信息：https://github.com/nottvlike/behavior3lua
 
-<h3 id="3.3">3.3	热更新模块（稍后添加）</h3>
+<h3 id="3.3">3.3	热更新模块</h3>
+使用UpdateManager.cs已经基本实现了本地的热更，http的热更等到有时间我再做进一步的测试。
 
 <h3 id="3.4">3.4 资源管理模块</h3>
+资源管理模块现在已经加上了，主要是ResourceManager和PrefabRequest这两个类，资源加载（主要是assetbundle）这个我目前只写了SingleLineLoadAsync(叫线性异步加载也行)，当然我也可以一次加载多个Assetbundle，或者加载一个Assetbundle里的多个prefab,这个后面看需求再添加。
 
-<h2 id="4">4.	后序计划</h2>
+<h3 id="3.5">3.5 Buff系统</h3>
+战斗相关的buff系统已经加上了，主要包含了这几个方面：
+
+*	Attribute:	基本属性，例如HP,MP,ATK,DEF等，可以看看Attribute.txt里面的定义；
+*	Effect:		暂且称为特效，特效主要涉及到属性更改，一个特效一般更改一个到多个属性，看看EffectDeal.txt的实现；
+*	Buff:		一个buff一般包含一个到多个effect,看看Script.Base.Buff目录里的文件和buff.txt文件；
+*	Skill:		一个技能一般包含一个到多个buff，可以看看SkillDataBase.txt里面的配置文件。
+
+buff都统一放在被施加者身上，例如A对B施法，那么buff放在B身上。
+
+拿一个普通攻击的过程来讲解下战斗吧，当玩家点击攻击按键时，首先播放攻击动画，我在攻击动画里面加了两个帧事件（addBuff和removeBuff），在播放开始时addBuff,在播放结束后removeBuff，模型的拳头上也都加有trigger,若是玩家碰到了其它人，便会接收到这个人的信息，我会查看这个人的信息判断它是否是敌人，如果是则hurt，处理脚本主要是HurtCollision.txt和BuffHandler.txt这两个脚本。
+
+关于监听器，为了方便，我将所有监听器的消息先中转到了root节点，然后才传递到lua脚本里，这样或许有隐含的问题，主要是担心buff计算错了碰撞目前，这个我先想想是否会出问题，以及出了问题怎么处理。
+
+<h2 id="4">4.	后续计划</h2>
 
 *	补充文档，这始终是一个大头，写文档的同时也能够理清思路
-*	完善热更，资源管理功能，添加网络模块
+*	完善热更模块
+*	完善战斗系统，添加网络模块
 *	研究AI和behavior3的AI设计工具

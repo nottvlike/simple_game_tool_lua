@@ -1,56 +1,17 @@
 local attribute = Class("Attribute")
 
-AttributeDetail = {
-	["HP"] = function(target, value)	--生命
-		local attribute = target.attribute
-		if not attribute or not attribute["HP"] then
-			return
-		end
-
-		if attribute["HP"] <= 0 or attribute["HP"] + value <= 0 then
-			target:dead()
-		end
-
-		attribute["HP"] = attribute["HP"] + value
-	end,			
-	
-	["MP"] = function(target, value)	--魔法
-		local attribute = target.attribute
-		if not attribute or not attribute["MP"] then
-			return
-		end
-
-		if attribute["MP"] <= 0 or attribute["MP"] + value <= 0 then
-			return
-		end
-
-		attribute["MP"] = attribute["MP"] + value
-	end,
-
-	["ATK"] = function(target, value)	--攻击力
-		local attribute = target.attribute
-		if not attribute or not attribute["ATK"] then
-			return
-		end
-
-		attribute["ATK"] = attribute["ATK"] + value
-	end,		
-	
-	["DEF"] = function(target, value)	--防御力
-		local attribute = target.attribute
-		if not attribute or not attribute["DEF"] then
-			return
-		end
-
-		attribute["DEF"] = attribute["DEF"] + value
-	end,		
+local CurrentAttribute = {
+	["HP"] = 0,
+	["MP"] = 0,
+	["ATK"] = 0,
+	["DEF"] = 0
 }
 
 function attribute:ctor(parent)
 	self.parent = parent
 	self.buffs = {}
 
-	for name,attr in pairs(AttributeDetail) do
+	for name,attr in pairs(CurrentAttribute) do
 		self[name] = 0
 	end
 
@@ -61,36 +22,6 @@ function attribute:init()
 	--TODO:从配置中或者服务器上获取属性信息
 
 	self["HP"] = 1000
-end
-
-function attribute:addBuff(buff)
-	table.insert(self.buffs, buff)
-
-	for i,v in pairs(buff) do
-		if AttributeDetail[i] then
-			--self[i] = self[i] + v
-			AttributeDetail[i](self.parent, v)
-		else	
-			print("Warning : " .. i .. " not found")
-		end
-	end
-end
-
-function attribute:deleteBuff(buff)
-	for i = #(self.buffs), 1, -1 do
-		if self.buffs[i] == buff then
-			table.remove(self.buffs, i)
-		end
-	end
-
-	for i,v in pairs(buff) do
-		if self[i] then
-			--self[i] = self[i] - v
-			AttributeDetail(self.parent, v * -1)
-		else	
-			print("Warning : " .. i .. " not found")
-		end
-	end
 end
 
 return attribute

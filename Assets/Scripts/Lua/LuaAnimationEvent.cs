@@ -3,38 +3,17 @@ using System.Collections;
 
 public class LuaAnimationEvent : LuaBaseEvent {
 
-	public void PlaySound(int type)
+	public void AddBuff(string name)
 	{
 		if (_luaFunc != null) {
-			_luaFunc.call("playSound", type);
-		}
-	}
-
-	public void PlayEffect(int type)
-	{
-		if (_luaFunc != null) {
-			_luaFunc.call("playEffect", type);
-		}
-	}
-
-	public void Fire(int type)
-	{
-		if (_luaFunc != null) {
-			_luaFunc.call("fire", type);
-		}
-	}
-
-	public void AddAttackInstance(string name)
-	{
-		if (_luaFunc != null) {
-			_luaFunc.call("addAttackInstance", name);
+			_luaFunc.call("addBuff", name);
 		}
 	}
 	
-	public void RemoveAttackInstance(string name)
+	public void RemoveBuff(string name)
 	{
 		if (_luaFunc != null) {
-			_luaFunc.call("removeAttackInstance", name);
+			_luaFunc.call("removeBuff", name);
 		}
 	}
 

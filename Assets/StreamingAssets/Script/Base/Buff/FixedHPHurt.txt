@@ -1,0 +1,39 @@
+local buff = require 'Script.Base.Fight.Buff'
+local fixedHPHurt = Class("FixedHPHurt", Buff)
+
+function fixedHPHurt:ctor(attributes)
+	buff.ctor(self, attributes)
+	self.count = 0
+end
+
+function fixedHPHurt:onAdd(source)
+	-- 处理播放音效，播放动画等效果
+end
+
+function fixedHPHurt:onRemove(source)
+	-- 同上
+end
+
+function fixedHPHurt:onExecute(source, target)
+	-- 只能有效一次
+	if self.count >= 2 then
+		return
+	end
+	-- 没有加血功能
+	if source.gameObject == target.gameObject then
+		return
+	end
+	
+	if self.effects["FixedHP"] > 0 then
+		self.effects["FixedHP"] = self.effects["FixedHP"] * -1
+	end
+	
+	-- 处理数值计算
+	buff.onExecute(self, source, target)
+
+	self.count = self.count + 1
+end
+
+-- TODO: BuffManager.register(buffid, fixedHPHurt)
+return fixedHPHurt
+

@@ -1,0 +1,87 @@
+local skillDataBase = require 'Config.SkillDataBase'
+local runTimeManager = require 'Script.Manager.RunTimeManager'
+local buffManager = require 'Script.Manager.BuffManager'
+local buffHandler = Class("BuffHandler")
+
+function buffHandler:ctor(parent)
+    self.parent = parent
+
+    self.gameObject = parent.gameObject
+    self.transform = parent.transform
+
+	self.buffs = {}
+
+    self:init()
+end
+
+function buffHandler:init()
+    if not self.gameObject then
+        return
+    end
+
+    LuaEventManager.AddAnimationEvent(self.gameObject, function(funcName, col)
+        self:onAnimationEvent(funcName, col)
+    end)
+end
+
+function buffHandler:hurt(gameObject)
+
+	local target = runTimeManager.getCreature(gameObject)
+
+	if not target then
+		return
+	end
+
+	if not target.attribute then
+		return
+	end
+	
+	for _,buffs in pairs(self.buffs) do
+		for name,buff in pairs(buffs) do
+			buff:onExecute(self.parent, target)
+		end
+	end
+end
+
+function buffHandler:onAnimationEvent(funcName, col)
+    if self[funcName] then
+        self[funcName](self, col)
+    end
+end
+
+function buffHandler:addBuff(name)
+	if not skillDataBase[name] or not skillDataBase[name].buffs then
+		print("skillDataBase can't find handler " .. name)
+		return
+	end
+
+	if not self.buffs[name] then
+		self.buffs[name] = {}
+	end
+
+	for i,v in pairs(skillDataBase[name].buffs) do
+		local tmpBuff = buffManager.createBuff(i,v)
+		tmpBuff.onAdd(self.parent)
+		table.insert(self.buffs[name] , tmpBuff)
+	end
+end
+
+function buffHandler:removeBuff(name)
+	if not self.buffs[name] then
+		return
+	end
+	
+	for i,v in pairs(self.buffs[name]) do
+		v:onRemove(self.parent)
+	end
+
+	-- TODO: 使用buff id保存buff,实现buff叠加效果
+	self.buffs[name] = nil
+end
+
+function buffHandler:animateFinished(name)
+
+end
+
+return buffHandler
+

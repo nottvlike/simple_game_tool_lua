@@ -5,7 +5,7 @@ function hurtCollision:ctor(parent)
 
     self.gameObject = parent.gameObject
     self.transform = parent.transform
-    self.attackHandler = parent.attackHandler
+    self.buffHandler = parent.buffHandler
 
     self:init()
 end
@@ -27,11 +27,11 @@ function hurtCollision:onCollisionTriggerEvent(funcName, target)
 end
 
 function hurtCollision:onTriggerEnter(target)
-    self.attackHandler:hurt(target)
+    self.buffHandler:hurt(target)
 end
 
 function hurtCollision:onTriggerStay(target)
-    self.attackHandler:hurt(target)
+    self.buffHandler:hurt(target)
 end
 
 function hurtCollision:onTriggerExit(target)

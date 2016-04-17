@@ -1,15 +1,15 @@
 return {
 	Version = "3.1.3",
 	UpdateURL = "/Users/nottvlike/Documents/github/OpenWorldGame/Assets/StreamingAssets",
-	UpdateSize = 4283,
+	UpdateSize = 4291,
 	Prefabs = {
 		{
 			name="/AssetBunle/Creature/Golem.assetbundle",
-			size=3392,
+			size=3396,
 		},
 		{
 			name="/AssetBunle/Creature/Hornet.assetbundle",
-			size=226,
+			size=227,
 		},
 		{
 			name="/AssetBunle/Level/LevelTest.assetbundle",
@@ -38,6 +38,10 @@ return {
 			size=7,
 		},
 		{
+			name="/Script/Base/Buff/FixedHPHurt.txt",
+			size=1,
+		},
+		{
 			name="/Script/Base/Creature/.DS_Store",
 			size=7,
 		},
@@ -47,10 +51,6 @@ return {
 		},
 		{
 			name="/Script/Base/Creature/Attribute.txt",
-			size=2,
-		},
-		{
-			name="/Script/Base/Creature/Buff.txt",
 			size=1,
 		},
 		{
@@ -58,7 +58,15 @@ return {
 			size=4,
 		},
 		{
-			name="/Script/Base/Fight/AttackHandler.txt",
+			name="/Script/Base/Fight/Buff.txt",
+			size=1,
+		},
+		{
+			name="/Script/Base/Fight/BuffHandler.txt",
+			size=2,
+		},
+		{
+			name="/Script/Base/Fight/EffectDeal.txt",
 			size=2,
 		},
 		{
@@ -182,6 +190,10 @@ return {
 			size=2,
 		},
 		{
+			name="/Script/Manager/BuffManager.txt",
+			size=1,
+		},
+		{
 			name="/Script/Manager/MainPlayer.txt",
 			size=1,
 		},
@@ -236,11 +248,11 @@ return {
 			size=1,
 		},
 		{
-			name="/Config/AttackDataBase.txt",
+			name="/Config/Configuration.txt",
 			size=1,
 		},
 		{
-			name="/Config/Configuration.txt",
+			name="/Config/SkillDataBase.txt",
 			size=1,
 		},
 	},
