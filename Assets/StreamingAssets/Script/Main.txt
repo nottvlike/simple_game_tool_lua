@@ -1,11 +1,12 @@
 require 'Script.Utils.Class'
 require 'Script.Utils.GlobalFunctions'
-
+local networkTest = require 'Script.Network.NetworkTest'
 local runTimeManager = require 'Script.Manager.RunTimeManager'
 
 return function()
+	networkTest()
+	
 	ResourceManager.GetInstance():Init("")
-
 	ResourceManager.GetInstance():SingleLineLoadAsync("LevelTest", function(obj)
 		local level = GameObject.Instantiate(obj, Vector3.zero, Vector3.zero)
 		local levelTransform = level.transform
