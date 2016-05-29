@@ -44,63 +44,70 @@ public class PrefabRequest{
         _isAssetBundle = isAssetBundle;
     }
 
-    public void LoadAsync(LuaFunction func)
-    {
+	public void Load(LuaFunction func)
+	{
 		_callBack = func;
 		if (_callBack != null && _prefab != null)
-        {
-			LoadFinished ();
-            return;
-        }
-
-        if (_isAssetBundle)
-        {
-			ResourceManager.Instance.StartCoroutine(StartLoadAssetBundleAsync());
+		{
+			LoadFinished();
+		}
+		
+		if (_isAssetBundle)
+		{
+			ResourceManager.Instance.StartCoroutine(StartLoadAssetBundle());
 		}
 		else
-        {
-			ResourceManager.Instance.StartCoroutine(StartLoadResourceAsync());
-        }
-    }
+		{
+			StartLoadResource();
+		}
+	}
 
-    IEnumerator StartLoadAssetBundleAsync()
-    {
-        AssetBundle bundle;
-        AssetBundleRequest request;
+	IEnumerator StartLoadAssetBundle()
+	{
+		AssetBundle bundle;
+		AssetBundleRequest request;
+		
+		string filepath = "";
 
-        string filepath = LuaManager.GetAssetBundlePath() + _assetBundlePath;
+#if UNITY_ANDROID && !UNITY_EDITOR
+		filepath = LuaManager.GetScriptPath () + _assetBundlePath;
+#else
+		filepath = "file://" +LuaManager.GetScriptPath() + _assetBundlePath;
+#endif
+		WWW www = new WWW(filepath);
+		yield return www;
+		bundle = www.assetBundle;
 
-        WWW www = new WWW("file://" + filepath);
-        yield return www;
-        bundle = www.assetBundle;
-        request = bundle.LoadAsync(_prefabName, typeof(GameObject));
-        yield return request;
-        _prefab = request.asset as GameObject;
-        bundle.Unload(false);
-
-		LoadFinished ();
+		request = bundle.LoadAsync(_prefabName, typeof(GameObject));
+		yield return request;
+		_prefab = request.asset as GameObject;
+		bundle.Unload(false);
+		
+		LoadFinished();
 	}
 	
-	IEnumerator StartLoadResourceAsync()
-    {
+	void StartLoadResource()
+	{
 		_prefab = Resources.Load<GameObject>(_resourcePath);
-		yield return new WaitForEndOfFrame ();
-
-		LoadFinished ();
+		LoadFinished();
 	}
 
 	public void LoadFinished()
 	{
-		if (_callBack != null && _prefab != null) 
-		{
-			_callBack.call (_prefab);
-			_callBack = null;
-		} 
-		else 
-		{
+		if (_prefab == null) {
 			Debug.LogWarning(string.Format("Warning : Failed to load prefab {0}", _prefabName));
-			_callBack = null;
+			ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
+			return;
 		}
+
+		if (_callBack == null) 
+		{
+			ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
+			return;
+		}
+
+		_callBack.call (_prefab);
+		_callBack = null;
 
 		ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
 	}

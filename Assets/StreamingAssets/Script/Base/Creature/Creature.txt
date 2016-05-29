@@ -33,7 +33,7 @@ end
 
 function creature:init()
 	if self.parent then
-		ResourceManager.GetInstance():SingleLineLoadAsync(self.prefabName, function(obj)
+		ResourceManager.GetInstance():SingleLineLoad(self.prefabName, function(obj)
 			local transform = self.parent:GetComponent(Transform)
 			self.gameObject = GameObject.Instantiate(obj, transform.position, transform.rotation)
 			self.animator = self.gameObject:GetComponent(Animator)
@@ -51,7 +51,6 @@ function creature:init()
 			end
 
 			self.attribute = attribute.new(self)
-			
 			self:initPrefab()
 		end)
 	else

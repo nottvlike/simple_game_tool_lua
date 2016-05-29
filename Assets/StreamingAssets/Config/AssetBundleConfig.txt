@@ -2,31 +2,31 @@
 	"Prefabs" : [
 		{
 			"PrefabName" : "Golem",
-			"PrefabPath" : "/AssetBunle/Creature/Golem.assetbundle",
+			"PrefabPath" : "AssetBunle/Creature/Golem.assetbundle",
 			"ResourcePath" : "Prefab/Creature/Golem",
 			"version" : "1.0.0"
 		},
 		{
 			"PrefabName" : "MonsterHornet-Red",
-			"PrefabPath" : "/AssetBunle/Creature/Hornet.assetbundle",
+			"PrefabPath" : "AssetBunle/Creature/Hornet.assetbundle",
 			"ResourcePath" : "Prefab/Creature/Hornet/MonsterHornet-Red",
 			"version" : "1.0.0"
 		},
 		{
 			"PrefabName" : "LevelTest",
-			"PrefabPath" : "/AssetBunle/Level/LevelTest.assetbundle",
+			"PrefabPath" : "AssetBunle/Level/LevelTest.assetbundle",
 			"ResourcePath" : "Prefab/Level/LevelTest",
 			"version" : "1.0.0"
 		},
 		{
 			"PrefabName" : "Fight",
-			"PrefabPath" : "/AssetBunle/UI/Fight/Fight.assetbundle",
+			"PrefabPath" : "AssetBunle/UI/Fight/Fight.assetbundle",
 			"ResourcePath" : "Prefab/UI/Fight/Fight",
 			"version" : "1.0.0"
 		},
 		{
 			"PrefabName" : "SceneUpdate",
-			"PrefabPath" : "/AssetBunle/UI/Update/SceneUpdate.assetbundle",
+			"PrefabPath" : "AssetBunle/UI/Update/SceneUpdate.assetbundle",
 			"ResourcePath" : "Prefab/UI/Update/SceneUpdate",
 			"version" : "1.0.0"
 		}

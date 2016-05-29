@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 public enum FileSizeUnitType
 {
@@ -100,17 +101,36 @@ public class FileManager {
     */
 	public static void LoadFileWithBytes(string path, out byte[] content)
 	{
-		//使用流的形式读取
 		content = null;
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+		int size = 0;
+		IntPtr p = IntPtr.Zero;
+		LuaInterface.LuaDLL.getAsset(path, out p, out size);
+		if (p != IntPtr.Zero)
+		{
+			content = new byte[size];
+			Marshal.Copy(p, content, 0, size);
+			LuaInterface.LuaDLL.freeObj(p);
+		}
+		else
+		{
+			Debug.Log(string.Format("Read file {0} failed", path));
+		}
+
+		return;
+#else
+		//使用流的形式读取
 		StreamReader sr =null;
 		try{
-			sr = File.OpenText(path);
+			string filepath = LuaManager.GetScriptPath() + "/" + path;
+			sr = File.OpenText(filepath);
 		}catch(Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
-#if LOG_DEBUG
+			#if LOG_DEBUG
 			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
-#endif
+			#endif
 			return;
 		}
 		string line = sr.ReadToEnd();
@@ -120,6 +140,7 @@ public class FileManager {
 		sr.Close();
 		//销毁流
 		sr.Dispose();
+#endif
 	}
 	
 	/**
@@ -128,12 +149,33 @@ public class FileManager {
     */
 	public static string LoadFileWithString(string path)
 	{
+#if UNITY_ANDROID && !UNITY_EDITOR
+		int size = 0;
+		IntPtr p = IntPtr.Zero;
+		LuaInterface.LuaDLL.getAsset(path, out p, out size);
+		if (p != IntPtr.Zero)
+		{
+			byte[] content = new byte[size];
+			Marshal.Copy(p, content, 0, size);
+			LuaInterface.LuaDLL.freeObj(p);
+			Debug.Log("path is " + path + " size is " + size + " data " + content.ToString());
+			return System.Text.Encoding.UTF8.GetString(content);
+		}
+		else
+		{
+			Debug.Log(string.Format("Read file {0} failed", path));
+		}
+		
+		return "";
+#else
+
 		//使用流的形式读取
 		string content = null;
 		StreamReader sr = null;
 		try
 		{
-			sr = File.OpenText(path);
+			string filepath = LuaManager.GetScriptPath() + "/" + path;
+			sr = File.OpenText(filepath);
 		}
 		catch (Exception e)
 		{
@@ -148,8 +190,8 @@ public class FileManager {
 		sr.Close();
 		//销毁流
 		sr.Dispose();
-		
 		return content;
+#endif
 	}  
 	
 	/**

@@ -1,20 +1,17 @@
 require 'Script.Utils.Class'
 require 'Script.Utils.GlobalFunctions'
-local networkTest = require 'Script.Network.NetworkTest'
+--local networkTest = require 'Script.Network.NetworkTest'
 local runTimeManager = require 'Script.Manager.RunTimeManager'
 
 return function()
-	networkTest()
-	
+	--networkTest()
 	ResourceManager.GetInstance():Init("")
-	ResourceManager.GetInstance():SingleLineLoadAsync("LevelTest", function(obj)
+	ResourceManager.GetInstance():SingleLineLoad("LevelTest", function(obj)
 		local level = GameObject.Instantiate(obj, Vector3.zero, Vector3.zero)
 		local levelTransform = level.transform
-
 		local player = levelTransform:Find("CreatureSpawn/PlayerSpawn")
 		local enemy0 = levelTransform:Find("CreatureSpawn/EnemySpawn0")
 		local enemy1 = levelTransform:Find("CreatureSpawn/EnemySpawn1")
-
 		runTimeManager.createCreature("Golem", player, true)
 		runTimeManager.createCreature("Hornet", enemy0, false)
 		runTimeManager.createCreature("Hornet", enemy1, false)

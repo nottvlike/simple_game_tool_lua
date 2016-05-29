@@ -56,7 +56,7 @@ return function()
 	local request = host:attach(sproto.new(proto.c2s))
 	
 	socket = GameObject.Find("Main Camera"):GetComponent(TcpSocket)
-	socket:Init("127.0.0.1", 8888, update)
+	socket:Init("192.168.1.104", 8888, update)
 	socket:Connect()
 	
 	local str = request("handshake", nil, 1)

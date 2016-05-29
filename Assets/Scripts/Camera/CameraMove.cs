@@ -11,6 +11,7 @@ public class CameraMove : MonoBehaviour {
 	public float RotationDamping = 3.0f;
 
 	Vector3 _pos = Vector3.zero;
+
 	// Update is called once per frame
 	void Update () {
 		if (!Target)

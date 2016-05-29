@@ -15,11 +15,6 @@ end
 function golem:initPrefab()
 	self.buffHandler = buffHandler.new(self)
 	self.hurtCollision = hurtCollision.new(self)
-
-	local camera = GameObject.Find("Main Camera")
-	local cameraMove = camera:GetComponent(CameraMove)
-	cameraMove.Target = self.transform
-	joystick.setMainPlayer(self)
 end
 
 return golem

@@ -47,32 +47,14 @@ public class Lua_ResourceManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SingleLineLoadAsync(IntPtr l) {
+	static public int SingleLineLoad(IntPtr l) {
 		try {
 			ResourceManager self=(ResourceManager)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
 			SLua.LuaFunction a2;
 			checkType(l,3,out a2);
-			self.SingleLineLoadAsync(a1,a2);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadAssetBundleByPath(IntPtr l) {
-		try {
-			ResourceManager self=(ResourceManager)checkSelf(l);
-			System.String a1;
-			checkType(l,2,out a1);
-			System.String a2;
-			checkType(l,3,out a2);
-			SLua.LuaFunction a3;
-			checkType(l,4,out a3);
-			self.LoadAssetBundleByPath(a1,a2,a3);
+			self.SingleLineLoad(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -180,8 +162,7 @@ public class Lua_ResourceManager : LuaObject {
 		getTypeTable(l,"ResourceManager");
 		addMember(l,Init);
 		addMember(l,LoadConfigFile);
-		addMember(l,SingleLineLoadAsync);
-		addMember(l,LoadAssetBundleByPath);
+		addMember(l,SingleLineLoad);
 		addMember(l,HasPrefabRequest);
 		addMember(l,HasConfigRequest);
 		addMember(l,Clear);

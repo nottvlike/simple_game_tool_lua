@@ -90,6 +90,14 @@ namespace LuaInterface
 		const string LUADLL = "slua";
 #endif
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void freeObj(IntPtr data);
+
+		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+		public static extern void getAsset(string fileName, out IntPtr data, out int size);
+#endif
+
 		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void luaS_openextlibs(IntPtr L);
 
@@ -259,7 +267,7 @@ namespace LuaInterface
             return lua_tonumberx(luaState, index, IntPtr.Zero);
         }        
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern Int64 lua_tointegerx(IntPtr luaState, int index,IntPtr x);
+        public static extern int lua_tointegerx(IntPtr luaState, int index,IntPtr x);
         public static int lua_tointeger(IntPtr luaState, int index)
         {
             return (int)lua_tointegerx(luaState, index, IntPtr.Zero);
@@ -278,15 +286,15 @@ namespace LuaInterface
         }
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void lua_rawgeti(IntPtr luaState, int tableIndex, Int64 index);
+        public static extern void lua_rawgeti(IntPtr luaState, int tableIndex, int index);
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void lua_rawseti(IntPtr luaState, int tableIndex, Int64 index);
+        public static extern void lua_rawseti(IntPtr luaState, int tableIndex, int index);
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void lua_pushinteger(IntPtr luaState, Int64 i);
+        public static extern void lua_pushinteger(IntPtr luaState, int i);
 
-        public static Int64 luaL_checkinteger(IntPtr luaState, int stackPos) {
+        public static int luaL_checkinteger(IntPtr luaState, int stackPos) {
 			luaL_checktype(luaState, stackPos, LuaTypes.LUA_TNUMBER);
 			return lua_tointegerx(luaState, stackPos, IntPtr.Zero);
 		}

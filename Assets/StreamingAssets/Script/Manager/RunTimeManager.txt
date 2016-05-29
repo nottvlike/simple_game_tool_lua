@@ -3,22 +3,22 @@ local runTimeManager = {}
 runTimeManager.__index = runTimeManager
 
 CreatureType = {
-	["Golem"] = function(parent)
+	["Golem"] = function(...)
 		local golem = require 'Script.Prefab.Character.Golem'
-		return golem.new(parent)
+		return golem.new(...)
 	end,
 
-	["Hornet"] = function(parent)
+	["Hornet"] = function(...)
 		local hornet = require 'Script.Prefab.Character.Hornet'
-		return hornet.new(parent)
+		return hornet.new(...)
 	end,
 }
 
 runTimeManager.creatureList = {}
 
-function runTimeManager.createCreature(creatureType, parent, isMainPlayer)
+function runTimeManager.createCreature(creatureType, ...)
 	if CreatureType[creatureType] then
-		local creature = CreatureType[creatureType](parent, isMainPlayer)
+		local creature = CreatureType[creatureType](...)
 		table.insert(runTimeManager.creatureList, creature)
 
 		return creature

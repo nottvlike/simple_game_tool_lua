@@ -216,11 +216,11 @@ namespace SLua
 		
 		public static void pushValue(IntPtr l, long i)
 		{
-#if LUA_5_3
-            LuaDLL.lua_pushinteger(l,i);
-#else
+//#if LUA_5_3
+//            LuaDLL.lua_pushinteger(l,i);
+//#else
 			LuaDLL.lua_pushnumber(l, i);
-#endif
+//#endif
 		}
 		
 		public static void pushValue(IntPtr l, long[] o)
@@ -252,11 +252,11 @@ namespace SLua
 		
 		public static void pushValue(IntPtr l, ulong o)
 		{
-			#if LUA_5_3
-			LuaDLL.lua_pushinteger(l, (long)o);
-			#else
+//			#if LUA_5_3
+//			LuaDLL.lua_pushinteger(l, (long)o);
+//			#else
 			LuaDLL.lua_pushnumber(l, o);
-			#endif
+//			#endif
 		}
 		#endregion
 		

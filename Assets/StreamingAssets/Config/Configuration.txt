@@ -2,13 +2,13 @@
 	"Configs" : [
 		{
 			"ConfigName" : "AssetBundleConfig",
-			"ConfigPath" : "/Config/AssetBundleConfig.txt",
+			"ConfigPath" : "Config/AssetBundleConfig.txt",
 			"ResourcePath" : "Config/AssetBundleConfig",
 			"version" : "1.0.0"
 		},
 		{
 			"ConfigName" : "AttackDataBase",
-			"ConfigPath" : "/Config/AttackDataBase.txt",
+			"ConfigPath" : "Config/AttackDataBase.txt",
 			"ResourcePath" : "Config/AttackDataBase",
 			"version" : "1.0.0"
 		}

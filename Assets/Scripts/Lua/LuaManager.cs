@@ -21,8 +21,11 @@ public class LuaManager : Singleton<LuaManager> {
 	{
 #if RESOURCE_DEBUG
 		return "";
+#elif UNITY_EDITOR
+		return Application.streamingAssetsPath + "/";
+#else
+		return "jar:file://" + Application.dataPath + "/!/assets/";
 #endif
-		return Application.streamingAssetsPath;
 	}
 	
 	public static string GetScriptPath()
@@ -53,10 +56,15 @@ public class LuaManager : Singleton<LuaManager> {
 		l.start(START_SCRIPT.Replace(".txt", ""));
 #else
 		UpdateManager.Instance.Download (
+#if UNITY_EDITOR
 			string.Format ("file:///{0}/{1}", UpdateManager.UpdateTest, START_SCRIPT),
+#else
+			string.Format ("{0}/{1}", "jar:file://" + Application.dataPath + "/!/assets", START_SCRIPT),
+#endif
 			string.Format ("{0}/{1}", GetScriptPath (), START_SCRIPT),
 			UpdateManager.DownloadFileType.TypeText,
-			LoadLuaString);
+			LoadLuaString,
+			false);
 #endif
 	}
 	
@@ -70,12 +78,12 @@ public class LuaManager : Singleton<LuaManager> {
 		byte[] list = null;
 		
 		_sb.Remove(0, _sb.Length);
-		_sb.Append(GetScriptPath());
-		_sb.Append("/");
+		//_sb.Append(GetScriptPath());
+		//_sb.Append("/");
 		_sb.Append(filePath);
 		_sb = _sb.Replace('.', '/');
 		_sb.Append(".txt");
-		
+
 		FileManager.LoadFileWithBytes(_sb.ToString(), out list);
 		if(list != null)
 		{

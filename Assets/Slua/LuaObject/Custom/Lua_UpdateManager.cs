@@ -29,7 +29,9 @@ public class Lua_UpdateManager : LuaObject {
 			checkEnum(l,4,out a3);
 			UpdateManager.OnScriptDownloadFinishedEvent a4;
 			LuaDelegation.checkDelegate(l,5,out a4);
-			self.Download(a1,a2,a3,a4);
+			System.Boolean a5;
+			checkType(l,6,out a5);
+			self.Download(a1,a2,a3,a4,a5);
 			pushValue(l,true);
 			return 1;
 		}

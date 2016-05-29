@@ -142,10 +142,11 @@ public class AssetBundleEditor {
 		ResourceManager.Instance.Init ("");
         var _prefabDict = ResourceManager.Instance.PrefabRequestDict;
 
-        foreach (KeyValuePair<string, PrefabRequest> obj in _prefabDict)
+		foreach (KeyValuePair<string, PrefabRequest> obj in _prefabDict)
         {
-            var target = obj.Value.AssetBundlePath;
-            var resource = obj.Value.ResourcePath;
+			var objReq = obj.Value;
+			var target = objReq.AssetBundlePath;
+			var resource = objReq.ResourcePath;
 
 			AssetBundleRequest req = null;
 			if (_assetBundleDict.TryGetValue(target, out req))
@@ -155,7 +156,7 @@ public class AssetBundleEditor {
             else
             {
 				AssetBundleRequest reqAsset = new AssetBundleRequest();
-				reqAsset.Name = obj.Value.PrefabName;
+				reqAsset.Name = objReq.PrefabName;
 				reqAsset.PrefabList = new List<string>();
 				reqAsset.PrefabList.Add(resource);
 				_assetBundleDict.Add(target, reqAsset);

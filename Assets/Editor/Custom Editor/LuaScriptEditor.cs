@@ -41,7 +41,7 @@ public class LuaScriptEditor {
             FileManager.LoadFileWithBytes(file, out fileContent);
             var size = FileManager.GetFileSize(FileSizeUnitType.Type_Kb, fileContent.Length);
             generate += "\t\t{\n";
-            generate += "\t\t\tname=\"" + file.Replace(Application.dataPath + "/Resources", "") + "\"" + ",\n";
+            generate += "\t\t\tname=\"" + file.Replace(Application.dataPath + "/Resources/", "") + "\"" + ",\n";
             generate += "\t\t\tsize=" + Mathf.Ceil(size) + ",\n";
             generate += "\t\t},\n";
             assetSize += (int)Mathf.Ceil(size);

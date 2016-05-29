@@ -296,11 +296,11 @@ return index
 				typePushMap[typeof(UInt64)] =
 				(IntPtr L, object o) =>
 				{
-#if LUA_5_3
-					LuaDLL.lua_pushinteger(L, (long)o);
-#else
+//#if LUA_5_3
+//					LuaDLL.lua_pushinteger(L, (long)o);
+//#else
 					LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
-#endif
+//#endif
 				};
 
 			typePushMap[typeof(string)] = (IntPtr L, object o) =>

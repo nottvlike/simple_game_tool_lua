@@ -1,18 +1,23 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plugins/Slua_Managed/LuaObject.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Lua/LuaManager.cs">
     <Files>
-      <File FileName="Assets/Editor/Custom Editor/MenuEditor.cs" Line="20" Column="35" />
-      <File FileName="Assets/Scripts/Resource/ResourceManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Network/TcpSocket.cs" Line="1" Column="1" />
-      <File FileName="Assets/Editor/Custom Editor/LuaScriptEditor.cs" Line="15" Column="25" />
-      <File FileName="Assets/Plugins/Slua_Managed/LuaState.cs" Line="676" Column="1" />
-      <File FileName="Assets/Plugins/Slua_Managed/LuaDLL.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/Slua_Managed/LuaObject.cs" Line="294" Column="4" />
+      <File FileName="Assets/Scripts/Update/UpdateManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Lua/LuaManager.cs" Line="55" Column="19" />
+      <File FileName="Assets/Scripts/Resource/PrefabRequest.cs" Line="7" Column="27" />
+      <File FileName="Assets/Scripts/Resource/ResourceManager.cs" Line="200" Column="25" />
+      <File FileName="Assets/Editor/Custom Editor/AssetBundleEditor.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Camera/CameraMove.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameStart.cs" Line="1" Column="1" />
+      <File FileName="Assets/Slua/Editor/LuaCodeGen.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Slua_Managed/LuaSvrGameObject.cs" Line="75" Column="8" />
+      <File FileName="Assets/Plugins/Slua_Managed/Unity/Lua_UnityEngine_Object.cs" Line="49" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/nottvlike/Documents/github/OpenWorldGame/Assets/Scripts/Resource/PrefabRequest.cs" line="105" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

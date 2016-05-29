@@ -27,12 +27,16 @@ public class UpdateManager : Singleton<UpdateManager>
         public string filePath;
         public DownloadFileType fileType;
         public OnScriptDownloadFinishedEvent onScriptDownloaded;
+		public bool isSaved;
     }
 
     public delegate void OnScriptDownloadFinishedEvent(string script);
     public delegate void OnUpdateStateChangedEvent(string filePath, UpdateFileStateType updateState);
-//	public const string UpdateTest = "/Users/nottvlike/Documents/github/Update";
-	public static string UpdateTest = Application.streamingAssetsPath + "";
+#if UNITY_EDITOR
+	public static string UpdateTest = Application.streamingAssetsPath;
+#else
+	public static string UpdateTest = "jar:file://" + Application.dataPath + "/!/assets";
+#endif
 
     public OnUpdateStateChangedEvent OnUpdateStateChanged = null;
     List<DownloadFileRequest> _downloadFileList = new List<DownloadFileRequest>();
@@ -64,7 +68,8 @@ public class UpdateManager : Singleton<UpdateManager>
         return Instance;
     }
 
-    public void Download(string url, string targetPath, DownloadFileType fileType, OnScriptDownloadFinishedEvent downloadedEvent = null)
+    public void Download(string url, string targetPath, DownloadFileType fileType, 
+	                     OnScriptDownloadFinishedEvent downloadedEvent = null, bool isSaved = false)
     {
         var file = new DownloadFileRequest();
         file.Id = System.DateTime.Now.Millisecond;
@@ -72,6 +77,7 @@ public class UpdateManager : Singleton<UpdateManager>
         file.filePath = targetPath;
         file.fileType = fileType;
         file.onScriptDownloaded = downloadedEvent;
+		file.isSaved = isSaved;
         _downloadFileList.Add(file);
 
 		StartDownloadFile();
@@ -97,8 +103,11 @@ public class UpdateManager : Singleton<UpdateManager>
         yield return www;
         State = UpdateFileStateType.FinishDownload;
 
-        State = UpdateFileStateType.MoveFile;
-        MoveFile(req, www.text, www.bytes, www.bytes.Length);
+		if (req.isSaved) 
+		{
+			State = UpdateFileStateType.MoveFile;
+			MoveFile(req, www.text, www.bytes, www.bytes.Length);
+		}
 
 		_downloadFileList.Remove(req);
         State = UpdateFileStateType.Finished;
@@ -111,6 +120,7 @@ public class UpdateManager : Singleton<UpdateManager>
 
     void MoveFile(DownloadFileRequest req, string info, byte[] bytes, int length)
     {
+		Debug.Log ("MoveFile" + req.filePath);
         if (req.fileType == DownloadFileType.TypeText)
         {
             FileManager.CreateFileWithString(req.filePath, info);
