@@ -16,7 +16,8 @@
 	*	[3.3.热更新模块](#3.3)
 	*	[3.4.资源管理模块](#3.4)	
 	*	[3.5.Buff系统](#3.5)
-*	[4.后序计划](#4)
+*	[4.Android支持](#4)
+*	[5.后序计划](#4)
 <br/>
 
 <h2 id="1">1.	前言</h2>
@@ -145,9 +146,20 @@ buff都统一放在被施加者身上，例如A对B施法，那么buff放在B身
 
 关于监听器，为了方便，我将所有监听器的消息先中转到了root节点，然后才传递到lua脚本里，这样或许有隐含的问题，主要是担心buff计算错了碰撞目前，这个我先想想是否会出问题，以及出了问题怎么处理。
 
-<h2 id="4">4.	后续计划</h2>
+<h2 id="4">4. Android支持</h2>
+最近两周一直忙着android方面的工作，主要是slua，遇到的问题有两个：
+
+*	StreamAssets中的资源unity3d只支持www异步加载，对于assetbundle还好，对于脚本来说就悲剧了；
+*	GameObject.Instantiate第二次执行时奔溃，这是我暂时没解决的问题，slua加入debug标签后，想看看奔溃信息却没有奔溃了；
+
+第一个问题比较简单，android使用java或者jni都可以访问assets目录，我这里用了jni，写了个getAssets()方法传递给了c#，具体可以看下slua里的jni/FileManagerAndroid.cpp和LuaDLL.cs文件
+第二个问题，我查了几天，始终没有收获，开始我以为是自己的ResourceManager写的有问题，将ResourceManager改为同步访问后，依旧没有效果。
+
+
+<h2 id="5">5.	后续计划</h2>
 
 *	补充文档，这始终是一个大头，写文档的同时也能够理清思路
 *	完善热更模块
 *	完善战斗系统，添加网络模块
 *	研究AI和behavior3的AI设计工具
+*	多平台目录优化，例如LuaManager.cs中的ScriptDir，ConfigDir和AssetBundleDir可以合并为一个，加入了android后，目录显示的有点乱，该统一优化下了。
