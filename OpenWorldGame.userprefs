@@ -1,17 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Lua/LuaManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Slua/Editor/CustomExport.cs">
     <Files>
-      <File FileName="Assets/Scripts/Update/UpdateManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Lua/LuaManager.cs" Line="55" Column="19" />
-      <File FileName="Assets/Scripts/Resource/PrefabRequest.cs" Line="7" Column="27" />
-      <File FileName="Assets/Scripts/Resource/ResourceManager.cs" Line="200" Column="25" />
-      <File FileName="Assets/Editor/Custom Editor/AssetBundleEditor.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Camera/CameraMove.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameStart.cs" Line="1" Column="1" />
-      <File FileName="Assets/Slua/Editor/LuaCodeGen.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/Slua_Managed/LuaSvrGameObject.cs" Line="75" Column="8" />
-      <File FileName="Assets/Plugins/Slua_Managed/Unity/Lua_UnityEngine_Object.cs" Line="49" Column="27" />
+      <File FileName="Assets/Scripts/Lua/LuaManager.cs" Line="73" Column="18" />
+      <File FileName="Assets/Scripts/Base/FileManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Slua_Managed/LuaSvr.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Slua_Managed/Logger.cs" Line="24" Column="1" />
+      <File FileName="Assets/Slua/LuaObject/Custom/Lua_System_Collections_Generic_Dictionary_2_int_string.cs" Line="1" Column="1" />
+      <File FileName="Assets/Slua/Editor/CustomExport.cs" Line="52" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

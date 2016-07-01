@@ -34,11 +34,13 @@ public class TcpSocket : MonoBehaviour {
 	void Destroy()
 	{
 		_recvThread.Abort ();
+		_recvCallback = null;
 	}
-
+	
 	void OnApplicationQuit()
 	{
-		_recvThread.Abort ();
+		if (_recvCallback != null)
+			_recvThread.Abort ();
 	}
 
 	public void Init(string ip, int port, LuaFunction recvCallback)

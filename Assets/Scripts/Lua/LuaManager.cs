@@ -46,7 +46,7 @@ public class LuaManager : Singleton<LuaManager> {
 #endif
 		
 		l = new LuaSvr();
-		l.init(null, Complete, false);
+		l.init(null, Complete, LuaSvrFlag.LSF_EXTLIB);
 		DontDestroyOnLoad(this);
 	}
 	

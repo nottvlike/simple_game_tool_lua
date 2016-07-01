@@ -79,7 +79,7 @@ public class Lua_FileManager : LuaObject {
 			System.String a1;
 			checkType(l,1,out a1);
 			System.Byte[] a2;
-			checkType(l,2,out a2);
+			checkArray(l,2,out a2);
 			System.Int32 a3;
 			checkType(l,3,out a3);
 			FileManager.CreateFileWithBytes(a1,a2,a3);

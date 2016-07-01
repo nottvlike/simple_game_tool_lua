@@ -23,7 +23,9 @@
 namespace SLua
 {
 
+#if !SLUA_STANDALONE
 	using UnityEngine;
+#endif
 	using System.Collections;
 	using System.Collections.Generic;
 	using System;
@@ -89,7 +91,7 @@ namespace SLua
 		delegate void PushVarDelegate(IntPtr l, object o);
 		static Dictionary<Type, PushVarDelegate> typePushMap = new Dictionary<Type, PushVarDelegate>();
 
-		internal const int VersionNumber = 0x1004;
+		internal const int VersionNumber = 0x1011;
 
 		public static void init(IntPtr l)
 		{
@@ -132,8 +134,9 @@ local function index(ud,k)
         if tp=='function' then 
             return fun 
         elseif tp=='table' then
-			if fun[1] then
-				return fun[1](ud)
+			local f=fun[1]
+			if f then
+				return f(ud)
 			else
 				error('property '..k..' is write only')
 			end
@@ -157,6 +160,7 @@ return index
 			addMember (l, GetType);
 			LuaDLL.lua_setfield(l, LuaIndexes.LUA_REGISTRYINDEX, "__luabaseobject");
 
+			LuaArray.init(l);
 			LuaVarObject.init(l);
 
 			LuaDLL.lua_newtable(l);
@@ -251,7 +255,7 @@ return index
 			typePushMap[typeof(uint)] =
 				(IntPtr L, object o) =>
 				{
-					LuaDLL.lua_pushinteger(L, Convert.ToInt32(o));
+					LuaDLL.lua_pushnumber(L, Convert.ToUInt32(o));
 				};
 
 			typePushMap[typeof(short)] =
@@ -291,16 +295,16 @@ return index
 					Debug.LogWarning("Failed to convert object to byte[]!");
 				}
 			};
-
+			
 			typePushMap[typeof(Int64)] =
 				typePushMap[typeof(UInt64)] =
 				(IntPtr L, object o) =>
 				{
-//#if LUA_5_3
-//					LuaDLL.lua_pushinteger(L, (long)o);
-//#else
+#if LUA_5_3
+					LuaDLL.lua_pushinteger(L, (long)o);
+#else
 					LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
-//#endif
+#endif
 				};
 
 			typePushMap[typeof(string)] = (IntPtr L, object o) =>
@@ -320,7 +324,7 @@ return index
 				{
 					((LuaVar)o).push(L);
 				};
-
+#if !SLUA_STANDALONE
 			typePushMap[typeof(Vector3)] = (IntPtr L, object o) =>
 			{
 				pushValue(L, (Vector3)o);
@@ -345,6 +349,7 @@ return index
 			{
 				pushValue(L, (Color)o);
 			};
+#endif
 
 			typePushMap[typeof(LuaCSFunction)] = (IntPtr L, object o) =>
 			{
@@ -559,7 +564,7 @@ return index
 #if UNITY_EDITOR
             if (f != null && !Attribute.IsDefined(f.Method, typeof(MonoPInvokeCallbackAttribute)))
             {
-                Debug.LogError(string.Format("MonoPInvokeCallbackAttribute not defined for LuaCSFunction {0}.", f.Method));
+				Logger.LogError(string.Format("MonoPInvokeCallbackAttribute not defined for LuaCSFunction {0}.", f.Method));
             }
 #endif
         }
@@ -664,11 +669,15 @@ return index
 
 		public static bool isImplByLua(Type t)
 		{
+#if !SLUA_STANDALONE
 			return t == typeof(Color)
 				|| t == typeof(Vector2)
 				|| t == typeof(Vector3)
 				|| t == typeof(Vector4)
 				|| t == typeof(Quaternion);
+#else
+		    return false;
+#endif
 		}
 
 
@@ -746,7 +755,7 @@ return index
 			}
 			return 0;
 		}
-
+#if !SLUA_STANDALONE
         static internal void gc(IntPtr l,int p,UnityEngine.Object o)
         {
             // set ud's metatable is nil avoid gc again
@@ -756,6 +765,7 @@ return index
             ObjectCache t = ObjectCache.get(l);
             t.gc(o);
         }
+#endif
 
 		static public void checkLuaObject(IntPtr l, int p)
 		{
@@ -773,11 +783,24 @@ return index
 			oc.push(l, o);
 		}
 
+		public static void pushObject(IntPtr l, Array o)
+		{
+			ObjectCache oc = ObjectCache.get(l);
+			oc.push(l, o);
+		}
+
+		// lightobj is non-exported object used for re-get from c#, not for lua
+		public static void pushLightObject(IntPtr l, object t)
+		{
+			ObjectCache oc = ObjectCache.get(l);
+			oc.push(l, t, false);
+		}
+
 		public static int pushTry(IntPtr l)
 		{
 			if (!LuaState.get(l).isMainThread())
 			{
-				Debug.LogError("Can't call lua function in bg thread");
+                Logger.LogError("Can't call lua function in bg thread");
 				return 0;
 			}
 
@@ -827,7 +850,7 @@ return index
 						if (t == typeof(LuaTable) || t.IsArray)
 							return true;
 						else if (t.IsValueType)
-							return luaTypeCheck(l, p, t.Name);
+							return true;//luaTypeCheck(l, p, t.Name);
 						else if (LuaDLL.luaS_subclassof(l, p, t.Name) == 1)
 							return true;
 						else
@@ -904,20 +927,79 @@ return index
 			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4);
 		}
 
-		// more than 4 args
-		public static bool matchType(IntPtr l, int total, int from, params Type[] types)
+		public static bool matchType(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5)
 		{
-			if (total - from + 1 != types.Length)
+			if (total - from + 1 != 5)
 				return false;
 
-			for (int n = 0; n < types.Length; n++)
-			{
-				int p = n + from;
-				LuaTypes t = LuaDLL.lua_type(l, p);
-				if (!matchType(l, p, t, types[n]))
-					return false;
-			}
-			return true;
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
+				&& matchType(l, from + 4, t5);
+		}
+
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6)
+		{
+			if (total - from + 1 != 6)
+				return false;
+
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
+				&& matchType(l, from + 4, t5)
+				&& matchType(l, from + 5, t6);
+		}
+
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7)
+		{
+			if (total - from + 1 != 7)
+				return false;
+
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
+				&& matchType(l, from + 4, t5)
+				&& matchType(l, from + 5, t6)
+				&& matchType(l, from + 6, t7);
+		}
+
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8)
+		{
+			if (total - from + 1 != 8)
+				return false;
+
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
+				&& matchType(l, from + 4, t5)
+				&& matchType(l, from + 5, t6)
+				&& matchType(l, from + 6, t7)
+				&& matchType(l, from + 7, t8);
+		}
+
+
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8,Type t9)
+		{
+			if (total - from + 1 != 9)
+				return false;
+
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
+				&& matchType(l, from + 4, t5)
+				&& matchType(l, from + 5, t6)
+				&& matchType(l, from + 6, t7)
+				&& matchType(l, from + 7, t8)
+				&& matchType(l, from + 8, t9);
+		}
+
+		public static bool matchType
+			(IntPtr l, int total, int from, Type t1, Type t2, Type t3, Type t4, Type t5,Type t6,Type t7,Type t8,Type t9,Type t10)
+		{
+			if (total - from + 1 != 10)
+				return false;
+			
+			return matchType(l, from, t1) && matchType(l, from + 1, t2) && matchType(l, from + 2, t3) && matchType(l, from + 3, t4)
+				&& matchType(l, from + 4, t5)
+					&& matchType(l, from + 5, t6)
+					&& matchType(l, from + 6, t7)
+					&& matchType(l, from + 7, t8)
+					&& matchType(l, from + 8, t9)
+					&& matchType(l, from + 9, t10);
 		}
 
 		public static bool matchType(IntPtr l, int total, int from, ParameterInfo[] pars)
@@ -970,14 +1052,26 @@ return index
 			return oc.get(l, p);
 		}
 
-		static public bool checkType(IntPtr l, int p, out Type[] t)
+		static public bool checkArray<T>(IntPtr l, int p, out T[] ta)
 		{
-			throw new NotSupportedException();
-		}
-
-		static public bool checkType(IntPtr l, int p, out Array t)
-		{
-			throw new NotSupportedException();
+			if (LuaDLL.lua_type(l, p) == LuaTypes.LUA_TTABLE)
+			{
+				int n = LuaDLL.lua_rawlen(l, p);
+				ta = new T[n];
+				for (int k = 0; k < n; k++)
+				{
+					LuaDLL.lua_rawgeti(l, p, k + 1);
+					ta[k]=(T)Convert.ChangeType(checkVar(l, -1),typeof(T));
+					LuaDLL.lua_pop(l, 1);
+				}
+				return true;
+			}
+			else
+			{
+				Array array = checkObj(l, p) as Array;
+				ta = array as T[];
+				return ta!=null;
+			}
 		}
 
 		static public bool checkParams<T>(IntPtr l, int p, out T[] pars) where T:class
@@ -1110,6 +1204,7 @@ return index
 					{
 						if (isLuaValueType(l, p))
 						{
+#if !SLUA_STANDALONE
 							if (luaTypeCheck(l, p, "Vector2"))
 							{
 								Vector2 v;
@@ -1140,7 +1235,8 @@ return index
 								checkType(l, p, out c);
 								return c;
 							}
-							Debug.LogError("unknown lua value type");
+#endif
+							Logger.LogError("unknown lua value type");
 							return null;
 						}
 						else if (isLuaClass(l, p))
@@ -1173,22 +1269,10 @@ return index
 			pushVar(l, o);
 		}
 
-
-		public static void pushValue(IntPtr l, object[] o)
+		public static void pushValue(IntPtr l, Array a)
 		{
-			if (o == null)
-			{
-				LuaDLL.lua_pushnil(l);
-				return;
-			}
-			LuaDLL.lua_createtable(l, o.Length, 0);
-			for (int n = 0; n < o.Length; n++)
-			{
-				pushValue(l, o[n]);
-				LuaDLL.lua_rawseti(l, -2, n + 1);
-			}
+			pushObject(l, a);
 		}
-
 
 		public static void pushVar(IntPtr l, object o)
 		{
@@ -1209,8 +1293,10 @@ return index
 			{
 				pushEnum(l, Convert.ToInt32(o));
 			}
+			else if (t.IsArray)
+				pushObject(l, (Array)o);
 			else
-				pushObject(l,o);
+				pushObject(l, o);
          
 		}
 
@@ -1240,6 +1326,7 @@ return index
 			t.setBack(l, 1, o);
 		}
 
+#if !SLUA_STANDALONE
 		public static void setBack(IntPtr l, Vector3 v)
 		{
 			LuaDLL.luaS_setDataVec(l, 1, v.x, v.y, v.z, float.NaN);
@@ -1264,6 +1351,7 @@ return index
         {
             LuaDLL.luaS_setDataVec(l, 1, v.r, v.g, v.b, v.a);
         }
+#endif
 
         public static int extractFunction(IntPtr l, int p)
 		{
@@ -1338,6 +1426,17 @@ return index
 		{
 			LuaDLL.lua_pushboolean(l, true);
 			return 1;
+		}
+
+		static public int ok(IntPtr l, int retCount)
+		{
+			LuaDLL.lua_pushboolean(l, true);
+			LuaDLL.lua_insert(l, -(retCount + 1));
+			return retCount + 1;
+		}
+
+		static public void assert(bool cond,string err) {
+			if(!cond) throw new Exception(err);
 		}
 	}
 

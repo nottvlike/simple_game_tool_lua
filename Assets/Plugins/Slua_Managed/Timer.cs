@@ -25,7 +25,6 @@ namespace SLua
 	using LuaInterface;
 	using System;
 	using System.Collections.Generic;
-	using UnityEngine;
 
 	public class LuaTimer : LuaObject
 	{
@@ -104,13 +103,18 @@ namespace SLua
 
 		static void innerDel(Timer tm)
 		{
+			innerDel(tm, true);
+		}
+
+		static void innerDel(Timer tm,bool removeFromMap)
+		{
 			tm.delete = true;
 			if (tm.container != null)
 			{
 				tm.container.Remove(tm);
 				tm.container = null;
 			}
-			mapSnTimer.Remove(tm.sn);
+			if (removeFromMap) mapSnTimer.Remove(tm.sn);
 		}
 
 		static int now()
@@ -318,12 +322,35 @@ namespace SLua
 		}
 
 
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+		public static int DeleteAll(IntPtr l)
+		{
+			if (mapSnTimer == null) return 0;
+			try
+			{
+				foreach (var t in mapSnTimer)
+				{
+					innerDel(t.Value, false);
+				}
+				mapSnTimer.Clear();
+
+				pushValue(l, true);
+				return 1;
+			}
+			catch (Exception e)
+			{
+				return LuaObject.error(l, e);
+			}
+		}
+
+
 		static public void reg(IntPtr l)
 		{
 			init();
 			getTypeTable(l, "LuaTimer");
 			addMember(l, Add, false);
 			addMember(l, Delete, false);
+			addMember(l, DeleteAll, false);
 			createTypeMetatable(l, typeof(LuaTimer));
 		}
 	}
