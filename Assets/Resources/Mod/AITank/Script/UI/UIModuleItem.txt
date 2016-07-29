@@ -1,0 +1,114 @@
+local BaseWindow = require 'Mod.AITank.Script.Base.UIWindow'
+local item = Class("UIModuleItem")
+
+function item:ctor(item, module, parent)
+	self.prefabName = "ModuleItem"
+	self.item = item
+	self.parent = parent
+	self.module = module
+	self.itemType = 0  -- 0: ownItems 1: equipItems
+	self.gameObject = nil
+end
+
+function item:init(func)
+	if not self.gameObject then
+		self.gameObject = PoolManager.GetInstance():CloneGameObject("ModuleItem", self.item, Vector3.zero, Vector3.zero)
+		self.transform = self.gameObject:GetComponent(RectTransform)
+		self.gameObject:SetActive(true)
+		self.nameText = self.transform:Find("Name").gameObject:GetComponent(UI.Text)
+		self.addButtonObject = self.transform:Find("Add").gameObject
+		self.addButton = self.addButtonObject:GetComponent(UI.Button)
+		self.delteButtonObject = self.transform:Find("Delete").gameObject
+		self.deleteButton = self.delteButtonObject:GetComponent(UI.Button)
+		
+		self.addButtonObject:SetActive(true)
+		self.delteButtonObject:SetActive(false)
+		self.nameText.text = self.module.name
+
+		LuaEventManager.AddOnDragEvent(self.gameObject, function(name, data)
+			local info = self.parent.detailText
+			info.text = self.module.info
+			self[name](self, data)
+		end)
+
+		self.addButton.onClick:AddListener(
+			function()
+				self:addToEquipScrollView()
+			end)
+
+		self.deleteButton.onClick:AddListener(
+			function()
+				self:removeFromEquipScrollView()
+			end)
+
+		if func then
+			func()
+		end
+	else
+		if func then
+			func()
+		end
+	end
+end
+
+function item:copy()
+	return item.new(self.item, self.module, self.parent)
+end
+
+function item:addToEquipScrollView()
+	self.parent:addToEquipModule(self)
+end
+
+function item:removeFromEquipScrollView()
+	self.parent:removeFromEquipModule(self)
+end
+
+function item:onBeginDrag(data)
+	if not self.itemType then 
+		return
+	end
+
+	if self.itemType == 0 then
+		local scrollView = self.parent.ownScrollView
+		scrollView:OnBeginDrag(data)
+	else
+		local scrollView = self.parent.equipScrollView
+		scrollView:OnBeginDrag(data)
+	end
+
+end
+
+function item:onDrag(data)
+	if not self.itemType then 
+		return
+	end
+
+	if self.itemType == 0 then
+		local scrollView = self.parent.ownScrollView
+		scrollView:OnDrag(data)
+	else
+		local scrollView = self.parent.equipScrollView
+		scrollView:OnDrag(data)
+	end
+end
+
+function item:onEndDrag(data)
+	if not self.itemType then 
+		return
+	end
+
+	if self.itemType == 0 then
+		local scrollView = self.parent.ownScrollView
+		scrollView:OnEndDrag(data)
+	else
+		local scrollView = self.parent.equipScrollView
+		scrollView:OnEndDrag(data)
+	end
+end
+
+function item:destroy()
+	PoolManager.GetInstance():ReleaseGameObject("ModuleItem", self.gameObject)
+	self = nil
+end
+
+return item

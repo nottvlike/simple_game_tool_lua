@@ -47,17 +47,17 @@
     {
 
 #if UNITY_IPHONE && !UNITY_EDITOR
-	const string LUADLL = "__Internal";
+	    const string LUADLL = "__Internal";
 #else
-	const string LUADLL = "slua";
+	    const string LUADLL = "slua";
 #endif
 
-#if LUA_5_3
+#if LUA_OLD
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaS_objlen(IntPtr luaState, int stackPos);
+#else
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaS_rawlen(IntPtr luaState, int index);
-#else
-		[DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int luaS_objlen(IntPtr luaState, int stackPos);
 #endif
 
 

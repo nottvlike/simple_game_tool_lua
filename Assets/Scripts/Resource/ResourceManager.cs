@@ -1,4 +1,15 @@
-﻿//#define RESOURCE_DEBUG
+﻿/*
+ * 对于一个prefab，将其相关的资源拆分为6个部分
+ * 1，texture资源单独打一个assetbundle
+ * 2, material资源单独打一个assetbundle
+ * 3, shader资源单独打一个assetbundle
+ * 4, animator控制器单独打一个assetbundle
+ * 5，模型资源单独打一个assetbundle
+ * 6，prefab单独打一个assetbundle
+ *
+ * 1~5称作共享assetbundle（或者依赖assetbundle）
+ * 6称作主assetbundle
+ * */
 
 using UnityEngine;
 using System.Collections;
@@ -12,15 +23,33 @@ public enum ResourceLoadStateType {
     Finished
 }
 
-public class SingleLineResource {
+/*
+ * 线性加载资源请求结构体
+ * */
+public class SingleLineResource : BaseObject {
     public float Id;
     public string PrefabName;
     public LuaFunction CallBack;
+
+	public override void Reset()
+	{
+		Id = 0;
+		PrefabName = "";
+		CallBack = null;
+	}
 }
 
-public class ConfigRequest{
+public class Dependency
+{
+    public bool IsLoaded;
+    public string PrefabName;
+    public string PrefabPath;
+    public string AssetbundlePath;
+    public List<Object> DependenciesObject;
+}
+
+public class ConfigRequest {
     public string ConfigName;
-    public string ConfigPath;
     public string ConfigResourcePath;
 }
 
@@ -31,8 +60,9 @@ public class ResourceManager : Singleton<ResourceManager>
 
     Dictionary<string, ConfigRequest> _configRequestDict = new Dictionary<string, ConfigRequest>();
 	Dictionary<string, PrefabRequest> _prefabRequestDict = new Dictionary<string, PrefabRequest>();
-    List<SingleLineResource> _prefabLoadList = new List<SingleLineResource>();
-	PrefabRequest _currentPrefabRequest = null;
+    Dictionary<string, Dependency> _sharedAssetbundleDict = new Dictionary<string, Dependency>();
+    List<SingleLineResource> _prefabLoadRequestList = new List<SingleLineResource>();
+
     ResourceLoadStateType _state = ResourceLoadStateType.None;
     bool _isAssetBundle = false;
     bool _isInit = false;
@@ -42,10 +72,14 @@ public class ResourceManager : Singleton<ResourceManager>
         set
         {
             _state = value;
+
+            if (_state == ResourceLoadStateType.Finished)
+                StartSingleLineLoad();
         }
         get { return _state; }
     }
 
+#if UNITY_EDITOR
     public Dictionary<string, PrefabRequest> PrefabRequestDict
     {
         get
@@ -54,52 +88,52 @@ public class ResourceManager : Singleton<ResourceManager>
         }
     }
 
+    public Dictionary<string, Dependency> SharedAssetbundleDict
+    {
+        get
+        {
+            return _sharedAssetbundleDict;
+        }
+    }
+#endif
+
     public static ResourceManager GetInstance()
     {
         return Instance;
     }
 
-    public void Init(string json)
+    public void Init(string prefix)
     {
         if (!_isInit)
         {
             _isInit = true;
-#if RESOURCE_DEBUG
-#else
+#if !RESOURCE_DEBUG
 			_isAssetBundle = true;
 #endif
 
-            LoadConfigurationConfig();
+            LoadConfigurationConfig(prefix);
             LoadAssetBundleConfig();
         }
     }
 
-    void LoadConfigurationConfig()
+    void LoadConfigurationConfig(string prefix)
     {
         string config = "";
 
 		_configRequestDict.Clear ();
-
-#if RESOURCE_DEBUG
-		TextAsset text = Resources.Load<TextAsset>(CONFIG_FILE);
-		config = text.text;
-#elif UNITY_ANDROID
-		config = FileManager.LoadFileWithString(CONFIG_FILE + ".txt");
-#else 
-		config = FileManager.LoadFileWithString(CONFIG_FILE + ".txt");
-#endif
+        config = LoadConfigFileByPath(string.Format("{0}/{1}", prefix, CONFIG_FILE));
 
         JsonData jsonData = JsonMapper.ToObject(config);
         if (jsonData["Configs"].IsArray)
         {
             for (int i = 0; i < jsonData["Configs"].Count; i++)
             {
-                var jsonObj = jsonData["Configs"][i];
-                var req = new ConfigRequest();
-                req.ConfigName = jsonObj["ConfigName"].ToString();
-                req.ConfigPath = jsonObj["ConfigPath"].ToString();
-                req.ConfigResourcePath = jsonObj["ResourcePath"].ToString();
-                _configRequestDict.Add(jsonObj["ConfigName"].ToString(), req);
+                var configInfo = jsonData["Configs"][i];
+
+                var request = new ConfigRequest();
+                request.ConfigName = configInfo["ConfigName"].ToString();
+                request.ConfigResourcePath = configInfo["ResourcePath"].ToString();
+                _configRequestDict.Add(configInfo["ConfigName"].ToString(), request);
             }
         }
     }
@@ -109,50 +143,83 @@ public class ResourceManager : Singleton<ResourceManager>
 		_prefabRequestDict.Clear ();
 
         var txt = LoadConfigFile(ASSETBUNDLE_CONFIG);
+        if (txt.Length <= 0)
+            return;
+
         JsonData jsonData = JsonMapper.ToObject(txt);
-        if (jsonData["Prefabs"].IsArray)
+        for (int i = 0; i < jsonData["Prefabs"].Count; i++)
         {
-            for (int i = 0; i < jsonData["Prefabs"].Count; i++)
+            var prefabInfo = jsonData["Prefabs"][i];
+            var prefabName = prefabInfo["PrefabName"].ToString();
+            var assetbundlePath = prefabInfo["AssetbundlePath"].ToString();
+            var prefabPath = prefabInfo["PrefabPath"].ToString();
+            var isShared = bool.Parse(prefabInfo["IsShared"].ToString());
+
+            if (isShared)
             {
-                var jsonObj = jsonData["Prefabs"][i];
-				var req = new PrefabRequest();
-				req.Init(jsonObj["PrefabName"].ToString(), jsonObj["PrefabPath"].ToString(), jsonObj["ResourcePath"].ToString(), _isAssetBundle);
-                _prefabRequestDict.Add(jsonObj["PrefabName"].ToString(), req);
+                var dependency = new Dependency();
+                dependency.PrefabName = prefabName;
+                dependency.PrefabPath = prefabPath;
+                dependency.AssetbundlePath = assetbundlePath;
+                dependency.DependenciesObject = new List<Object>();
+                dependency.IsLoaded = false;
+                _sharedAssetbundleDict.Add(prefabName, dependency);
+                continue;
             }
+
+            var dependenciesList = new List<string>();
+            for (int j = 0; j < prefabInfo["Dependency"].Count; j++)
+            {
+                var depend = prefabInfo["Dependency"][j].ToString();
+                dependenciesList.Add(depend);
+            }
+
+            var request = new PrefabRequest();
+            request.Init(prefabName, assetbundlePath, prefabPath, dependenciesList, _isAssetBundle);
+            _prefabRequestDict.Add(prefabName, request);
         }
+    }
+
+    public string LoadConfigFileByPath(string configPath)
+    {
+#if RESOURCE_DEBUG
+        TextAsset text = Resources.Load<TextAsset>(configPath);
+        return text.text;
+#else 
+		return FileManager.LoadFileWithString(configPath + ".txt");
+#endif
     }
 
     public string LoadConfigFile(string configName)
     {
         ConfigRequest configReq = null;
 
-        if (!HasConfigRequest(configName, out configReq))
+        if (!_configRequestDict.TryGetValue(configName, out configReq))
         {
             return "";
         }
 #if RESOURCE_DEBUG
 		TextAsset text = Resources.Load<TextAsset>(configReq.ConfigResourcePath);
 		return text.text;
-#elif UNITY_ANDROID
-		return FileManager.LoadFileWithString(configReq.ConfigResourcePath + ".txt");
-#else
-		return FileManager.LoadFileWithString(LuaManager.GetConfigPath() + "/" + configReq.ConfigResourcePath + ".txt");
 #endif
+        return FileManager.LoadFileWithString(configReq.ConfigResourcePath + ".txt");
     }
 
 	//线性载入prefab，牺牲载入时间，保证prefab载入的速度和内存占用
 	public void SingleLineLoad(string prefabName, LuaFunction func)
 	{
-		var prefabLoad = new SingleLineResource();
+		var prefabLoad = PoolManager.GetInstance().Get<SingleLineResource>("SingleLineResource");
 		prefabLoad.PrefabName = prefabName;
 		prefabLoad.CallBack = func;
 		prefabLoad.Id = Time.realtimeSinceStartup;
-		_prefabLoadList.Add(prefabLoad);
+		_prefabLoadRequestList.Add(prefabLoad);
+
+        StartSingleLineLoad();
 	}
 	
 	void  StartSingleLineLoad()
 	{
-		if (_prefabLoadList.Count <= 0)
+		if (_prefabLoadRequestList.Count <= 0)
 		{
 			return;
 		}
@@ -162,16 +229,18 @@ public class ResourceManager : Singleton<ResourceManager>
 			return;
 		}
 		
-		var res = _prefabLoadList[0];
-		PrefabRequest prefabReq = null;
-		var prefabName = res.PrefabName;
-		var callBack = res.CallBack;
-		_prefabLoadList.Remove(res);
+		var request = _prefabLoadRequestList[0];
+		var prefabName = request.PrefabName;
+		var callBack = request.CallBack;
 		
-		if (HasPrefabRequest(prefabName, out prefabReq))
+        _prefabLoadRequestList.Remove(request);
+		PoolManager.GetInstance().ReleaseObject<SingleLineResource> ("SingleLineResource", request);
+
+        PrefabRequest prefabRequest = null;
+        if (_prefabRequestDict.TryGetValue(prefabName, out prefabRequest))
 		{
 			_state = ResourceLoadStateType.Loading;
-			prefabReq.Load(callBack);
+			prefabRequest.Load(callBack);
 		}
 		else
 		{
@@ -179,17 +248,15 @@ public class ResourceManager : Singleton<ResourceManager>
 		}
 	}
 
-    public bool HasPrefabRequest(string prefabName, out PrefabRequest prefabRequest)
+    public bool GetSharedDependencies(string name, out Dependency dependency)
     {
-		if (_prefabRequestDict.TryGetValue(prefabName, out prefabRequest)) {
-			return true;
-		}
-		return false;
-	}
-	
-    public bool HasConfigRequest(string configName, out ConfigRequest configRequest)
-    {
-        return _configRequestDict.TryGetValue(configName, out configRequest);
+        if (_sharedAssetbundleDict.TryGetValue(name, out dependency))
+        {
+            return true;
+        }
+
+        Debug.LogWarning("Could not found the share dependency " + name);
+        return false;
     }
 
     public void Clear()
@@ -200,12 +267,4 @@ public class ResourceManager : Singleton<ResourceManager>
 			obj.Value.ClearPrefab();
         }
     }
-
-	void Update()
-	{
-		if (_state != ResourceLoadStateType.Loading && _prefabLoadList.Count > 0)
-		{
-			StartSingleLineLoad();
-		}
-	}
 }

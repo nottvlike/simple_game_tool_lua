@@ -1,0 +1,18 @@
+local attackDataBase = {
+	["MissileA"] = {
+		buffs = {
+			["FixedHPHurt"] = {
+				["FixedHP"] = 200,
+			}
+		}
+	},
+	["GolemNormalAttack7"] = {
+		buffs = {
+			["FixedHPHurt"] = {
+				["FixedHP"] = 200,
+			}
+		}
+	}
+}
+
+return attackDataBase

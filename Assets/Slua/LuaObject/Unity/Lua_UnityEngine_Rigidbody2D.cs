@@ -96,6 +96,49 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsTouching(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+			UnityEngine.Collider2D a1;
+			checkType(l,2,out a1);
+			var ret=self.IsTouching(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsTouchingLayers(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+				var ret=self.IsTouchingLayers();
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==2){
+				UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				var ret=self.IsTouchingLayers(a1);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int AddForce(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -414,6 +457,32 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_useAutoMass(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.useAutoMass);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_useAutoMass(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.useAutoMass=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mass(IntPtr l) {
 		try {
 			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
@@ -608,11 +677,11 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_fixedAngle(IntPtr l) {
+	static public int get_freezeRotation(IntPtr l) {
 		try {
 			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.fixedAngle);
+			pushValue(l,self.freezeRotation);
 			return 2;
 		}
 		catch(Exception e) {
@@ -620,12 +689,38 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_fixedAngle(IntPtr l) {
+	static public int set_freezeRotation(IntPtr l) {
 		try {
 			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
 			bool v;
 			checkType(l,2,out v);
-			self.fixedAngle=v;
+			self.freezeRotation=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_constraints(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.constraints);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_constraints(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody2D self=(UnityEngine.Rigidbody2D)checkSelf(l);
+			UnityEngine.RigidbodyConstraints2D v;
+			checkEnum(l,2,out v);
+			self.constraints=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -745,6 +840,8 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		addMember(l,IsAwake);
 		addMember(l,Sleep);
 		addMember(l,WakeUp);
+		addMember(l,IsTouching);
+		addMember(l,IsTouchingLayers);
 		addMember(l,AddForce);
 		addMember(l,AddRelativeForce);
 		addMember(l,AddForceAtPosition);
@@ -759,6 +856,7 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		addMember(l,"rotation",get_rotation,set_rotation,true);
 		addMember(l,"velocity",get_velocity,set_velocity,true);
 		addMember(l,"angularVelocity",get_angularVelocity,set_angularVelocity,true);
+		addMember(l,"useAutoMass",get_useAutoMass,set_useAutoMass,true);
 		addMember(l,"mass",get_mass,set_mass,true);
 		addMember(l,"centerOfMass",get_centerOfMass,set_centerOfMass,true);
 		addMember(l,"worldCenterOfMass",get_worldCenterOfMass,null,true);
@@ -767,7 +865,8 @@ public class Lua_UnityEngine_Rigidbody2D : LuaObject {
 		addMember(l,"angularDrag",get_angularDrag,set_angularDrag,true);
 		addMember(l,"gravityScale",get_gravityScale,set_gravityScale,true);
 		addMember(l,"isKinematic",get_isKinematic,set_isKinematic,true);
-		addMember(l,"fixedAngle",get_fixedAngle,set_fixedAngle,true);
+		addMember(l,"freezeRotation",get_freezeRotation,set_freezeRotation,true);
+		addMember(l,"constraints",get_constraints,set_constraints,true);
 		addMember(l,"simulated",get_simulated,set_simulated,true);
 		addMember(l,"interpolation",get_interpolation,set_interpolation,true);
 		addMember(l,"sleepMode",get_sleepMode,set_sleepMode,true);

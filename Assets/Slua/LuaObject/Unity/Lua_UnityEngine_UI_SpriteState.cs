@@ -18,35 +18,6 @@ public class Lua_UnityEngine_UI_SpriteState : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_normalSprite(IntPtr l) {
-		try {
-			UnityEngine.UI.SpriteState self;
-			checkValueType(l,1,out self);
-			pushValue(l,true);
-			pushValue(l,self.normalSprite);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_normalSprite(IntPtr l) {
-		try {
-			UnityEngine.UI.SpriteState self;
-			checkValueType(l,1,out self);
-			UnityEngine.Sprite v;
-			checkType(l,2,out v);
-			self.normalSprite=v;
-			setBack(l,self);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_highlightedSprite(IntPtr l) {
 		try {
 			UnityEngine.UI.SpriteState self;
@@ -135,7 +106,6 @@ public class Lua_UnityEngine_UI_SpriteState : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.SpriteState");
-		addMember(l,"normalSprite",get_normalSprite,set_normalSprite,true);
 		addMember(l,"highlightedSprite",get_highlightedSprite,set_highlightedSprite,true);
 		addMember(l,"pressedSprite",get_pressedSprite,set_pressedSprite,true);
 		addMember(l,"disabledSprite",get_disabledSprite,set_disabledSprite,true);

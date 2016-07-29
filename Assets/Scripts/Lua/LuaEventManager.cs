@@ -6,6 +6,9 @@ public class LuaEventManager{
 
 	static void AddBaseCallback<T>(GameObject obj, LuaFunction func) where T : LuaBaseEvent
 	{
+        if (obj == null)
+            obj = new GameObject("LuaBaseCallback");
+
 		if(obj.GetComponent<T>() == null)
 			obj.AddComponent<T>();
 		obj.GetComponent<T>().LuaCallback = func;
@@ -30,4 +33,19 @@ public class LuaEventManager{
 	{
 		AddBaseCallback<LuaCollisionTriggerEvent>(obj, func);
 	}
+
+    public static void AddCollisionTrigger2DEvent(GameObject obj, LuaFunction func)
+    {
+        AddBaseCallback<LuaCollisionTrigger2DEvent>(obj, func);
+    }
+
+    public static void AddOnDragEvent(GameObject obj, LuaFunction func)
+    {
+        AddBaseCallback<LuaOnDragEvent>(obj, func);
+    }
+
+    public static void AddOnSelectEvent(GameObject obj, LuaFunction func)
+    {
+        AddBaseCallback<LuaOnSelectEvent>(obj, func);
+    }
 }

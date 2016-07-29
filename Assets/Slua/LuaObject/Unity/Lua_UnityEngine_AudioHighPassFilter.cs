@@ -44,11 +44,11 @@ public class Lua_UnityEngine_AudioHighPassFilter : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_highpassResonaceQ(IntPtr l) {
+	static public int get_highpassResonanceQ(IntPtr l) {
 		try {
 			UnityEngine.AudioHighPassFilter self=(UnityEngine.AudioHighPassFilter)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.highpassResonaceQ);
+			pushValue(l,self.highpassResonanceQ);
 			return 2;
 		}
 		catch(Exception e) {
@@ -56,12 +56,12 @@ public class Lua_UnityEngine_AudioHighPassFilter : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_highpassResonaceQ(IntPtr l) {
+	static public int set_highpassResonanceQ(IntPtr l) {
 		try {
 			UnityEngine.AudioHighPassFilter self=(UnityEngine.AudioHighPassFilter)checkSelf(l);
 			float v;
 			checkType(l,2,out v);
-			self.highpassResonaceQ=v;
+			self.highpassResonanceQ=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -72,7 +72,7 @@ public class Lua_UnityEngine_AudioHighPassFilter : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AudioHighPassFilter");
 		addMember(l,"cutoffFrequency",get_cutoffFrequency,set_cutoffFrequency,true);
-		addMember(l,"highpassResonaceQ",get_highpassResonaceQ,set_highpassResonaceQ,true);
+		addMember(l,"highpassResonanceQ",get_highpassResonanceQ,set_highpassResonanceQ,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioHighPassFilter),typeof(UnityEngine.Behaviour));
 	}
 }

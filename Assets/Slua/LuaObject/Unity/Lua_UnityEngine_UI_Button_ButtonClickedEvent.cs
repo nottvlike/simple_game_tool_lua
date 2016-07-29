@@ -18,8 +18,7 @@ public class Lua_UnityEngine_UI_Button_ButtonClickedEvent : LuaObject {
 		}
 	}
 	static public void reg(IntPtr l) {
-		LuaUnityEvent_UnityEngine_UI_Button.reg(l);
 		getTypeTable(l,"UnityEngine.UI.Button.ButtonClickedEvent");
-		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Button.ButtonClickedEvent),typeof(LuaUnityEvent_UnityEngine_UI_Button));
+		createTypeMetatable(l,constructor, typeof(UnityEngine.UI.Button.ButtonClickedEvent),typeof(UnityEngine.Events.UnityEvent));
 	}
 }

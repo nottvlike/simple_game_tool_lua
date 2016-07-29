@@ -79,11 +79,11 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_allowActivationOnMobileDevice(IntPtr l) {
+	static public int get_forceModuleActive(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.StandaloneInputModule self=(UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.allowActivationOnMobileDevice);
+			pushValue(l,self.forceModuleActive);
 			return 2;
 		}
 		catch(Exception e) {
@@ -91,12 +91,12 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_allowActivationOnMobileDevice(IntPtr l) {
+	static public int set_forceModuleActive(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.StandaloneInputModule self=(UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
 			bool v;
 			checkType(l,2,out v);
-			self.allowActivationOnMobileDevice=v;
+			self.forceModuleActive=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -123,6 +123,32 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 			float v;
 			checkType(l,2,out v);
 			self.inputActionsPerSecond=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_repeatDelay(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.StandaloneInputModule self=(UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.repeatDelay);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_repeatDelay(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.StandaloneInputModule self=(UnityEngine.EventSystems.StandaloneInputModule)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.repeatDelay=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -242,8 +268,9 @@ public class Lua_UnityEngine_EventSystems_StandaloneInputModule : LuaObject {
 		addMember(l,ActivateModule);
 		addMember(l,DeactivateModule);
 		addMember(l,Process);
-		addMember(l,"allowActivationOnMobileDevice",get_allowActivationOnMobileDevice,set_allowActivationOnMobileDevice,true);
+		addMember(l,"forceModuleActive",get_forceModuleActive,set_forceModuleActive,true);
 		addMember(l,"inputActionsPerSecond",get_inputActionsPerSecond,set_inputActionsPerSecond,true);
+		addMember(l,"repeatDelay",get_repeatDelay,set_repeatDelay,true);
 		addMember(l,"horizontalAxis",get_horizontalAxis,set_horizontalAxis,true);
 		addMember(l,"verticalAxis",get_verticalAxis,set_verticalAxis,true);
 		addMember(l,"submitButton",get_submitButton,set_submitButton,true);

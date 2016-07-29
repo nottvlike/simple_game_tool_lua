@@ -48,26 +48,14 @@ public class Lua_UnityEngine_Events_UnityEventBase : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int DisablePersistentListener(IntPtr l) {
+	static public int SetPersistentListenerState(IntPtr l) {
 		try {
 			UnityEngine.Events.UnityEventBase self=(UnityEngine.Events.UnityEventBase)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
-			self.DisablePersistentListener(a1);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int EnablePersistentListener(IntPtr l) {
-		try {
-			UnityEngine.Events.UnityEventBase self=(UnityEngine.Events.UnityEventBase)checkSelf(l);
-			System.Int32 a1;
-			checkType(l,2,out a1);
-			self.EnablePersistentListener(a1);
+			UnityEngine.Events.UnityEventCallState a2;
+			checkEnum(l,3,out a2);
+			self.SetPersistentListenerState(a1,a2);
 			pushValue(l,true);
 			return 1;
 		}
@@ -110,8 +98,7 @@ public class Lua_UnityEngine_Events_UnityEventBase : LuaObject {
 		addMember(l,GetPersistentEventCount);
 		addMember(l,GetPersistentTarget);
 		addMember(l,GetPersistentMethodName);
-		addMember(l,DisablePersistentListener);
-		addMember(l,EnablePersistentListener);
+		addMember(l,SetPersistentListenerState);
 		addMember(l,RemoveAllListeners);
 		addMember(l,GetValidMethodInfo_s);
 		createTypeMetatable(l,null, typeof(UnityEngine.Events.UnityEventBase));

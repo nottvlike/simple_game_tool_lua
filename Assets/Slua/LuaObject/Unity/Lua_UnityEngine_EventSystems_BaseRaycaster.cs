@@ -33,11 +33,23 @@ public class Lua_UnityEngine_EventSystems_BaseRaycaster : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_priority(IntPtr l) {
+	static public int get_sortOrderPriority(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.BaseRaycaster self=(UnityEngine.EventSystems.BaseRaycaster)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.priority);
+			pushValue(l,self.sortOrderPriority);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_renderOrderPriority(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.BaseRaycaster self=(UnityEngine.EventSystems.BaseRaycaster)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.renderOrderPriority);
 			return 2;
 		}
 		catch(Exception e) {
@@ -48,7 +60,8 @@ public class Lua_UnityEngine_EventSystems_BaseRaycaster : LuaObject {
 		getTypeTable(l,"UnityEngine.EventSystems.BaseRaycaster");
 		addMember(l,Raycast);
 		addMember(l,"eventCamera",get_eventCamera,null,true);
-		addMember(l,"priority",get_priority,null,true);
+		addMember(l,"sortOrderPriority",get_sortOrderPriority,null,true);
+		addMember(l,"renderOrderPriority",get_renderOrderPriority,null,true);
 		createTypeMetatable(l,null, typeof(UnityEngine.EventSystems.BaseRaycaster),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

@@ -1,0 +1,110 @@
+local Animator = require 'Mod.AITank.Script.Base.Tank.Animator'
+local Module = require 'Mod.AITank.Script.Base.Tank.Module'
+local Buff = require 'Mod.AITank.Script.Base.Tank.Buff'
+local BaseBuff = require 'Mod.AITank.Script.Base.BaseBuff'
+local Attribute = require 'Mod.AITank.Script.Base.Tank.Attribute'
+local HurtCollision = require 'Mod.AITank.Script.Base.Tank.HurtCollision'
+local MissileA = require 'Mod.AITank.Script.Base.MissileA'
+local SkillDataBase = require 'Mod.AITank.Config.SkillDataBase'
+local BaseTank = Class("BaseTank")
+
+function BaseTank:ctor(parent, group, destroy)
+	self.name = "tank"
+	self.parent = parent
+	self.prefabName = "TankA"
+	self.group = group
+	self.modules = {}
+
+	self.foundationAngle = 0
+	self.turretAngle = 0
+
+	self.selected = false
+	self.lastFireTime = 0
+	self.fireSpeed = 3
+	self.destroyFunc = destroy
+end
+
+function BaseTank:init(func)
+	if self.parent then
+		ResourceManager.GetInstance():SingleLineLoad(self.prefabName, function(obj)
+			local transform = self.parent:GetComponent(Transform)
+			self.gameObject = PoolManager.GetInstance():CloneGameObject("BaseTank", obj, transform.position, transform.rotation)
+			self.transform = self.gameObject:GetComponent(Transform)
+
+			local turret = self.transform:Find("Turret")
+			local foundation = self.transform:Find("Foundation")
+			self.missileRoot = self.transform:Find("Turret/TurretRoot")
+			self.selectedObj = self.transform:Find("Selected").gameObject
+			self.turretTransform = turret:GetComponent(Transform)
+			self.foundationTransform = foundation:GetComponent(Transform)
+
+			self.animator = Animator.new(self)
+			self.module = Module.new(self)
+			self.attribute = Attribute.new(self)
+
+			LuaEventManager.AddUpdateEvent(self.gameObject, function()
+				self:update()
+			end)
+
+			if func then
+				func()
+			end
+		end)
+	end
+end
+
+function BaseTank:update()
+	self.animator:update()
+	self.module:updateModule()
+end
+
+function BaseTank:canMove()
+	if self.animator.rotateFoundationTime < 1 then
+		return false
+	end
+
+	return true
+end
+
+function BaseTank:canFire()
+	if Time.time - self.lastFireTime < self.fireSpeed then
+		return false
+	end
+
+	self.lastFireTime = Time.time
+	return true
+end
+
+function BaseTank:fire()
+	if not self:canFire() then
+		return
+	end
+
+	self.firetime = 0
+	local missile = MissileA.new(self)
+	missile:init()
+end
+
+function BaseTank:setSelected(isSelected)
+	self.selected = isSelected
+	self.selectedObj:SetActive(isSelected)
+end
+
+function BaseTank:destroy()
+	if self.destroyFunc then
+		self.destroyFunc(self)
+	end
+	
+	PoolManager.GetInstance():ReleaseGameObject("BaseTank", self.gameObject)
+	self = nil
+end
+
+function BaseTank:onAttacked(isSelected)
+
+end
+
+function BaseTank:onHurted(isSelected)
+
+end
+
+return BaseTank

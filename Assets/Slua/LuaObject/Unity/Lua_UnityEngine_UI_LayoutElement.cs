@@ -29,6 +29,32 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_ignoreLayout(IntPtr l) {
+		try {
+			UnityEngine.UI.LayoutElement self=(UnityEngine.UI.LayoutElement)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.ignoreLayout);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_ignoreLayout(IntPtr l) {
+		try {
+			UnityEngine.UI.LayoutElement self=(UnityEngine.UI.LayoutElement)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.ignoreLayout=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_minWidth(IntPtr l) {
 		try {
 			UnityEngine.UI.LayoutElement self=(UnityEngine.UI.LayoutElement)checkSelf(l);
@@ -200,6 +226,7 @@ public class Lua_UnityEngine_UI_LayoutElement : LuaObject {
 		getTypeTable(l,"UnityEngine.UI.LayoutElement");
 		addMember(l,CalculateLayoutInputHorizontal);
 		addMember(l,CalculateLayoutInputVertical);
+		addMember(l,"ignoreLayout",get_ignoreLayout,set_ignoreLayout,true);
 		addMember(l,"minWidth",get_minWidth,set_minWidth,true);
 		addMember(l,"minHeight",get_minHeight,set_minHeight,true);
 		addMember(l,"preferredWidth",get_preferredWidth,set_preferredWidth,true);

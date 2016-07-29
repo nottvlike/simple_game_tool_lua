@@ -310,19 +310,6 @@ public class Lua_UnityEngine_GL : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetRevertBackfacing_s(IntPtr l) {
-		try {
-			System.Boolean a1;
-			checkType(l,1,out a1);
-			UnityEngine.GL.SetRevertBackfacing(a1);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Clear_s(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -387,9 +374,22 @@ public class Lua_UnityEngine_GL : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IssuePluginEvent_s(IntPtr l) {
 		try {
-			System.Int32 a1;
+			System.IntPtr a1;
 			checkType(l,1,out a1);
-			UnityEngine.GL.IssuePluginEvent(a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			UnityEngine.GL.IssuePluginEvent(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RenderTargetBarrier_s(IntPtr l) {
+		try {
+			UnityEngine.GL.RenderTargetBarrier();
 			pushValue(l,true);
 			return 1;
 		}
@@ -513,6 +513,30 @@ public class Lua_UnityEngine_GL : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_invertCulling(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.GL.invertCulling);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_invertCulling(IntPtr l) {
+		try {
+			bool v;
+			checkType(l,2,out v);
+			UnityEngine.GL.invertCulling=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.GL");
 		addMember(l,Vertex3_s);
@@ -535,11 +559,11 @@ public class Lua_UnityEngine_GL : LuaObject {
 		addMember(l,PushMatrix_s);
 		addMember(l,PopMatrix_s);
 		addMember(l,GetGPUProjectionMatrix_s);
-		addMember(l,SetRevertBackfacing_s);
 		addMember(l,Clear_s);
 		addMember(l,ClearWithSkybox_s);
 		addMember(l,InvalidateState_s);
 		addMember(l,IssuePluginEvent_s);
+		addMember(l,RenderTargetBarrier_s);
 		addMember(l,"TRIANGLES",get_TRIANGLES,null,false);
 		addMember(l,"TRIANGLE_STRIP",get_TRIANGLE_STRIP,null,false);
 		addMember(l,"QUADS",get_QUADS,null,false);
@@ -547,6 +571,7 @@ public class Lua_UnityEngine_GL : LuaObject {
 		addMember(l,"modelview",get_modelview,set_modelview,false);
 		addMember(l,"wireframe",get_wireframe,set_wireframe,false);
 		addMember(l,"sRGBWrite",get_sRGBWrite,set_sRGBWrite,false);
+		addMember(l,"invertCulling",get_invertCulling,set_invertCulling,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.GL));
 	}
 }

@@ -311,6 +311,17 @@ public class Lua_UnityEngine_Input : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_mouseScrollDelta(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Input.mouseScrollDelta);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mousePresent(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -427,6 +438,39 @@ public class Lua_UnityEngine_Input : LuaObject {
 		try {
 			pushValue(l,true);
 			pushValue(l,UnityEngine.Input.touchCount);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_touchPressureSupported(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Input.touchPressureSupported);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_stylusTouchSupported(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Input.stylusTouchSupported);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_touchSupported(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Input.touchSupported);
 			return 2;
 		}
 		catch(Exception e) {
@@ -560,6 +604,30 @@ public class Lua_UnityEngine_Input : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_backButtonLeavesApp(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Input.backButtonLeavesApp);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_backButtonLeavesApp(IntPtr l) {
+		try {
+			bool v;
+			checkType(l,2,out v);
+			UnityEngine.Input.backButtonLeavesApp=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Input");
 		addMember(l,GetAxis_s);
@@ -580,6 +648,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 		addMember(l,"compensateSensors",get_compensateSensors,set_compensateSensors,false);
 		addMember(l,"gyro",get_gyro,null,false);
 		addMember(l,"mousePosition",get_mousePosition,null,false);
+		addMember(l,"mouseScrollDelta",get_mouseScrollDelta,null,false);
 		addMember(l,"mousePresent",get_mousePresent,null,false);
 		addMember(l,"simulateMouseWithTouches",get_simulateMouseWithTouches,set_simulateMouseWithTouches,false);
 		addMember(l,"anyKey",get_anyKey,null,false);
@@ -590,6 +659,9 @@ public class Lua_UnityEngine_Input : LuaObject {
 		addMember(l,"accelerationEventCount",get_accelerationEventCount,null,false);
 		addMember(l,"touches",get_touches,null,false);
 		addMember(l,"touchCount",get_touchCount,null,false);
+		addMember(l,"touchPressureSupported",get_touchPressureSupported,null,false);
+		addMember(l,"stylusTouchSupported",get_stylusTouchSupported,null,false);
+		addMember(l,"touchSupported",get_touchSupported,null,false);
 		addMember(l,"multiTouchEnabled",get_multiTouchEnabled,set_multiTouchEnabled,false);
 		addMember(l,"location",get_location,null,false);
 		addMember(l,"compass",get_compass,null,false);
@@ -598,6 +670,7 @@ public class Lua_UnityEngine_Input : LuaObject {
 		addMember(l,"compositionString",get_compositionString,null,false);
 		addMember(l,"imeIsSelected",get_imeIsSelected,null,false);
 		addMember(l,"compositionCursorPos",get_compositionCursorPos,set_compositionCursorPos,false);
+		addMember(l,"backButtonLeavesApp",get_backButtonLeavesApp,set_backButtonLeavesApp,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Input));
 	}
 }

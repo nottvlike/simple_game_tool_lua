@@ -278,6 +278,35 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_hasTranslationDoF(IntPtr l) {
+		try {
+			UnityEngine.HumanDescription self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.hasTranslationDoF);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_hasTranslationDoF(IntPtr l) {
+		try {
+			UnityEngine.HumanDescription self;
+			checkValueType(l,1,out self);
+			bool v;
+			checkType(l,2,out v);
+			self.hasTranslationDoF=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.HumanDescription");
 		addMember(l,"human",get_human,set_human,true);
@@ -289,6 +318,7 @@ public class Lua_UnityEngine_HumanDescription : LuaObject {
 		addMember(l,"armStretch",get_armStretch,set_armStretch,true);
 		addMember(l,"legStretch",get_legStretch,set_legStretch,true);
 		addMember(l,"feetSpacing",get_feetSpacing,set_feetSpacing,true);
+		addMember(l,"hasTranslationDoF",get_hasTranslationDoF,set_hasTranslationDoF,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.HumanDescription),typeof(System.ValueType));
 	}
 }

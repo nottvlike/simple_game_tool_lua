@@ -1,0 +1,82 @@
+local HurtCollision = require 'Mod.AITank.Script.Base.Tank.HurtCollision'
+local BaseBuff = require 'Mod.AITank.Script.Base.BaseBuff'
+local Buff = require 'Mod.AITank.Script.Base.Tank.Buff'
+local Attribute = require 'Mod.AITank.Script.Base.Tank.Attribute'
+local SkillDataBase = require 'Mod.AITank.Config.SkillDataBase'
+local missile = Class("MissileA")
+
+function missile:ctor(parent)
+	self.name = "missile"
+	self.parent = parent
+	self.root = parent.missileRoot
+	self.angle = parent.turretAngle
+	self.prefabName = "MissileA"
+
+	self.life = 10
+	self.speed = 0.8
+	self.moveTime = 0
+
+	self.sourcePosition = Vector3.zero
+	self.targetPosition = Vector3.zero
+end
+
+function missile:init()
+	if not self.parent then
+		return 
+	end
+
+	ResourceManager.GetInstance():SingleLineLoad(self.prefabName, function(obj)
+		local transform = self.root:GetComponent(Transform)
+		self.gameObject = PoolManager.GetInstance():CloneGameObject("MissileA", obj, transform.position, transform.rotation)
+		self.transform = self.gameObject:GetComponent(Transform)
+
+		self.sourcePosition = self.transform.position
+		self.targetPosition = self.transform.position
+
+		self.hurtCollision = HurtCollision.new(self)
+		self.attribute = Attribute.new(self)
+		self.buff = Buff.new(self)
+
+		for i,v in pairs(SkillDataBase.MissileA.buffs) do
+			self.buff:add(i, v)
+		end
+
+		--self.buff:addBuff(BaseBuff.new(SkillDataBase.MissileA.buffs))
+
+		LuaEventManager.AddUpdateEvent(self.gameObject, function()
+			self:update()
+		end)
+
+		self.targetPosition.x = self.targetPosition.x + self.speed * self.life * math.sin(math.rad(self.angle)) * -1
+		self.targetPosition.y = self.targetPosition.y + self.speed * self.life * math.cos(math.rad(self.angle))
+	end)
+end
+
+function missile:update()
+	self:updateMove()
+	self.buff:update()
+end
+
+function missile:updateMove()
+	if self.moveTime <= 1 then
+		self.moveTime = self.moveTime + Time.deltaTime * self.speed
+		self.transform.position = Vector3.Lerp(self.sourcePosition, self.targetPosition, self.moveTime)
+	else
+		self:destroy()
+	end
+end
+
+function missile:destroy()
+	PoolManager.GetInstance():ReleaseGameObject("MissileA", self.gameObject)
+	self = nil
+end
+
+function missile:onAttacked()
+	self:destroy()
+end
+
+function missile:onHurted()
+
+end
+
+return missile

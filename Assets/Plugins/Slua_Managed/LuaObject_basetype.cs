@@ -194,42 +194,42 @@ namespace SLua
 		#region long
 		static public bool checkType(IntPtr l, int p, out long v)
 		{
-#if LUA_5_3
-            v = (long)LuaDLL.luaL_checkinteger(l, p);
+#if LUA_OLD
+            v = (long)LuaDLL.luaL_checknumber(l, p);
 #else
-			v = (long)LuaDLL.luaL_checknumber(l, p);
+            v = (long)LuaDLL.luaL_checkinteger(l, p);
 #endif
 			return true;
 		}
 		
 		public static void pushValue(IntPtr l, long i)
 		{
-#if LUA_5_3
-            LuaDLL.lua_pushinteger(l,i);
-#else
+#if LUA_OLD
 			LuaDLL.lua_pushnumber(l, i);
+#else
+            LuaDLL.lua_pushinteger(l, i);
 #endif
-		}
+        }
 		
 		#endregion
 
 		#region ulong
 		static public bool checkType(IntPtr l, int p, out ulong v)
 		{
-#if LUA_5_3
-			v = (ulong)LuaDLL.luaL_checkinteger(l, p);
+#if LUA_OLD
+            v = (ulong)LuaDLL.luaL_checknumber(l, p);
 #else
-			v = (ulong)LuaDLL.luaL_checknumber(l, p);
+            v = (ulong)LuaDLL.luaL_checkinteger(l, p); 
 #endif
 			return true;
 		}
 		
 		public static void pushValue(IntPtr l, ulong o)
 		{
-			#if LUA_5_3
-			LuaDLL.lua_pushinteger(l, (long)o);
-			#else
-			LuaDLL.lua_pushnumber(l, o);
+			#if LUA_OLD
+            LuaDLL.lua_pushnumber(l, o);
+            #else
+            LuaDLL.lua_pushinteger(l, (long)o); 
 			#endif
 		}
 		#endregion

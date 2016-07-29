@@ -192,35 +192,11 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_isReadyToPlay(IntPtr l) {
-		try {
-			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.isReadyToPlay);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_loadType(IntPtr l) {
 		try {
 			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
 			pushValue(l,true);
 			pushEnum(l,(int)self.loadType);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_format(IntPtr l) {
-		try {
-			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
-			pushValue(l,true);
-			pushEnum(l,(int)self.format);
 			return 2;
 		}
 		catch(Exception e) {
@@ -240,11 +216,11 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_audioDataLoaded(IntPtr l) {
+	static public int get_loadState(IntPtr l) {
 		try {
 			UnityEngine.AudioClip self=(UnityEngine.AudioClip)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.audioDataLoaded);
+			pushEnum(l,(int)self.loadState);
 			return 2;
 		}
 		catch(Exception e) {
@@ -274,11 +250,9 @@ public class Lua_UnityEngine_AudioClip : LuaObject {
 		addMember(l,"samples",get_samples,null,true);
 		addMember(l,"channels",get_channels,null,true);
 		addMember(l,"frequency",get_frequency,null,true);
-		addMember(l,"isReadyToPlay",get_isReadyToPlay,null,true);
 		addMember(l,"loadType",get_loadType,null,true);
-		addMember(l,"format",get_format,null,true);
 		addMember(l,"preloadAudioData",get_preloadAudioData,null,true);
-		addMember(l,"audioDataLoaded",get_audioDataLoaded,null,true);
+		addMember(l,"loadState",get_loadState,null,true);
 		addMember(l,"loadInBackground",get_loadInBackground,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioClip),typeof(UnityEngine.Object));
 	}

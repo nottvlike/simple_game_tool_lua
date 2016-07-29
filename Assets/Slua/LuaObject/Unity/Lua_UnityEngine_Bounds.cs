@@ -186,6 +186,22 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ClosestPoint(IntPtr l) {
+		try {
+			UnityEngine.Bounds self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector3 a1;
+			checkType(l,2,out a1);
+			var ret=self.ClosestPoint(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int op_Equality(IntPtr l) {
 		try {
 			UnityEngine.Bounds a1;
@@ -371,6 +387,7 @@ public class Lua_UnityEngine_Bounds : LuaObject {
 		addMember(l,Contains);
 		addMember(l,SqrDistance);
 		addMember(l,IntersectRay);
+		addMember(l,ClosestPoint);
 		addMember(l,op_Equality);
 		addMember(l,op_Inequality);
 		addMember(l,"center",get_center,set_center,true);

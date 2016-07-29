@@ -31,6 +31,19 @@ public class Lua_UnityEngine_AssetBundleManifest : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetAllAssetBundlesWithVariant(IntPtr l) {
+		try {
+			UnityEngine.AssetBundleManifest self=(UnityEngine.AssetBundleManifest)checkSelf(l);
+			var ret=self.GetAllAssetBundlesWithVariant();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetAssetBundleHash(IntPtr l) {
 		try {
 			UnityEngine.AssetBundleManifest self=(UnityEngine.AssetBundleManifest)checkSelf(l);
@@ -78,6 +91,7 @@ public class Lua_UnityEngine_AssetBundleManifest : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AssetBundleManifest");
 		addMember(l,GetAllAssetBundles);
+		addMember(l,GetAllAssetBundlesWithVariant);
 		addMember(l,GetAssetBundleHash);
 		addMember(l,GetDirectDependencies);
 		addMember(l,GetAllDependencies);

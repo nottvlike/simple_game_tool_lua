@@ -112,12 +112,39 @@ public class Lua_UnityEngine_CanvasGroup : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_ignoreParentGroups(IntPtr l) {
+		try {
+			UnityEngine.CanvasGroup self=(UnityEngine.CanvasGroup)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.ignoreParentGroups);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_ignoreParentGroups(IntPtr l) {
+		try {
+			UnityEngine.CanvasGroup self=(UnityEngine.CanvasGroup)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.ignoreParentGroups=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CanvasGroup");
 		addMember(l,IsRaycastLocationValid);
 		addMember(l,"alpha",get_alpha,set_alpha,true);
 		addMember(l,"interactable",get_interactable,set_interactable,true);
 		addMember(l,"blocksRaycasts",get_blocksRaycasts,set_blocksRaycasts,true);
+		addMember(l,"ignoreParentGroups",get_ignoreParentGroups,set_ignoreParentGroups,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CanvasGroup),typeof(UnityEngine.Component));
 	}
 }

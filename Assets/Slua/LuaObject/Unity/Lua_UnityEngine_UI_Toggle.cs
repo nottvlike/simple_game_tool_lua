@@ -5,6 +5,44 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_UI_Toggle : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Rebuild(IntPtr l) {
+		try {
+			UnityEngine.UI.Toggle self=(UnityEngine.UI.Toggle)checkSelf(l);
+			UnityEngine.UI.CanvasUpdate a1;
+			checkEnum(l,2,out a1);
+			self.Rebuild(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LayoutComplete(IntPtr l) {
+		try {
+			UnityEngine.UI.Toggle self=(UnityEngine.UI.Toggle)checkSelf(l);
+			self.LayoutComplete();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GraphicUpdateComplete(IntPtr l) {
+		try {
+			UnityEngine.UI.Toggle self=(UnityEngine.UI.Toggle)checkSelf(l);
+			self.GraphicUpdateComplete();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OnPointerClick(IntPtr l) {
 		try {
 			UnityEngine.UI.Toggle self=(UnityEngine.UI.Toggle)checkSelf(l);
@@ -164,6 +202,9 @@ public class Lua_UnityEngine_UI_Toggle : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Toggle");
+		addMember(l,Rebuild);
+		addMember(l,LayoutComplete);
+		addMember(l,GraphicUpdateComplete);
 		addMember(l,OnPointerClick);
 		addMember(l,OnSubmit);
 		addMember(l,"toggleTransition",get_toggleTransition,set_toggleTransition,true);

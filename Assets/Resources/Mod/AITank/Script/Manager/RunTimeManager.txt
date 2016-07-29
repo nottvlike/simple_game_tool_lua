@@ -1,0 +1,41 @@
+local runtime = Class("RunTimeManager")
+
+local TankTypeDeal = {
+	Normal = function(root, ...)
+		local tank = require 'Mod.AITank.Script.Base.Tank.BaseTank'
+		return tank.new(root, ...)
+	end,	
+}
+
+function runtime:ctor()
+	self.tankset = {}
+end
+
+function runtime:createTank(tankType, func, root, ...)
+	if not TankTypeDeal[tankType] then
+		print("Error runtime:createTank, tankType not found!")
+		return
+	end
+
+	local tank = TankTypeDeal[tankType](root, ...)
+	tank:init(function()
+		self.tankset[tank.gameObject] = tank
+
+		if func then
+			func(tank)
+		end
+	end)
+end
+
+function runtime:getTankByObject(object)
+	local tank = self.tankset[object]
+	if not tank then
+		print(string.format("Error runtime:getTankByObject, tank %s not found!", tostring(object)))
+		return
+	end
+
+	return tank
+end
+
+local manager = runtime.new()
+return manager

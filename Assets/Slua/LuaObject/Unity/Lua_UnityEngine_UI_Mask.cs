@@ -5,31 +5,6 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_UI_Mask : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int MaskEnabled(IntPtr l) {
-		try {
-			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
-			var ret=self.MaskEnabled();
-			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int OnSiblingGraphicEnabledDisabled(IntPtr l) {
-		try {
-			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
-			self.OnSiblingGraphicEnabledDisabled();
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsRaycastLocationValid(IntPtr l) {
 		try {
 			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
@@ -55,6 +30,18 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 			var ret=self.GetModifiedMaterial(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_rectTransform(IntPtr l) {
+		try {
+			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.rectTransform);
 			return 2;
 		}
 		catch(Exception e) {
@@ -88,11 +75,11 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_rectTransform(IntPtr l) {
+	static public int get_graphic(IntPtr l) {
 		try {
 			UnityEngine.UI.Mask self=(UnityEngine.UI.Mask)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.rectTransform);
+			pushValue(l,self.graphic);
 			return 2;
 		}
 		catch(Exception e) {
@@ -101,12 +88,11 @@ public class Lua_UnityEngine_UI_Mask : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Mask");
-		addMember(l,MaskEnabled);
-		addMember(l,OnSiblingGraphicEnabledDisabled);
 		addMember(l,IsRaycastLocationValid);
 		addMember(l,GetModifiedMaterial);
-		addMember(l,"showMaskGraphic",get_showMaskGraphic,set_showMaskGraphic,true);
 		addMember(l,"rectTransform",get_rectTransform,null,true);
+		addMember(l,"showMaskGraphic",get_showMaskGraphic,set_showMaskGraphic,true);
+		addMember(l,"graphic",get_graphic,null,true);
 		createTypeMetatable(l,null, typeof(UnityEngine.UI.Mask),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

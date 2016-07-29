@@ -18,7 +18,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddFloat(IntPtr l) {
+	static public int SetFloat(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
 			if(matchType(l,argc,2,typeof(int),typeof(float))){
@@ -27,7 +27,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				System.Single a2;
 				checkType(l,3,out a2);
-				self.AddFloat(a1,a2);
+				self.SetFloat(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -37,7 +37,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				System.Single a2;
 				checkType(l,3,out a2);
-				self.AddFloat(a1,a2);
+				self.SetFloat(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -50,7 +50,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddVector(IntPtr l) {
+	static public int SetVector(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
 			if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Vector4))){
@@ -59,7 +59,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Vector4 a2;
 				checkType(l,3,out a2);
-				self.AddVector(a1,a2);
+				self.SetVector(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -69,7 +69,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Vector4 a2;
 				checkType(l,3,out a2);
-				self.AddVector(a1,a2);
+				self.SetVector(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -82,7 +82,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddColor(IntPtr l) {
+	static public int SetColor(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
 			if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Color))){
@@ -91,7 +91,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Color a2;
 				checkType(l,3,out a2);
-				self.AddColor(a1,a2);
+				self.SetColor(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -101,7 +101,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Color a2;
 				checkType(l,3,out a2);
-				self.AddColor(a1,a2);
+				self.SetColor(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -114,7 +114,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddMatrix(IntPtr l) {
+	static public int SetMatrix(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
 			if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Matrix4x4))){
@@ -123,7 +123,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Matrix4x4 a2;
 				checkValueType(l,3,out a2);
-				self.AddMatrix(a1,a2);
+				self.SetMatrix(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -133,7 +133,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Matrix4x4 a2;
 				checkValueType(l,3,out a2);
-				self.AddMatrix(a1,a2);
+				self.SetMatrix(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -146,7 +146,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddTexture(IntPtr l) {
+	static public int SetTexture(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
 			if(matchType(l,argc,2,typeof(int),typeof(UnityEngine.Texture))){
@@ -155,7 +155,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Texture a2;
 				checkType(l,3,out a2);
-				self.AddTexture(a1,a2);
+				self.SetTexture(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -165,7 +165,7 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 				checkType(l,2,out a1);
 				UnityEngine.Texture a2;
 				checkType(l,3,out a2);
-				self.AddTexture(a1,a2);
+				self.SetTexture(a1,a2);
 				pushValue(l,true);
 				return 1;
 			}
@@ -309,18 +309,31 @@ public class Lua_UnityEngine_MaterialPropertyBlock : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isEmpty(IntPtr l) {
+		try {
+			UnityEngine.MaterialPropertyBlock self=(UnityEngine.MaterialPropertyBlock)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.isEmpty);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.MaterialPropertyBlock");
-		addMember(l,AddFloat);
-		addMember(l,AddVector);
-		addMember(l,AddColor);
-		addMember(l,AddMatrix);
-		addMember(l,AddTexture);
+		addMember(l,SetFloat);
+		addMember(l,SetVector);
+		addMember(l,SetColor);
+		addMember(l,SetMatrix);
+		addMember(l,SetTexture);
 		addMember(l,GetFloat);
 		addMember(l,GetVector);
 		addMember(l,GetMatrix);
 		addMember(l,GetTexture);
 		addMember(l,Clear);
+		addMember(l,"isEmpty",get_isEmpty,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.MaterialPropertyBlock));
 	}
 }

@@ -131,24 +131,51 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadImageIntoTexture(IntPtr l) {
+	static public int GetAudioClipCompressed(IntPtr l) {
 		try {
-			UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
-			UnityEngine.Texture2D a1;
-			checkType(l,2,out a1);
-			self.LoadImageIntoTexture(a1);
-			pushValue(l,true);
-			return 1;
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
+				var ret=self.GetAudioClipCompressed();
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==2){
+				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
+				System.Boolean a1;
+				checkType(l,2,out a1);
+				var ret=self.GetAudioClipCompressed(a1);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==3){
+				UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
+				System.Boolean a1;
+				checkType(l,2,out a1);
+				UnityEngine.AudioType a2;
+				checkEnum(l,3,out a2);
+				var ret=self.GetAudioClipCompressed(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadUnityWeb(IntPtr l) {
+	static public int LoadImageIntoTexture(IntPtr l) {
 		try {
 			UnityEngine.WWW self=(UnityEngine.WWW)checkSelf(l);
-			self.LoadUnityWeb();
+			UnityEngine.Texture2D a1;
+			checkType(l,2,out a1);
+			self.LoadImageIntoTexture(a1);
 			pushValue(l,true);
 			return 1;
 		}
@@ -471,8 +498,8 @@ public class Lua_UnityEngine_WWW : LuaObject {
 		addMember(l,Dispose);
 		addMember(l,InitWWW);
 		addMember(l,GetAudioClip);
+		addMember(l,GetAudioClipCompressed);
 		addMember(l,LoadImageIntoTexture);
-		addMember(l,LoadUnityWeb);
 		addMember(l,EscapeURL_s);
 		addMember(l,UnEscapeURL_s);
 		addMember(l,LoadFromCacheOrDownload_s);

@@ -1,0 +1,68 @@
+local OpenClosePanel = require 'Script.Base.OpenClosePanel'
+local UIManager = require 'Script.Manager.UIManager'
+local ServerItemInfo = require 'Script.Prefab.UI.Login.ServerItemInfo'
+local ServerListPanel = Class("ServerListPanel", OpenClosePanel)
+
+ServerState = {
+	Normal = "Normal",
+	Busy = "Busy",
+	Stop = "Stop",
+}
+
+function ServerListPanel:Ctor()
+	OpenClosePanel.Ctor(self)
+
+end
+
+function ServerListPanel:Init()
+	if not self.IsInit then
+		self.IsInit = true
+		UIManager.RegisterPanel(PanelType.ServerListPanel, self)
+
+		self.window = GameObject.Find("UI Root Login/LoginWindow/Login Root/Server List Panel")
+		self.returnBtn = GameObject.Find("UI Root Login/LoginWindow/Login Root/Server List Panel/CloseTween/ServerListBack/Return Button"):GetComponent("UIButton")
+		self.serverListGrid = GameObject.Find("UI Root Login/LoginWindow/Login Root/Server List Panel/CloseTween/ServerListBack/BlackBack/Scroll View/Server Grid"):GetComponent("UIGrid")
+		self.serverItemObj = GameObject.Find("UI Root Login/LoginWindow/Login Root/Server List Panel/CloseTween/ServerListBack/Back2/Grid/2ServerID")
+		self.serverListScrollView = GameObject.Find("UI Root Login/LoginWindow/Login Root/Server List Panel/CloseTween/ServerListBack/BlackBack/Scroll View"):GetComponent("UIScrollView")
+		
+		--NGUI.EventDelegate.Add(self.beginBtn.onClick, handler(self,self.OnLoginClick), false)
+		--NGUI.EventDelegate.Add(self.serverBtn.onClick, handler(self,self.OnServerClick), false)
+		--NGUI.EventDelegate.Add(self.switchBtn.onClick, handler(self,self.OnSwitchUserClick), false)
+
+		self.serverInfoItemList = {}
+		self.normalServerList = {
+		{id=1,name="test1"},
+		{id=2,name="test2"},
+		{id=3,name="test3"},
+		}
+
+		self:InitServer()
+	end
+
+	--self.window:SetActive(false)
+end
+
+function ServerListPanel:InitServer()
+	local parent = self.serverListGrid.transform
+	templateTransform = self.serverItemObj.transform
+	for i,v in pairs(self.normalServerList) do
+		local item = GameObject.Instantiate(self.serverItemObj, templateTransform.position, templateTransform.rotation)
+		print(tostring(item))
+		local itemTransform = item.transform
+		itemTransform.parent = parent
+		itemTransform.localScale = Vector3.one
+		itemTransform.localRotation = templateTransform.localRotation
+		local serverItem = ServerItemInfo.New(self, item, v)
+		self.serverInfoItemList[v] = serverItem
+	end
+end
+
+function ServerListPanel:OnPanelStartOpen()
+
+end
+
+function ServerListPanel:OnPanelStartClose()
+
+end
+
+return ServerListPanel

@@ -7,10 +7,11 @@ public class Lua_UnityEngine_DrivenTransformProperties : LuaObject {
 	static public void reg(IntPtr l) {
 		getEnumTable(l,"UnityEngine.DrivenTransformProperties");
 		addMember(l,0,"None");
-		addMember(l,2,"PositionX");
-		addMember(l,4,"PositionY");
-		addMember(l,8,"PositionZ");
-		addMember(l,14,"Position");
+		addMember(l,2,"AnchoredPositionX");
+		addMember(l,4,"AnchoredPositionY");
+		addMember(l,6,"AnchoredPosition");
+		addMember(l,8,"AnchoredPositionZ");
+		addMember(l,14,"AnchoredPosition3D");
 		addMember(l,16,"Rotation");
 		addMember(l,32,"ScaleX");
 		addMember(l,64,"ScaleY");

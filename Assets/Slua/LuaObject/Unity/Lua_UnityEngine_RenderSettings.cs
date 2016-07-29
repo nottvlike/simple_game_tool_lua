@@ -282,6 +282,30 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_ambientIntensity(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.RenderSettings.ambientIntensity);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_ambientIntensity(IntPtr l) {
+		try {
+			float v;
+			checkType(l,2,out v);
+			UnityEngine.RenderSettings.ambientIntensity=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_ambientProbe(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -295,9 +319,57 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int set_ambientProbe(IntPtr l) {
 		try {
-			UnityEngine.Rendering.SphericalHarmonics3 v;
+			UnityEngine.Rendering.SphericalHarmonicsL2 v;
 			checkValueType(l,2,out v);
 			UnityEngine.RenderSettings.ambientProbe=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_reflectionIntensity(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.RenderSettings.reflectionIntensity);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_reflectionIntensity(IntPtr l) {
+		try {
+			float v;
+			checkType(l,2,out v);
+			UnityEngine.RenderSettings.reflectionIntensity=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_reflectionBounces(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.RenderSettings.reflectionBounces);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_reflectionBounces(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.RenderSettings.reflectionBounces=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -426,6 +498,30 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_defaultReflectionResolution(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.RenderSettings.defaultReflectionResolution);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_defaultReflectionResolution(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.RenderSettings.defaultReflectionResolution=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_customReflection(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -462,12 +558,16 @@ public class Lua_UnityEngine_RenderSettings : LuaObject {
 		addMember(l,"ambientEquatorColor",get_ambientEquatorColor,set_ambientEquatorColor,false);
 		addMember(l,"ambientGroundColor",get_ambientGroundColor,set_ambientGroundColor,false);
 		addMember(l,"ambientLight",get_ambientLight,set_ambientLight,false);
+		addMember(l,"ambientIntensity",get_ambientIntensity,set_ambientIntensity,false);
 		addMember(l,"ambientProbe",get_ambientProbe,set_ambientProbe,false);
+		addMember(l,"reflectionIntensity",get_reflectionIntensity,set_reflectionIntensity,false);
+		addMember(l,"reflectionBounces",get_reflectionBounces,set_reflectionBounces,false);
 		addMember(l,"haloStrength",get_haloStrength,set_haloStrength,false);
 		addMember(l,"flareStrength",get_flareStrength,set_flareStrength,false);
 		addMember(l,"flareFadeSpeed",get_flareFadeSpeed,set_flareFadeSpeed,false);
 		addMember(l,"skybox",get_skybox,set_skybox,false);
 		addMember(l,"defaultReflectionMode",get_defaultReflectionMode,set_defaultReflectionMode,false);
+		addMember(l,"defaultReflectionResolution",get_defaultReflectionResolution,set_defaultReflectionResolution,false);
 		addMember(l,"customReflection",get_customReflection,set_customReflection,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.RenderSettings),typeof(UnityEngine.Object));
 	}

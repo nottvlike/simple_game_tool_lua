@@ -27,6 +27,21 @@ public class Lua_UnityEngine_Rendering_BlendOp : LuaObject {
 		addMember(l,18,"LogicalAndInverted");
 		addMember(l,19,"LogicalOrReverse");
 		addMember(l,20,"LogicalOrInverted");
+		addMember(l,21,"Multiply");
+		addMember(l,22,"Screen");
+		addMember(l,23,"Overlay");
+		addMember(l,24,"Darken");
+		addMember(l,25,"Lighten");
+		addMember(l,26,"ColorDodge");
+		addMember(l,27,"ColorBurn");
+		addMember(l,28,"HardLight");
+		addMember(l,29,"SoftLight");
+		addMember(l,30,"Difference");
+		addMember(l,31,"Exclusion");
+		addMember(l,32,"HSLHue");
+		addMember(l,33,"HSLSaturation");
+		addMember(l,34,"HSLColor");
+		addMember(l,35,"HSLLuminosity");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

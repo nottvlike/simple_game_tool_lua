@@ -39,9 +39,57 @@ public class Lua_UnityEngine_Hash128 : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int op_Equality(IntPtr l) {
+		try {
+			UnityEngine.Hash128 a1;
+			checkValueType(l,1,out a1);
+			UnityEngine.Hash128 a2;
+			checkValueType(l,2,out a2);
+			var ret=(a1==a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int op_Inequality(IntPtr l) {
+		try {
+			UnityEngine.Hash128 a1;
+			checkValueType(l,1,out a1);
+			UnityEngine.Hash128 a2;
+			checkValueType(l,2,out a2);
+			var ret=(a1!=a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isValid(IntPtr l) {
+		try {
+			UnityEngine.Hash128 self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.isValid);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Hash128");
 		addMember(l,Parse_s);
+		addMember(l,op_Equality);
+		addMember(l,op_Inequality);
+		addMember(l,"isValid",get_isValid,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Hash128),typeof(System.ValueType));
 	}
 }

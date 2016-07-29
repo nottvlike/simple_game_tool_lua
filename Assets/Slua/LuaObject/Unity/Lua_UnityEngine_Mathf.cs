@@ -478,6 +478,24 @@ public class Lua_UnityEngine_Mathf : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LerpUnclamped_s(IntPtr l) {
+		try {
+			System.Single a1;
+			checkType(l,1,out a1);
+			System.Single a2;
+			checkType(l,2,out a2);
+			System.Single a3;
+			checkType(l,3,out a3);
+			var ret=UnityEngine.Mathf.LerpUnclamped(a1,a2,a3);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LerpAngle_s(IntPtr l) {
 		try {
 			System.Single a1;
@@ -982,6 +1000,7 @@ public class Lua_UnityEngine_Mathf : LuaObject {
 		addMember(l,Clamp_s);
 		addMember(l,Clamp01_s);
 		addMember(l,Lerp_s);
+		addMember(l,LerpUnclamped_s);
 		addMember(l,LerpAngle_s);
 		addMember(l,MoveTowards_s);
 		addMember(l,MoveTowardsAngle_s);

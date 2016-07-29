@@ -274,22 +274,6 @@ public class Lua_UnityEngine_Font : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_textureRebuildCallback(IntPtr l) {
-		try {
-			UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
-			UnityEngine.Font.FontTextureRebuildCallback v;
-			int op=LuaDelegation.checkDelegate(l,2,out v);
-			if(op==0) self.textureRebuildCallback=v;
-			else if(op==1) self.textureRebuildCallback+=v;
-			else if(op==2) self.textureRebuildCallback-=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_dynamic(IntPtr l) {
 		try {
 			UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
@@ -325,6 +309,18 @@ public class Lua_UnityEngine_Font : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_fontSize(IntPtr l) {
+		try {
+			UnityEngine.Font self=(UnityEngine.Font)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.fontSize);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Font");
 		addMember(l,HasCharacter);
@@ -336,10 +332,10 @@ public class Lua_UnityEngine_Font : LuaObject {
 		addMember(l,"material",get_material,set_material,true);
 		addMember(l,"fontNames",get_fontNames,set_fontNames,true);
 		addMember(l,"characterInfo",get_characterInfo,set_characterInfo,true);
-		addMember(l,"textureRebuildCallback",null,set_textureRebuildCallback,true);
 		addMember(l,"dynamic",get_dynamic,null,true);
 		addMember(l,"ascent",get_ascent,null,true);
 		addMember(l,"lineHeight",get_lineHeight,null,true);
+		addMember(l,"fontSize",get_fontSize,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Font),typeof(UnityEngine.Object));
 	}
 }

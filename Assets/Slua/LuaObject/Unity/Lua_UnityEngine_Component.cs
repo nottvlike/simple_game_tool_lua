@@ -20,12 +20,27 @@ public class Lua_UnityEngine_Component : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponent(IntPtr l) {
 		try {
-			UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
-			System.Type a1;
-			checkType(l,2,out a1);
-			var ret=self.GetComponent(a1);
-			pushValue(l,true);
-			pushValue(l,ret);
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(string))){
+				UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
+				System.String a1;
+				checkType(l,2,out a1);
+				var ret=self.GetComponent(a1);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,2,typeof(System.Type))){
+				UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
+				System.Type a1;
+				checkType(l,2,out a1);
+				var ret=self.GetComponent(a1);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
 			return 2;
 		}
 		catch(Exception e) {
@@ -35,12 +50,29 @@ public class Lua_UnityEngine_Component : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetComponentInChildren(IntPtr l) {
 		try {
-			UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
-			System.Type a1;
-			checkType(l,2,out a1);
-			var ret=self.GetComponentInChildren(a1);
-			pushValue(l,true);
-			pushValue(l,ret);
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
+				System.Type a1;
+				checkType(l,2,out a1);
+				var ret=self.GetComponentInChildren(a1);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==3){
+				UnityEngine.Component self=(UnityEngine.Component)checkSelf(l);
+				System.Type a1;
+				checkType(l,2,out a1);
+				System.Boolean a2;
+				checkType(l,3,out a2);
+				var ret=self.GetComponentInChildren(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
 			return 2;
 		}
 		catch(Exception e) {

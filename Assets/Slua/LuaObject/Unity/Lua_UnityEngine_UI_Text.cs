@@ -5,6 +5,18 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_UI_Text : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FontTextureChanged(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			self.FontTextureChanged();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetGenerationSettings(IntPtr l) {
 		try {
 			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
@@ -76,70 +88,6 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 			pushValue(l,true);
 			pushValue(l,self.cachedTextGeneratorForLayout);
 			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_defaultMaterial(IntPtr l) {
-		try {
-			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.defaultMaterial);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_shownAsPassword(IntPtr l) {
-		try {
-			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.shownAsPassword);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_shownAsPassword(IntPtr l) {
-		try {
-			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
-			bool v;
-			checkType(l,2,out v);
-			self.shownAsPassword=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_showPasswordLastChar(IntPtr l) {
-		try {
-			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.showPasswordLastChar);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_showPasswordLastChar(IntPtr l) {
-		try {
-			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
-			bool v;
-			checkType(l,2,out v);
-			self.showPasswordLastChar=v;
-			pushValue(l,true);
-			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -340,6 +288,32 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.alignByGeometry);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.alignByGeometry=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_fontSize(IntPtr l) {
 		try {
 			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
@@ -358,6 +332,84 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 			int v;
 			checkType(l,2,out v);
 			self.fontSize=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_horizontalOverflow(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.horizontalOverflow);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_horizontalOverflow(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			UnityEngine.HorizontalWrapMode v;
+			checkEnum(l,2,out v);
+			self.horizontalOverflow=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_verticalOverflow(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.verticalOverflow);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_verticalOverflow(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			UnityEngine.VerticalWrapMode v;
+			checkEnum(l,2,out v);
+			self.verticalOverflow=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_lineSpacing(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.lineSpacing);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_lineSpacing(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.lineSpacing=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -386,6 +438,18 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 			self.fontStyle=v;
 			pushValue(l,true);
 			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pixelsPerUnit(IntPtr l) {
+		try {
+			UnityEngine.UI.Text self=(UnityEngine.UI.Text)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.pixelsPerUnit);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -477,15 +541,13 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Text");
+		addMember(l,FontTextureChanged);
 		addMember(l,GetGenerationSettings);
 		addMember(l,CalculateLayoutInputHorizontal);
 		addMember(l,CalculateLayoutInputVertical);
 		addMember(l,GetTextAnchorPivot_s);
 		addMember(l,"cachedTextGenerator",get_cachedTextGenerator,null,true);
 		addMember(l,"cachedTextGeneratorForLayout",get_cachedTextGeneratorForLayout,null,true);
-		addMember(l,"defaultMaterial",get_defaultMaterial,null,true);
-		addMember(l,"shownAsPassword",get_shownAsPassword,set_shownAsPassword,true);
-		addMember(l,"showPasswordLastChar",get_showPasswordLastChar,set_showPasswordLastChar,true);
 		addMember(l,"mainTexture",get_mainTexture,null,true);
 		addMember(l,"font",get_font,set_font,true);
 		addMember(l,"text",get_text,set_text,true);
@@ -494,8 +556,13 @@ public class Lua_UnityEngine_UI_Text : LuaObject {
 		addMember(l,"resizeTextMinSize",get_resizeTextMinSize,set_resizeTextMinSize,true);
 		addMember(l,"resizeTextMaxSize",get_resizeTextMaxSize,set_resizeTextMaxSize,true);
 		addMember(l,"alignment",get_alignment,set_alignment,true);
+		addMember(l,"alignByGeometry",get_alignByGeometry,set_alignByGeometry,true);
 		addMember(l,"fontSize",get_fontSize,set_fontSize,true);
+		addMember(l,"horizontalOverflow",get_horizontalOverflow,set_horizontalOverflow,true);
+		addMember(l,"verticalOverflow",get_verticalOverflow,set_verticalOverflow,true);
+		addMember(l,"lineSpacing",get_lineSpacing,set_lineSpacing,true);
 		addMember(l,"fontStyle",get_fontStyle,set_fontStyle,true);
+		addMember(l,"pixelsPerUnit",get_pixelsPerUnit,null,true);
 		addMember(l,"minWidth",get_minWidth,null,true);
 		addMember(l,"preferredWidth",get_preferredWidth,null,true);
 		addMember(l,"flexibleWidth",get_flexibleWidth,null,true);

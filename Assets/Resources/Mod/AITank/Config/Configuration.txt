@@ -1,0 +1,9 @@
+{
+	"Configs" : [
+		{
+			"ConfigName" : "AssetBundleConfig",
+			"ResourcePath" : "Mod/AITank/Config/AssetBundleConfig",
+			"version" : "1.0.0"
+		}
+	]
+}

@@ -300,10 +300,10 @@ return index
 				typePushMap[typeof(UInt64)] =
 				(IntPtr L, object o) =>
 				{
-#if LUA_5_3
-					LuaDLL.lua_pushinteger(L, (long)o);
+#if LUA_OLD
+                    LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
 #else
-					LuaDLL.lua_pushnumber(L, System.Convert.ToDouble(o));
+                    LuaDLL.lua_pushinteger(L, (long)o);
 #endif
 				};
 
@@ -829,13 +829,13 @@ return index
                 case LuaTypes.LUA_TNIL:
                     return !t.IsValueType && !t.IsPrimitive;
 				case LuaTypes.LUA_TNUMBER:
-#if LUA_5_3
-					if (LuaDLL.lua_isinteger(l, p) > 0)
-						return (t.IsPrimitive && t != typeof(float) && t != typeof(double)) || t.IsEnum;
-					else
-						return t == typeof(float) || t == typeof(double);
+#if LUA_OLD
+                    return t.IsPrimitive || t.IsEnum;
 #else
-					return t.IsPrimitive || t.IsEnum;
+                    if (LuaDLL.lua_isinteger(l, p) > 0)
+                        return (t.IsPrimitive && t != typeof(float) && t != typeof(double)) || t.IsEnum;
+                    else
+                        return t == typeof(float) || t == typeof(double);
 #endif
 				case LuaTypes.LUA_TUSERDATA:
 					object o = checkObj(l, p);

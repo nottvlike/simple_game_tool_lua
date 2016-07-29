@@ -17,6 +17,8 @@ namespace SLua {
 				Lua_UpdateManager.reg,
 				Lua_FileManager.reg,
 				Lua_TcpSocket.reg,
+				Lua_iTween.reg,
+				Lua_PoolManager.reg,
 			};
 			return list;
 		}

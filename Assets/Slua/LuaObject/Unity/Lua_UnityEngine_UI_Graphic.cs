@@ -67,6 +67,30 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LayoutComplete(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			self.LayoutComplete();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GraphicUpdateComplete(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			self.GraphicUpdateComplete();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetNativeSize(IntPtr l) {
 		try {
 			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
@@ -162,6 +186,90 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RegisterDirtyLayoutCallback(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			UnityEngine.Events.UnityAction a1;
+			LuaDelegation.checkDelegate(l,2,out a1);
+			self.RegisterDirtyLayoutCallback(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int UnregisterDirtyLayoutCallback(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			UnityEngine.Events.UnityAction a1;
+			LuaDelegation.checkDelegate(l,2,out a1);
+			self.UnregisterDirtyLayoutCallback(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RegisterDirtyVerticesCallback(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			UnityEngine.Events.UnityAction a1;
+			LuaDelegation.checkDelegate(l,2,out a1);
+			self.RegisterDirtyVerticesCallback(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int UnregisterDirtyVerticesCallback(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			UnityEngine.Events.UnityAction a1;
+			LuaDelegation.checkDelegate(l,2,out a1);
+			self.UnregisterDirtyVerticesCallback(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RegisterDirtyMaterialCallback(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			UnityEngine.Events.UnityAction a1;
+			LuaDelegation.checkDelegate(l,2,out a1);
+			self.RegisterDirtyMaterialCallback(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int UnregisterDirtyMaterialCallback(IntPtr l) {
+		try {
+			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
+			UnityEngine.Events.UnityAction a1;
+			LuaDelegation.checkDelegate(l,2,out a1);
+			self.UnregisterDirtyMaterialCallback(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_defaultGraphicMaterial(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -199,11 +307,11 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_pixelsPerUnit(IntPtr l) {
+	static public int get_raycastTarget(IntPtr l) {
 		try {
 			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.pixelsPerUnit);
+			pushValue(l,self.raycastTarget);
 			return 2;
 		}
 		catch(Exception e) {
@@ -211,12 +319,12 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_pixelsPerUnit(IntPtr l) {
+	static public int set_raycastTarget(IntPtr l) {
 		try {
 			UnityEngine.UI.Graphic self=(UnityEngine.UI.Graphic)checkSelf(l);
-			float v;
+			bool v;
 			checkType(l,2,out v);
-			self.pixelsPerUnit=v;
+			self.raycastTarget=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -341,15 +449,23 @@ public class Lua_UnityEngine_UI_Graphic : LuaObject {
 		addMember(l,SetVerticesDirty);
 		addMember(l,SetMaterialDirty);
 		addMember(l,Rebuild);
+		addMember(l,LayoutComplete);
+		addMember(l,GraphicUpdateComplete);
 		addMember(l,SetNativeSize);
 		addMember(l,Raycast);
 		addMember(l,PixelAdjustPoint);
 		addMember(l,GetPixelAdjustedRect);
 		addMember(l,CrossFadeColor);
 		addMember(l,CrossFadeAlpha);
+		addMember(l,RegisterDirtyLayoutCallback);
+		addMember(l,UnregisterDirtyLayoutCallback);
+		addMember(l,RegisterDirtyVerticesCallback);
+		addMember(l,UnregisterDirtyVerticesCallback);
+		addMember(l,RegisterDirtyMaterialCallback);
+		addMember(l,UnregisterDirtyMaterialCallback);
 		addMember(l,"defaultGraphicMaterial",get_defaultGraphicMaterial,null,false);
 		addMember(l,"color",get_color,set_color,true);
-		addMember(l,"pixelsPerUnit",get_pixelsPerUnit,set_pixelsPerUnit,true);
+		addMember(l,"raycastTarget",get_raycastTarget,set_raycastTarget,true);
 		addMember(l,"depth",get_depth,null,true);
 		addMember(l,"rectTransform",get_rectTransform,null,true);
 		addMember(l,"canvas",get_canvas,null,true);

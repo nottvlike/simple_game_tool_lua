@@ -1,0 +1,261 @@
+local UIManager = require 'Mod.AITank.Script.Manager.UIManager'
+local BaseWindow = require 'Mod.AITank.Script.Base.UIWindow'
+local ModuleItem = require 'Mod.AITank.Script.UI.UIModuleItem'
+local bag = Class("UIModuleBag", BaseWindow)
+
+local CELL_WIDTH = 256
+local CELL_HEIGHT = 64
+local CELL_HEIGHT_PADING_Y = 10
+
+local INIT_SCROLL_HEIGHT = 474
+local EQUIP_WIDTH = 549
+
+function bag:ctor()
+	self.prefabName = "ModuleBag"
+	self.testTanks = {}
+	
+	self.selected = 0
+	self.setcontrol = false
+
+	self.ownItems = {}
+	self.ownItemsCount = 0
+
+	self.equipItems = {}
+	self.equipItemsCount = 0
+end
+
+function bag:init(func)
+	if not self.gameObject then
+		BaseWindow.init(self, function()
+			self.transform = self.gameObject:GetComponent(RectTransform)
+			self.item = self.transform:Find("module").gameObject
+			self.exitButton = self.transform:Find("Panel/ExitButton").gameObject:GetComponent(UI.Button)
+			self.ownScrollViewObject = self.transform:Find("OwnScrollView").gameObject
+			self.ownScrollView = self.transform:Find("OwnScrollView").gameObject:GetComponent(UI.ScrollRect)
+			self.ownGridObject = self.transform:Find("OwnScrollView/Grid").gameObject
+			self.ownGrid = self.ownGridObject:GetComponent(UI.GridLayoutGroup)
+			self.ownGridRect = self.ownGridObject:GetComponent(RectTransform)
+			self.equipScrollView = self.transform:Find("EquipScrollView").gameObject:GetComponent(UI.ScrollRect)
+			self.equipGridObject = self.transform:Find("EquipScrollView/Grid").gameObject
+			self.equipGrid = self.equipGridObject:GetComponent(UI.GridLayoutGroup)
+			self.equipGridRect = self.equipGridObject:GetComponent(RectTransform)
+			self.detailText = self.transform:Find("DetailScrollView/Text").gameObject:GetComponent(UI.Text)
+			self.addTankButton = self.transform:Find("Panel/AddTestTank").gameObject:GetComponent(UI.Button)			
+			self.setControlButton = self.transform:Find("Panel/SetControl").gameObject:GetComponent(UI.Button)
+			self.setSelectedButton = self.transform:Find("Panel/SetSelected").gameObject:GetComponent(UI.Button)
+
+			if func then
+				func()
+			end
+
+			self:initOwnModule()
+
+			self.exitButton.onClick:AddListener(
+				function()
+					UIManager:close()
+				end)
+			self.addTankButton.onClick:AddListener(
+				function()
+					self:addTestTank()
+				end)
+			self.setControlButton.onClick:AddListener(
+				function()
+					self:setControl()
+				end)	
+			self.setSelectedButton.onClick:AddListener(
+				function()
+					self:setSelected()
+				end)			
+		end)
+	else
+		if func then
+			func()
+		end
+	end
+end
+
+function bag:initOwnModule()
+	local search = require 'Mod.AITank.Script.Module.Search'
+	local attack = require 'Mod.AITank.Script.Module.Attack'
+	local searchItem = ModuleItem.new(self.item, search.new(), self)
+	local attackItem = ModuleItem.new(self.item, attack.new(), self)
+
+	searchItem:init(function()
+			self.ownItems[searchItem.gameObject] = searchItem
+			searchItem.transform:SetParent(self.ownGridRect)
+			searchItem.transform.localScale = Vector3(1, 1, 1)
+			self.ownItemsCount = self.ownItemsCount + 1
+		end)
+	attackItem:init(function()
+			self.ownItems[attackItem.gameObject] = attackItem
+			attackItem.transform:SetParent(self.ownGridRect)
+			attackItem.transform.localScale = Vector3(1, 1, 1)
+			self.ownItemsCount = self.ownItemsCount + 1
+		end)
+
+	self:updateOwnModule()
+end
+
+function bag:updateOwnModule()
+	local height = self.ownItemsCount * (CELL_HEIGHT + CELL_HEIGHT_PADING_Y)
+	if height < INIT_SCROLL_HEIGHT then
+		height = INIT_SCROLL_HEIGHT
+	end
+	
+	self.ownGridRect.sizeDelta = Vector2(CELL_WIDTH, height)
+end
+
+function bag:updateEquipModule()
+	local height = self.equipItemsCount * (CELL_HEIGHT + CELL_HEIGHT_PADING_Y)
+	if height < INIT_SCROLL_HEIGHT then
+		height = INIT_SCROLL_HEIGHT
+	end
+	self.equipGridRect.sizeDelta = Vector2(CELL_WIDTH, height)
+end
+
+function bag:addToEquipModule(item)
+	if not self.tank then
+		return
+	end
+	local module = self.tank.module
+	if not self.setcontrol and module:hasModule(item.module.name) then
+		return 
+	end
+
+	if self.ownItems[item.gameObject] then
+		local copyItem = item:copy()
+		copyItem:init(function()
+			copyItem.itemType = 1
+			copyItem.addButtonObject:SetActive(false)
+			copyItem.delteButtonObject:SetActive(true)
+			copyItem.transform:SetParent(self.equipGridRect)
+			copyItem.transform.localScale = Vector3(1, 1, 1)
+			
+			self.equipItems[copyItem.gameObject] = copyItem
+			self.equipItemsCount = self.equipItemsCount + 1			
+			self:updateEquipModule()
+			
+			if not self.setcontrol then
+				module:addModule(item.module:copy())
+			else
+				local conm = self.controlset.module
+				conm:addModule(item.module:copy())
+			end
+		end)
+	end
+end
+
+function bag:addModuleToEquipModule(module)
+	local item = ModuleItem.new(self.item, module, self)
+	item:init(function()
+		item.itemType = 1
+		item.addButtonObject:SetActive(false)
+		item.delteButtonObject:SetActive(true)
+		item.transform:SetParent(self.equipGridRect)
+		item.transform.localScale = Vector3(1, 1, 1)
+		
+		self.equipItems[item.gameObject] = item
+		self.equipItemsCount = self.equipItemsCount + 1			
+		self:updateEquipModule()
+	end)
+end
+
+function bag:clearEquipModule()
+	self.equipItemsCount = 0
+	for _,v in pairs(self.equipItems) do
+		v.transform:SetParent(self.transform)
+		v.gameObject:SetActive(false)
+		v:destroy()
+	end
+	self.equipItems = {}
+end
+
+function bag:removeFromEquipModule(item)
+	if self.equipItems[item.gameObject] then
+		self.equipItems[item.gameObject] = nil
+		self.equipItemsCount = self.equipItemsCount - 1
+		self:updateEquipModule()
+
+		self.tank:removeModule(item.module)
+		item:destroy()
+	end
+end
+
+local i = 0
+function bag:addTestTank()
+	local manager = require 'Mod.AITank.Script.Manager.RunTimeManager'
+
+	local posTankA = GameObject.Find("TankA")
+
+	local destroy = function(tank)
+		self:removeTestTank(tank)
+	end
+
+	manager:createTank("Normal", function(tank)
+		tank.animator:rotateFoundation(-180)
+		table.insert(self.testTanks, tank)
+		self:setSelectedTank(tank)
+		end, posTankA, 1, destroy)
+end
+
+function bag:removeTestTank(tank)
+	for i = 1, #(self.testTanks) do
+		local tmp = self.testTanks[i]
+		if tmp == tank then
+			table.remove(self.testTanks, i)
+			return
+		end
+	end
+	self:setSelected()
+end
+
+function bag:setControl()
+	self.setcontrol = true
+	if not self.controlset then
+		local ControlCenter = require 'Mod.AITank.Script.Base.ControlCenter'
+		self.controlset = ControlCenter.new()
+	end
+
+	if self.tank then
+		self.tank:setSelected(false)
+	end
+	self:clearEquipModule()
+
+	for _,v in pairs(self.controlset.module.modules) do
+		self:addModuleToEquipModule(v)
+	end	
+end
+
+function bag:setSelectedTank(tank)
+	self:clearEquipModule()
+
+	if self.tank then
+		self.tank:setSelected(false)
+	end
+	self.tank = tank
+	self.tank:setSelected(true)
+	for _,v in pairs(tank.module.modules) do
+		self:addModuleToEquipModule(v)
+	end	
+end
+
+function bag:setSelected()
+	self.setcontrol = false
+	if #(self.testTanks) <= 0 then
+		return
+	end
+
+	self.selected = self.selected + 1
+	if self.selected > #(self.testTanks) then
+		self.selected = 1
+	end
+
+	local tank = self.testTanks[self.selected]
+
+	if not tank then
+		self:setSelected()
+	end
+	self:setSelectedTank(tank)
+end
+
+UIManager:register("UIModuleBag", bag)

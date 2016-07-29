@@ -454,6 +454,30 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetCenterOfMass(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody self=(UnityEngine.Rigidbody)checkSelf(l);
+			self.ResetCenterOfMass();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ResetInertiaTensor(IntPtr l) {
+		try {
+			UnityEngine.Rigidbody self=(UnityEngine.Rigidbody)checkSelf(l);
+			self.ResetInertiaTensor();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SweepTest(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -476,6 +500,21 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				System.Single a3;
 				checkType(l,4,out a3);
 				var ret=self.SweepTest(a1,out a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a2);
+				return 3;
+			}
+			else if(argc==5){
+				UnityEngine.Rigidbody self=(UnityEngine.Rigidbody)checkSelf(l);
+				UnityEngine.Vector3 a1;
+				checkType(l,2,out a1);
+				UnityEngine.RaycastHit a2;
+				System.Single a3;
+				checkType(l,4,out a3);
+				UnityEngine.QueryTriggerInteraction a4;
+				checkEnum(l,5,out a4);
+				var ret=self.SweepTest(a1,out a2,a3,a4);
 				pushValue(l,true);
 				pushValue(l,ret);
 				pushValue(l,a2);
@@ -509,6 +548,19 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 				System.Single a2;
 				checkType(l,3,out a2);
 				var ret=self.SweepTestAll(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Rigidbody self=(UnityEngine.Rigidbody)checkSelf(l);
+				UnityEngine.Vector3 a1;
+				checkType(l,2,out a1);
+				System.Single a2;
+				checkType(l,3,out a2);
+				UnityEngine.QueryTriggerInteraction a3;
+				checkEnum(l,4,out a3);
+				var ret=self.SweepTestAll(a1,a2,a3);
 				pushValue(l,true);
 				pushValue(l,ret);
 				return 2;
@@ -1122,6 +1174,8 @@ public class Lua_UnityEngine_Rigidbody : LuaObject {
 		addMember(l,Sleep);
 		addMember(l,IsSleeping);
 		addMember(l,WakeUp);
+		addMember(l,ResetCenterOfMass);
+		addMember(l,ResetInertiaTensor);
 		addMember(l,SweepTest);
 		addMember(l,SweepTestAll);
 		addMember(l,"velocity",get_velocity,set_velocity,true);

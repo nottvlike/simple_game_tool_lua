@@ -1,7 +1,4 @@
-﻿#define LOG_DEBUG
-//#define RESOURCE_DEBUG
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Text;
 using SLua;
@@ -11,40 +8,45 @@ public class LuaManager : Singleton<LuaManager> {
 	LuaSvr l;
 	StringBuilder _sb = new StringBuilder();
 	const string START_SCRIPT = "Update/Update.txt";
-	
+
+    public LuaSvr L
+    {
+        get 
+        {
+            return l;
+        }
+    }
+
 	public static LuaManager GetInstance()
 	{
 		return Instance;
 	}
 	
-	public static string GetAssetBundlePath()
+	public static string GetExternalDir(bool hasPrefix = false)
 	{
-#if RESOURCE_DEBUG
+#if UNITY_EDITOR
+    #if RESOURCE_DEBUG
 		return "";
-#elif UNITY_EDITOR
-		return Application.streamingAssetsPath + "/";
+    #endif
 #else
+    #if UNITY_ANDROID
 		return "jar:file://" + Application.dataPath + "/!/assets/";
+    #endif
 #endif
+        if (hasPrefix)
+        {
+            return "file:///" + Application.dataPath + "/StreamingAssets" + "/";
+        }
+        return Application.dataPath + "/StreamingAssets" + "/";
 	}
-	
-	public static string GetScriptPath()
-	{
-		return GetAssetBundlePath();
-	}
-	
-	public static string GetConfigPath()
-	{
-		return GetAssetBundlePath();
-	}
-	
+
 	public void Init()
 	{
-#if RESOURCE_DEBUG
-#else
+#if !RESOURCE_DEBUG
 		LuaState.loaderDelegate += LoaderDelegate;
 #endif
-		
+        ModManager.Instance.Init();
+
 		l = new LuaSvr();
 		l.init(null, Complete, LuaSvrFlag.LSF_EXTLIB);
 		DontDestroyOnLoad(this);
@@ -52,16 +54,16 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	void Complete()
 	{
+        //若是载入了独立mod，则无需再执行本地游戏逻辑了
+        if (ModManager.Instance.LoadMod())
+            return;
+
 #if RESOURCE_DEBUG
 		l.start(START_SCRIPT.Replace(".txt", ""));
 #else
 		UpdateManager.Instance.Download (
-#if UNITY_EDITOR
-			string.Format ("file:///{0}/{1}", UpdateManager.UpdateTest, START_SCRIPT),
-#else
-			string.Format ("{0}/{1}", "jar:file://" + Application.dataPath + "/!/assets", START_SCRIPT),
-#endif
-			string.Format ("{0}/{1}", GetScriptPath (), START_SCRIPT),
+			string.Format ("{0}/{1}", GetExternalDir(true), START_SCRIPT),
+			"",
 			UpdateManager.DownloadFileType.TypeText,
 			LoadLuaString,
 			false);
@@ -70,7 +72,7 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	void LoadLuaString(string str)
 	{
-		l.startDoString(str);
+        l.startDoString(str);
 	}
 	
 	byte[] LoaderDelegate(string filePath)
@@ -78,8 +80,6 @@ public class LuaManager : Singleton<LuaManager> {
 		byte[] list = null;
 		
 		_sb.Remove(0, _sb.Length);
-		//_sb.Append(GetScriptPath());
-		//_sb.Append("/");
 		_sb.Append(filePath);
 		_sb = _sb.Replace('.', '/');
 		_sb.Append(".txt");

@@ -18,11 +18,11 @@ public class Lua_UnityEngine_AreaEffector2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_forceDirection(IntPtr l) {
+	static public int get_forceAngle(IntPtr l) {
 		try {
 			UnityEngine.AreaEffector2D self=(UnityEngine.AreaEffector2D)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.forceDirection);
+			pushValue(l,self.forceAngle);
 			return 2;
 		}
 		catch(Exception e) {
@@ -30,12 +30,38 @@ public class Lua_UnityEngine_AreaEffector2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_forceDirection(IntPtr l) {
+	static public int set_forceAngle(IntPtr l) {
 		try {
 			UnityEngine.AreaEffector2D self=(UnityEngine.AreaEffector2D)checkSelf(l);
 			float v;
 			checkType(l,2,out v);
-			self.forceDirection=v;
+			self.forceAngle=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_useGlobalAngle(IntPtr l) {
+		try {
+			UnityEngine.AreaEffector2D self=(UnityEngine.AreaEffector2D)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.useGlobalAngle);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_useGlobalAngle(IntPtr l) {
+		try {
+			UnityEngine.AreaEffector2D self=(UnityEngine.AreaEffector2D)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.useGlobalAngle=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -175,7 +201,8 @@ public class Lua_UnityEngine_AreaEffector2D : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.AreaEffector2D");
-		addMember(l,"forceDirection",get_forceDirection,set_forceDirection,true);
+		addMember(l,"forceAngle",get_forceAngle,set_forceAngle,true);
+		addMember(l,"useGlobalAngle",get_useGlobalAngle,set_useGlobalAngle,true);
 		addMember(l,"forceMagnitude",get_forceMagnitude,set_forceMagnitude,true);
 		addMember(l,"forceVariation",get_forceVariation,set_forceVariation,true);
 		addMember(l,"drag",get_drag,set_drag,true);

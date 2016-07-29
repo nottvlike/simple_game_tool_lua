@@ -5,6 +5,44 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int Rebuild(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.UI.CanvasUpdate a1;
+			checkEnum(l,2,out a1);
+			self.Rebuild(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LayoutComplete(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			self.LayoutComplete();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GraphicUpdateComplete(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			self.GraphicUpdateComplete();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int IsActive(IntPtr l) {
 		try {
 			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
@@ -12,6 +50,46 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int StopMovement(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			self.StopMovement();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OnScroll(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.EventSystems.PointerEventData a1;
+			checkType(l,2,out a1);
+			self.OnScroll(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OnInitializePotentialDrag(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.EventSystems.PointerEventData a1;
+			checkType(l,2,out a1);
+			self.OnInitializePotentialDrag(a1);
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -52,6 +130,54 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 			UnityEngine.EventSystems.PointerEventData a1;
 			checkType(l,2,out a1);
 			self.OnDrag(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CalculateLayoutInputHorizontal(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			self.CalculateLayoutInputHorizontal();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CalculateLayoutInputVertical(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			self.CalculateLayoutInputVertical();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetLayoutHorizontal(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			self.SetLayoutHorizontal();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetLayoutVertical(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			self.SetLayoutVertical();
 			pushValue(l,true);
 			return 1;
 		}
@@ -190,11 +316,11 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_intertia(IntPtr l) {
+	static public int get_inertia(IntPtr l) {
 		try {
 			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.intertia);
+			pushValue(l,self.inertia);
 			return 2;
 		}
 		catch(Exception e) {
@@ -202,12 +328,12 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_intertia(IntPtr l) {
+	static public int set_inertia(IntPtr l) {
 		try {
 			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
 			bool v;
 			checkType(l,2,out v);
-			self.intertia=v;
+			self.inertia=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -234,6 +360,58 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 			float v;
 			checkType(l,2,out v);
 			self.decelerationRate=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_scrollSensitivity(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.scrollSensitivity);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_scrollSensitivity(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.scrollSensitivity=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_viewport(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.viewport);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_viewport(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.RectTransform v;
+			checkType(l,2,out v);
+			self.viewport=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -286,6 +464,162 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 			UnityEngine.UI.Scrollbar v;
 			checkType(l,2,out v);
 			self.verticalScrollbar=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_horizontalScrollbarVisibility(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.horizontalScrollbarVisibility);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_horizontalScrollbarVisibility(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.UI.ScrollRect.ScrollbarVisibility v;
+			checkEnum(l,2,out v);
+			self.horizontalScrollbarVisibility=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_verticalScrollbarVisibility(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.verticalScrollbarVisibility);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_verticalScrollbarVisibility(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.UI.ScrollRect.ScrollbarVisibility v;
+			checkEnum(l,2,out v);
+			self.verticalScrollbarVisibility=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_horizontalScrollbarSpacing(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.horizontalScrollbarSpacing);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_horizontalScrollbarSpacing(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.horizontalScrollbarSpacing=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_verticalScrollbarSpacing(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.verticalScrollbarSpacing);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_verticalScrollbarSpacing(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.verticalScrollbarSpacing=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_onValueChanged(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.onValueChanged);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_onValueChanged(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.UI.ScrollRect.ScrollRectEvent v;
+			checkType(l,2,out v);
+			self.onValueChanged=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_velocity(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.velocity);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_velocity(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			UnityEngine.Vector2 v;
+			checkType(l,2,out v);
+			self.velocity=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -371,24 +705,133 @@ public class Lua_UnityEngine_UI_ScrollRect : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_minWidth(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.minWidth);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_preferredWidth(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.preferredWidth);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_flexibleWidth(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.flexibleWidth);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_minHeight(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.minHeight);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_preferredHeight(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.preferredHeight);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_flexibleHeight(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.flexibleHeight);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_layoutPriority(IntPtr l) {
+		try {
+			UnityEngine.UI.ScrollRect self=(UnityEngine.UI.ScrollRect)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.layoutPriority);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.ScrollRect");
+		addMember(l,Rebuild);
+		addMember(l,LayoutComplete);
+		addMember(l,GraphicUpdateComplete);
 		addMember(l,IsActive);
+		addMember(l,StopMovement);
+		addMember(l,OnScroll);
+		addMember(l,OnInitializePotentialDrag);
 		addMember(l,OnBeginDrag);
 		addMember(l,OnEndDrag);
 		addMember(l,OnDrag);
+		addMember(l,CalculateLayoutInputHorizontal);
+		addMember(l,CalculateLayoutInputVertical);
+		addMember(l,SetLayoutHorizontal);
+		addMember(l,SetLayoutVertical);
 		addMember(l,"content",get_content,set_content,true);
 		addMember(l,"horizontal",get_horizontal,set_horizontal,true);
 		addMember(l,"vertical",get_vertical,set_vertical,true);
 		addMember(l,"movementType",get_movementType,set_movementType,true);
 		addMember(l,"elasticity",get_elasticity,set_elasticity,true);
-		addMember(l,"intertia",get_intertia,set_intertia,true);
+		addMember(l,"inertia",get_inertia,set_inertia,true);
 		addMember(l,"decelerationRate",get_decelerationRate,set_decelerationRate,true);
+		addMember(l,"scrollSensitivity",get_scrollSensitivity,set_scrollSensitivity,true);
+		addMember(l,"viewport",get_viewport,set_viewport,true);
 		addMember(l,"horizontalScrollbar",get_horizontalScrollbar,set_horizontalScrollbar,true);
 		addMember(l,"verticalScrollbar",get_verticalScrollbar,set_verticalScrollbar,true);
+		addMember(l,"horizontalScrollbarVisibility",get_horizontalScrollbarVisibility,set_horizontalScrollbarVisibility,true);
+		addMember(l,"verticalScrollbarVisibility",get_verticalScrollbarVisibility,set_verticalScrollbarVisibility,true);
+		addMember(l,"horizontalScrollbarSpacing",get_horizontalScrollbarSpacing,set_horizontalScrollbarSpacing,true);
+		addMember(l,"verticalScrollbarSpacing",get_verticalScrollbarSpacing,set_verticalScrollbarSpacing,true);
+		addMember(l,"onValueChanged",get_onValueChanged,set_onValueChanged,true);
+		addMember(l,"velocity",get_velocity,set_velocity,true);
 		addMember(l,"normalizedPosition",get_normalizedPosition,set_normalizedPosition,true);
 		addMember(l,"horizontalNormalizedPosition",get_horizontalNormalizedPosition,set_horizontalNormalizedPosition,true);
 		addMember(l,"verticalNormalizedPosition",get_verticalNormalizedPosition,set_verticalNormalizedPosition,true);
+		addMember(l,"minWidth",get_minWidth,null,true);
+		addMember(l,"preferredWidth",get_preferredWidth,null,true);
+		addMember(l,"flexibleWidth",get_flexibleWidth,null,true);
+		addMember(l,"minHeight",get_minHeight,null,true);
+		addMember(l,"preferredHeight",get_preferredHeight,null,true);
+		addMember(l,"flexibleHeight",get_flexibleHeight,null,true);
+		addMember(l,"layoutPriority",get_layoutPriority,null,true);
 		createTypeMetatable(l,null, typeof(UnityEngine.UI.ScrollRect),typeof(UnityEngine.EventSystems.UIBehaviour));
 	}
 }

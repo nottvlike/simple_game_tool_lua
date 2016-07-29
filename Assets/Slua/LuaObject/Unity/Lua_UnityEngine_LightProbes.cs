@@ -18,18 +18,17 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetInterpolatedLightProbe(IntPtr l) {
+	static public int GetInterpolatedProbe_s(IntPtr l) {
 		try {
-			UnityEngine.LightProbes self=(UnityEngine.LightProbes)checkSelf(l);
 			UnityEngine.Vector3 a1;
-			checkType(l,2,out a1);
+			checkType(l,1,out a1);
 			UnityEngine.Renderer a2;
-			checkType(l,3,out a2);
-			System.Single[] a3;
-			checkArray(l,4,out a3);
-			self.GetInterpolatedLightProbe(a1,a2,a3);
+			checkType(l,2,out a2);
+			UnityEngine.Rendering.SphericalHarmonicsL2 a3;
+			UnityEngine.LightProbes.GetInterpolatedProbe(a1,a2,out a3);
 			pushValue(l,true);
-			return 1;
+			pushValue(l,a3);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -48,11 +47,11 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_coefficients(IntPtr l) {
+	static public int get_bakedProbes(IntPtr l) {
 		try {
 			UnityEngine.LightProbes self=(UnityEngine.LightProbes)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.coefficients);
+			pushValue(l,self.bakedProbes);
 			return 2;
 		}
 		catch(Exception e) {
@@ -60,12 +59,12 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_coefficients(IntPtr l) {
+	static public int set_bakedProbes(IntPtr l) {
 		try {
 			UnityEngine.LightProbes self=(UnityEngine.LightProbes)checkSelf(l);
-			System.Single[] v;
+			UnityEngine.Rendering.SphericalHarmonicsL2[] v;
 			checkArray(l,2,out v);
-			self.coefficients=v;
+			self.bakedProbes=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -99,9 +98,9 @@ public class Lua_UnityEngine_LightProbes : LuaObject {
 	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LightProbes");
-		addMember(l,GetInterpolatedLightProbe);
+		addMember(l,GetInterpolatedProbe_s);
 		addMember(l,"positions",get_positions,null,true);
-		addMember(l,"coefficients",get_coefficients,set_coefficients,true);
+		addMember(l,"bakedProbes",get_bakedProbes,set_bakedProbes,true);
 		addMember(l,"count",get_count,null,true);
 		addMember(l,"cellCount",get_cellCount,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LightProbes),typeof(UnityEngine.Object));

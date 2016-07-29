@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using SLua;
 
@@ -7,10 +8,11 @@ using SLua;
 public class PrefabRequest{
     string _prefabName = "";
     string _assetBundlePath = "";
-    string _resourcePath = "";
+    string _prefabPath = "";
+    List<string> _dependenciesPath = null;
+    LuaFunction _callBack = null;
     GameObject _prefab = null;
     bool _isAssetBundle = false;
-	LuaFunction _callBack = null;
 
     public string PrefabName
     {
@@ -20,7 +22,7 @@ public class PrefabRequest{
         }
     }
 
-    public string AssetBundlePath
+    public string AssetbundlePath
     {
         get 
         {
@@ -28,26 +30,35 @@ public class PrefabRequest{
         }
     }
 
-    public string ResourcePath
+    public string PrefabPath
     {
         get 
         {
-            return _resourcePath;
+            return _prefabPath;
         }
     }
 
-    public void Init(string prefabName, string prefabPath, string resourcePath, bool isAssetBundle)
+    public List<string> DependenciesPath
+    {
+        get
+        {
+            return _dependenciesPath;
+        }
+    }
+
+    public void Init(string prefabName, string assetbundlePath, string prefabPath, List<string> dependenciesPath, bool isAssetBundle)
     {
         _prefabName = prefabName;
-        _assetBundlePath = prefabPath;
-        _resourcePath = resourcePath;
+        _assetBundlePath = assetbundlePath;
+        _prefabPath = prefabPath;
+        _dependenciesPath = dependenciesPath;
         _isAssetBundle = isAssetBundle;
     }
 
 	public void Load(LuaFunction func)
 	{
 		_callBack = func;
-		if (_callBack != null && _prefab != null)
+		if (_prefab != null)
 		{
 			LoadFinished();
 		}
@@ -66,19 +77,34 @@ public class PrefabRequest{
 	{
 		AssetBundle bundle;
 		AssetBundleRequest request;
-		
-		string filepath = "";
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-		filepath = LuaManager.GetScriptPath () + _assetBundlePath;
-#else
-		filepath = "file://" +LuaManager.GetScriptPath() + _assetBundlePath;
-#endif
+        //预先载入共享assetbundle
+        for (int i = 0; i < _dependenciesPath.Count; ++i)
+        {
+            var dependName = _dependenciesPath[i];
+            Dependency dependency = null;
+            if (!ResourceManager.Instance.GetSharedDependencies(dependName, out dependency) || dependency.IsLoaded)
+            {
+                continue;
+            }
+
+            WWW depend = new WWW(dependency.AssetbundlePath);
+            yield return depend;
+            bundle = depend.assetBundle;
+
+            //没保存prefab name,所以使用loadall方法，有明显卡顿的话再改
+			dependency.DependenciesObject.AddRange(bundle.LoadAllAssets());
+            dependency.IsLoaded = true;
+            bundle.Unload(false);
+        }
+
+        //载入主assetbundle
+		string filepath = LuaManager.GetExternalDir(true) + _assetBundlePath;
 		WWW www = new WWW(filepath);
 		yield return www;
 		bundle = www.assetBundle;
 
-		request = bundle.LoadAsync(_prefabName, typeof(GameObject));
+		request = bundle.LoadAssetAsync<GameObject>(_prefabName);
 		yield return request;
 		_prefab = request.asset as GameObject;
 		bundle.Unload(false);
@@ -88,13 +114,14 @@ public class PrefabRequest{
 	
 	void StartLoadResource()
 	{
-		_prefab = Resources.Load<GameObject>(_resourcePath);
+		_prefab = Resources.Load<GameObject>(_prefabPath);
 		LoadFinished();
 	}
 
 	public void LoadFinished()
 	{
-		if (_prefab == null) {
+		if (_prefab == null) 
+        {
 			Debug.LogWarning(string.Format("Warning : Failed to load prefab {0}", _prefabName));
 			ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
 			return;
@@ -114,15 +141,19 @@ public class PrefabRequest{
 
     public void ClearPrefab()
     {
-        if (_prefab != null)
+        _prefab = null;
+        _callBack = null;
+        
+        if (_dependenciesPath != null)
         {
-            _prefab = null;
+            _dependenciesPath.Clear();
+            _dependenciesPath = null;
         }
     }
 
-    public void Reset(string prefabName, string prefabPath, string resourcePath, bool isAssetBundle)
+    public void Reset(string prefabName, string prefabPath, string resourcePath, List<string> dependenciesPath,bool isAssetBundle)
     {
         ClearPrefab();
-        Init(prefabName, prefabPath, resourcePath, isAssetBundle);
+        Init(prefabName, prefabPath, resourcePath, dependenciesPath, isAssetBundle);
     }
 }

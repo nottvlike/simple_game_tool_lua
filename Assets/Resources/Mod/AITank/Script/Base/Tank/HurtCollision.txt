@@ -1,0 +1,61 @@
+local hurtCollision = Class("HurtCollision")
+local RunTimeManager = require 'Mod.AITank.Script.Manager.RunTimeManager'
+
+function hurtCollision:ctor(parent)
+    self.parent = parent
+    self.gameObject = parent.gameObject
+    self.attribute = parent.attribute
+    self.collision = {}
+
+    self:init()
+end
+
+function hurtCollision:init()
+    if not self.gameObject then
+        return
+    end
+
+    LuaEventManager.AddCollisionTrigger2DEvent(self.gameObject, function(funcName, target)
+        self:onCollisionTriggerEvent(funcName, target)
+    end)
+end
+
+function hurtCollision:onCollisionTriggerEvent(funcName, target)
+    if self[funcName] then
+        self[funcName](self, target)
+    end
+end
+
+function hurtCollision:onTriggerEnter2D(target)
+    local object = target.gameObject
+    if self.collision[object] then
+        return
+    end
+
+    local tank = RunTimeManager:getTankByObject(object)
+    if not tank then
+        return
+    end
+
+    self.collision[object] = tank
+end
+
+function hurtCollision:onTriggerStay2D(target)
+    local object = target.gameObject
+    if self.collision[object] then
+        return
+    end
+
+    local tank = RunTimeManager:getTankByObject(object)
+    if not tank then
+        return
+    end
+
+    self.collision[object] = tank
+end
+
+function hurtCollision:onTriggerExit2D(target)
+
+end
+
+return hurtCollision

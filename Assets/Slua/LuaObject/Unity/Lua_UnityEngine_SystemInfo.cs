@@ -68,6 +68,17 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_processorFrequency(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.SystemInfo.processorFrequency);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_processorCount(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -145,6 +156,17 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_graphicsDeviceType(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushEnum(l,(int)UnityEngine.SystemInfo.graphicsDeviceType);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_graphicsDeviceVersion(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -182,6 +204,17 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		try {
 			pushValue(l,true);
 			pushValue(l,UnityEngine.SystemInfo.supportsShadows);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_supportsRawShadowDepthSampling(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.SystemInfo.supportsRawShadowDepthSampling);
 			return 2;
 		}
 		catch(Exception e) {
@@ -376,6 +409,17 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_supportsAudio(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.SystemInfo.supportsAudio);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_deviceType(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -403,6 +447,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		addMember(l,SupportsTextureFormat_s);
 		addMember(l,"operatingSystem",get_operatingSystem,null,false);
 		addMember(l,"processorType",get_processorType,null,false);
+		addMember(l,"processorFrequency",get_processorFrequency,null,false);
 		addMember(l,"processorCount",get_processorCount,null,false);
 		addMember(l,"systemMemorySize",get_systemMemorySize,null,false);
 		addMember(l,"graphicsMemorySize",get_graphicsMemorySize,null,false);
@@ -410,10 +455,12 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		addMember(l,"graphicsDeviceVendor",get_graphicsDeviceVendor,null,false);
 		addMember(l,"graphicsDeviceID",get_graphicsDeviceID,null,false);
 		addMember(l,"graphicsDeviceVendorID",get_graphicsDeviceVendorID,null,false);
+		addMember(l,"graphicsDeviceType",get_graphicsDeviceType,null,false);
 		addMember(l,"graphicsDeviceVersion",get_graphicsDeviceVersion,null,false);
 		addMember(l,"graphicsShaderLevel",get_graphicsShaderLevel,null,false);
 		addMember(l,"graphicsMultiThreaded",get_graphicsMultiThreaded,null,false);
 		addMember(l,"supportsShadows",get_supportsShadows,null,false);
+		addMember(l,"supportsRawShadowDepthSampling",get_supportsRawShadowDepthSampling,null,false);
 		addMember(l,"supportsRenderTextures",get_supportsRenderTextures,null,false);
 		addMember(l,"supportsRenderToCubemap",get_supportsRenderToCubemap,null,false);
 		addMember(l,"supportsImageEffects",get_supportsImageEffects,null,false);
@@ -431,6 +478,7 @@ public class Lua_UnityEngine_SystemInfo : LuaObject {
 		addMember(l,"supportsGyroscope",get_supportsGyroscope,null,false);
 		addMember(l,"supportsLocationService",get_supportsLocationService,null,false);
 		addMember(l,"supportsVibration",get_supportsVibration,null,false);
+		addMember(l,"supportsAudio",get_supportsAudio,null,false);
 		addMember(l,"deviceType",get_deviceType,null,false);
 		addMember(l,"maxTextureSize",get_maxTextureSize,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.SystemInfo));

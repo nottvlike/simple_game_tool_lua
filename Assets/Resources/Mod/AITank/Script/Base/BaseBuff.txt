@@ -1,0 +1,40 @@
+local EffectDeal = require 'Mod.AITank.Script.Base.EffectDeal'
+local buff = Class("BaseBuff")
+
+function buff:ctor(effects, canGiveSelf)
+	self.effects = {}
+	for i,v in pairs(effects) do
+		self.effects[i] = v
+	end
+
+	self.canGiveSelf = canGiveSeld or false
+end
+
+function buff:onAdd()
+
+end
+
+function buff:onRemove()
+
+end
+
+function buff:onUpdate(source, target)
+	source:onAttacked()
+	target:onHurted()
+	--print("source name " .. source.name)
+	--print("target name " .. target.name)
+end
+
+function buff:update(source, target)
+	for i,v in pairs(self.effects) do
+		if EffectDeal[i] then
+			EffectDeal[i](source, target, v)
+		else
+			print("EffectDeal : effect " .. i .. " not found!")
+		end
+	end
+	
+	self:onUpdate(source, target)
+end
+
+return buff

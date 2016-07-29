@@ -89,6 +89,18 @@ public class Lua_UnityEngine_Collision : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_impulse(IntPtr l) {
+		try {
+			UnityEngine.Collision self=(UnityEngine.Collision)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.impulse);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Collision");
 		addMember(l,"relativeVelocity",get_relativeVelocity,null,true);
@@ -97,6 +109,7 @@ public class Lua_UnityEngine_Collision : LuaObject {
 		addMember(l,"transform",get_transform,null,true);
 		addMember(l,"gameObject",get_gameObject,null,true);
 		addMember(l,"contacts",get_contacts,null,true);
+		addMember(l,"impulse",get_impulse,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Collision));
 	}
 }

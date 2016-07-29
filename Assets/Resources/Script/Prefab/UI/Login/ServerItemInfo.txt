@@ -1,0 +1,47 @@
+local UIManager = require 'Script.Manager.UIManager'
+local ServerItemInfo = Class("ServerItemInfo")
+
+function ServerItemInfo:Ctor(parent, window, serverInfo)
+	print("ServerItemInfo:Ctor()")
+	--self:Init(PanelType.ServerItemInfo, self)
+	self.listParent = parent
+	self.window = window
+	self.serverInfo = serverInfo
+	self.IsSelected = false
+	self.State = ServerState.Stop
+end
+
+function ServerItemInfo:Init()
+	if not self.IsInit then
+		self.IsInit = true
+		--UIManager.RegisterPanel(PanelType.ServerItemInfo, self)
+		if not self.window and not self.listParent then
+			return
+		end
+
+		self.selectBtn = self.window:GetComponent("UIButton")
+		self.serverLabel = self.window:Find("Label"):GetComponent("UILabel")
+		--self.serverSprite = self.window:Find("Ico_State"):GetComponent("UISprite")
+
+		NGUI.EventDelegate.Add(self.selectBtn.onClick, handler(self,self.OnServerClick), false)
+
+		self:UpdateServerInfo()
+	end
+end
+
+function ServerItemInfo:UpdateServerInfo()
+	self.serverLabel.text = self.serverInfo.name
+end
+
+function ServerItemInfo:OnServerClick()
+	print("ServerItemInfo:OnServerClick()")
+	if not self.isSelected and self.state ~= ServerState.Stop then
+		self.listParent:OnSelectServer(self.serverInfo.id)
+	end
+end
+
+function ServerItemInfo:SetSelectedState( isSelected)
+	self.IsSelected = isSelected
+end
+
+return ServerItemInfo

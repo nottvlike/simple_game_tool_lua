@@ -51,12 +51,12 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetLocalPose(IntPtr l) {
+	static public int GetWorldPose(IntPtr l) {
 		try {
 			UnityEngine.WheelCollider self=(UnityEngine.WheelCollider)checkSelf(l);
 			UnityEngine.Vector3 a1;
 			UnityEngine.Quaternion a2;
-			self.GetLocalPose(out a1,out a2);
+			self.GetWorldPose(out a1,out a2);
 			pushValue(l,true);
 			pushValue(l,a1);
 			pushValue(l,a2);
@@ -391,6 +391,18 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sprungMass(IntPtr l) {
+		try {
+			UnityEngine.WheelCollider self=(UnityEngine.WheelCollider)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.sprungMass);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rpm(IntPtr l) {
 		try {
 			UnityEngine.WheelCollider self=(UnityEngine.WheelCollider)checkSelf(l);
@@ -406,7 +418,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		getTypeTable(l,"UnityEngine.WheelCollider");
 		addMember(l,ConfigureVehicleSubsteps);
 		addMember(l,GetGroundHit);
-		addMember(l,GetLocalPose);
+		addMember(l,GetWorldPose);
 		addMember(l,"center",get_center,set_center,true);
 		addMember(l,"radius",get_radius,set_radius,true);
 		addMember(l,"suspensionDistance",get_suspensionDistance,set_suspensionDistance,true);
@@ -420,6 +432,7 @@ public class Lua_UnityEngine_WheelCollider : LuaObject {
 		addMember(l,"brakeTorque",get_brakeTorque,set_brakeTorque,true);
 		addMember(l,"steerAngle",get_steerAngle,set_steerAngle,true);
 		addMember(l,"isGrounded",get_isGrounded,null,true);
+		addMember(l,"sprungMass",get_sprungMass,null,true);
 		addMember(l,"rpm",get_rpm,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.WheelCollider),typeof(UnityEngine.Collider));
 	}

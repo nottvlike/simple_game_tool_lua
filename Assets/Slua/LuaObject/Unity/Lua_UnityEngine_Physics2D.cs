@@ -2031,10 +2031,10 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_raycastsHitTriggers(IntPtr l) {
+	static public int get_queriesHitTriggers(IntPtr l) {
 		try {
 			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics2D.raycastsHitTriggers);
+			pushValue(l,UnityEngine.Physics2D.queriesHitTriggers);
 			return 2;
 		}
 		catch(Exception e) {
@@ -2042,11 +2042,11 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_raycastsHitTriggers(IntPtr l) {
+	static public int set_queriesHitTriggers(IntPtr l) {
 		try {
 			bool v;
 			checkType(l,2,out v);
-			UnityEngine.Physics2D.raycastsHitTriggers=v;
+			UnityEngine.Physics2D.queriesHitTriggers=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -2055,10 +2055,10 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_deleteStopsCallbacks(IntPtr l) {
+	static public int get_queriesStartInColliders(IntPtr l) {
 		try {
 			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics2D.deleteStopsCallbacks);
+			pushValue(l,UnityEngine.Physics2D.queriesStartInColliders);
 			return 2;
 		}
 		catch(Exception e) {
@@ -2066,11 +2066,35 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_deleteStopsCallbacks(IntPtr l) {
+	static public int set_queriesStartInColliders(IntPtr l) {
 		try {
 			bool v;
 			checkType(l,2,out v);
-			UnityEngine.Physics2D.deleteStopsCallbacks=v;
+			UnityEngine.Physics2D.queriesStartInColliders=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_changeStopsCallbacks(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Physics2D.changeStopsCallbacks);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_changeStopsCallbacks(IntPtr l) {
+		try {
+			bool v;
+			checkType(l,2,out v);
+			UnityEngine.Physics2D.changeStopsCallbacks=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -2191,6 +2215,30 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 			float v;
 			checkType(l,2,out v);
 			UnityEngine.Physics2D.maxRotationSpeed=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_minPenetrationForPenalty(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Physics2D.minPenetrationForPenalty);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_minPenetrationForPenalty(IntPtr l) {
+		try {
+			float v;
+			checkType(l,2,out v);
+			UnityEngine.Physics2D.minPenetrationForPenalty=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -2356,13 +2404,15 @@ public class Lua_UnityEngine_Physics2D : LuaObject {
 		addMember(l,"velocityIterations",get_velocityIterations,set_velocityIterations,false);
 		addMember(l,"positionIterations",get_positionIterations,set_positionIterations,false);
 		addMember(l,"gravity",get_gravity,set_gravity,false);
-		addMember(l,"raycastsHitTriggers",get_raycastsHitTriggers,set_raycastsHitTriggers,false);
-		addMember(l,"deleteStopsCallbacks",get_deleteStopsCallbacks,set_deleteStopsCallbacks,false);
+		addMember(l,"queriesHitTriggers",get_queriesHitTriggers,set_queriesHitTriggers,false);
+		addMember(l,"queriesStartInColliders",get_queriesStartInColliders,set_queriesStartInColliders,false);
+		addMember(l,"changeStopsCallbacks",get_changeStopsCallbacks,set_changeStopsCallbacks,false);
 		addMember(l,"velocityThreshold",get_velocityThreshold,set_velocityThreshold,false);
 		addMember(l,"maxLinearCorrection",get_maxLinearCorrection,set_maxLinearCorrection,false);
 		addMember(l,"maxAngularCorrection",get_maxAngularCorrection,set_maxAngularCorrection,false);
 		addMember(l,"maxTranslationSpeed",get_maxTranslationSpeed,set_maxTranslationSpeed,false);
 		addMember(l,"maxRotationSpeed",get_maxRotationSpeed,set_maxRotationSpeed,false);
+		addMember(l,"minPenetrationForPenalty",get_minPenetrationForPenalty,set_minPenetrationForPenalty,false);
 		addMember(l,"baumgarteScale",get_baumgarteScale,set_baumgarteScale,false);
 		addMember(l,"baumgarteTOIScale",get_baumgarteTOIScale,set_baumgarteTOIScale,false);
 		addMember(l,"timeToSleep",get_timeToSleep,set_timeToSleep,false);

@@ -46,6 +46,40 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetInsetAndSizeFromParentEdge(IntPtr l) {
+		try {
+			UnityEngine.RectTransform self=(UnityEngine.RectTransform)checkSelf(l);
+			UnityEngine.RectTransform.Edge a1;
+			checkEnum(l,2,out a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			System.Single a3;
+			checkType(l,4,out a3);
+			self.SetInsetAndSizeFromParentEdge(a1,a2,a3);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetSizeWithCurrentAnchors(IntPtr l) {
+		try {
+			UnityEngine.RectTransform self=(UnityEngine.RectTransform)checkSelf(l);
+			UnityEngine.RectTransform.Axis a1;
+			checkEnum(l,2,out a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			self.SetSizeWithCurrentAnchors(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_rect(IntPtr l) {
 		try {
 			UnityEngine.RectTransform self=(UnityEngine.RectTransform)checkSelf(l);
@@ -102,6 +136,32 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 			UnityEngine.Vector2 v;
 			checkType(l,2,out v);
 			self.anchorMax=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_anchoredPosition3D(IntPtr l) {
+		try {
+			UnityEngine.RectTransform self=(UnityEngine.RectTransform)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.anchoredPosition3D);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_anchoredPosition3D(IntPtr l) {
+		try {
+			UnityEngine.RectTransform self=(UnityEngine.RectTransform)checkSelf(l);
+			UnityEngine.Vector3 v;
+			checkType(l,2,out v);
+			self.anchoredPosition3D=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -243,9 +303,12 @@ public class Lua_UnityEngine_RectTransform : LuaObject {
 		getTypeTable(l,"UnityEngine.RectTransform");
 		addMember(l,GetLocalCorners);
 		addMember(l,GetWorldCorners);
+		addMember(l,SetInsetAndSizeFromParentEdge);
+		addMember(l,SetSizeWithCurrentAnchors);
 		addMember(l,"rect",get_rect,null,true);
 		addMember(l,"anchorMin",get_anchorMin,set_anchorMin,true);
 		addMember(l,"anchorMax",get_anchorMax,set_anchorMax,true);
+		addMember(l,"anchoredPosition3D",get_anchoredPosition3D,set_anchoredPosition3D,true);
 		addMember(l,"anchoredPosition",get_anchoredPosition,set_anchoredPosition,true);
 		addMember(l,"sizeDelta",get_sizeDelta,set_sizeDelta,true);
 		addMember(l,"pivot",get_pivot,set_pivot,true);

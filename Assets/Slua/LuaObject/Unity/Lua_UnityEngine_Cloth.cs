@@ -18,6 +18,18 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ClearTransformMotion(IntPtr l) {
+		try {
+			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
+			self.ClearTransformMotion();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetEnabledFading(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -410,32 +422,6 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_constrainSurfacePenetration(IntPtr l) {
-		try {
-			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.constrainSurfacePenetration);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_constrainSurfacePenetration(IntPtr l) {
-		try {
-			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
-			bool v;
-			checkType(l,2,out v);
-			self.constrainSurfacePenetration=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_worldVelocityScale(IntPtr l) {
 		try {
 			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
@@ -513,8 +499,61 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_capsuleColliders(IntPtr l) {
+		try {
+			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.capsuleColliders);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_capsuleColliders(IntPtr l) {
+		try {
+			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
+			UnityEngine.CapsuleCollider[] v;
+			checkArray(l,2,out v);
+			self.capsuleColliders=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sphereColliders(IntPtr l) {
+		try {
+			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.sphereColliders);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sphereColliders(IntPtr l) {
+		try {
+			UnityEngine.Cloth self=(UnityEngine.Cloth)checkSelf(l);
+			UnityEngine.ClothSphereColliderPair[] v;
+			checkArray(l,2,out v);
+			self.sphereColliders=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Cloth");
+		addMember(l,ClearTransformMotion);
 		addMember(l,SetEnabledFading);
 		addMember(l,"sleepThreshold",get_sleepThreshold,set_sleepThreshold,true);
 		addMember(l,"bendingStiffness",get_bendingStiffness,set_bendingStiffness,true);
@@ -531,10 +570,11 @@ public class Lua_UnityEngine_Cloth : LuaObject {
 		addMember(l,"useContinuousCollision",get_useContinuousCollision,set_useContinuousCollision,true);
 		addMember(l,"useVirtualParticles",get_useVirtualParticles,set_useVirtualParticles,true);
 		addMember(l,"coefficients",get_coefficients,set_coefficients,true);
-		addMember(l,"constrainSurfacePenetration",get_constrainSurfacePenetration,set_constrainSurfacePenetration,true);
 		addMember(l,"worldVelocityScale",get_worldVelocityScale,set_worldVelocityScale,true);
 		addMember(l,"worldAccelerationScale",get_worldAccelerationScale,set_worldAccelerationScale,true);
 		addMember(l,"solverFrequency",get_solverFrequency,set_solverFrequency,true);
+		addMember(l,"capsuleColliders",get_capsuleColliders,set_capsuleColliders,true);
+		addMember(l,"sphereColliders",get_sphereColliders,set_sphereColliders,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Cloth),typeof(UnityEngine.Component));
 	}
 }

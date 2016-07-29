@@ -106,6 +106,24 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LerpUnclamped_s(IntPtr l) {
+		try {
+			UnityEngine.Vector3 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Vector3 a2;
+			checkType(l,2,out a2);
+			System.Single a3;
+			checkType(l,3,out a3);
+			var ret=UnityEngine.Vector3.LerpUnclamped(a1,a2,a3);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Slerp_s(IntPtr l) {
 		try {
 			UnityEngine.Vector3 a1;
@@ -115,6 +133,24 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 			System.Single a3;
 			checkType(l,3,out a3);
 			var ret=UnityEngine.Vector3.Slerp(a1,a2,a3);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SlerpUnclamped_s(IntPtr l) {
+		try {
+			UnityEngine.Vector3 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Vector3 a2;
+			checkType(l,2,out a2);
+			System.Single a3;
+			checkType(l,3,out a3);
+			var ret=UnityEngine.Vector3.SlerpUnclamped(a1,a2,a3);
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -869,7 +905,9 @@ public class Lua_UnityEngine_Vector3 : LuaObject {
 		addMember(l,Scale);
 		addMember(l,Normalize);
 		addMember(l,Lerp_s);
+		addMember(l,LerpUnclamped_s);
 		addMember(l,Slerp_s);
+		addMember(l,SlerpUnclamped_s);
 		addMember(l,OrthoNormalize_s);
 		addMember(l,MoveTowards_s);
 		addMember(l,RotateTowards_s);

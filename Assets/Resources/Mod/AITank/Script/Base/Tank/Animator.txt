@@ -1,0 +1,91 @@
+local anim = Class("Animator")
+
+function anim:ctor(parent)
+	self.parent = parent
+	self.transform = parent.transform
+	self.turretTransform = parent.turretTransform
+	self.foundationTransform = parent.foundationTransform
+
+	self.sourceTurretAngle = 0
+	self.targetTurretAngle = 0
+	self.sourceFoundationAngle = 0
+	self.targetFoundationAngle = 0
+	self.rotateSpeed = 0.8
+	self.rotateTurretTime = 0
+	self.rotateFoundationTime = 0
+
+	self.moveSpeed = 0.2
+	self.moveTime = 0
+	self.targetPosition = Vector3.zero
+	self.sourcePosition = Vector3.zero
+
+	self.targetTurretRotation = self.turretTransform.rotation
+	self.sourceTurretRotation = self.turretTransform.rotation
+	self.sourceFoundationRotation = self.foundationTransform.rotation
+	self.targetFoundationRotation = self.foundationTransform.rotation
+
+end
+
+function anim:update()
+	self:updateTurret()
+	self:updateFoundation()
+	self:updateMove()
+end
+
+function anim:updateMove()
+	if self.moveTime <= 1 and self.parent:canMove() then
+		self.moveTime = self.moveTime + Time.deltaTime * self.moveSpeed
+		self.transform.position = Vector3.Lerp(self.sourcePosition, self.targetPosition, self.moveTime)
+	end
+end
+
+function anim:updateTurret()
+	if self.rotateTurretTime <= 1 then
+		self.rotateTurretTime = self.rotateTurretTime + Time.deltaTime * self.rotateSpeed
+		self.turretTransform.rotation = Quaternion.Lerp(self.sourceTurretRotation, self.targetTurretRotation, self.rotateTurretTime)
+		self.parent.turretAngle = self.sourceTurretAngle + (self.targetTurretAngle - self.sourceTurretAngle) * self.rotateTurretTime
+	end
+end
+
+function anim:updateFoundation()
+	if self.rotateFoundationTime <= 1 then
+		self.rotateFoundationTime = self.rotateFoundationTime + Time.deltaTime * self.rotateSpeed
+		self.foundationTransform.rotation = Quaternion.Lerp(self.sourceFoundationRotation, self.targetFoundationRotation, self.rotateFoundationTime)
+		self.parent.foundationAngle = self.sourceFoundationAngle + (self.targetFoundationAngle - self.sourceFoundationAngle) * self.rotateFoundationTime
+	end
+end
+
+function anim:rotateTurret(angle)
+	self.sourceTurretAngle = self.targetTurretAngle
+	self.targetTurretAngle = angle
+	self.targetTurretRotation = Quaternion.Euler(0, 0, angle)
+	self.sourceTurretRotation = self.turretTransform.rotation
+	self.rotateTurretTime = 0
+end
+
+function anim:rotateFoundation(angle)
+	self.sourceFoundationAngle = self.targetFoundationAngle
+	self.targetFoundationAngle = angle
+	self.targetFoundationRotation = Quaternion.Euler(0, 0, angle)
+	self.sourceFoundationRotation = self.foundationTransform.rotation
+	self.rotateFoundationTime = 0
+end
+
+function anim:move(x, y)
+	self.targetPosition.x = x
+	self.targetPosition.y = y
+	self.sourcePosition = self.transform.position
+	self.moveTime = 0
+
+	local tmpVec = self.targetPosition - self.sourcePosition
+	local up = Vector3.up
+
+	local angle = Vector3.Angle(tmpVec, up)
+	if self.sourcePosition.x - self.targetPosition.x < 0 then
+		angle = angle * -1
+	end
+
+	self:rotateFoundation(angle)
+end
+
+return anim

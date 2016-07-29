@@ -1,0 +1,53 @@
+local module = Class("Module")
+
+function module:ctor(parent)
+	self.parent = parent
+	self.modules = {}
+end
+
+function module:update()
+	self:updateModule()
+end
+
+function module:updateModule()
+	for i = 1,#(self.modules) do
+		local module = self.modules[i]
+		module:update()
+	end
+end
+
+function module:hasModule(name)
+	for i = 1,#(self.modules) do
+		local tmpModule = self.modules[i]
+		if tmpModule.name == name then
+			return true
+		end
+	end
+
+	return false
+end
+
+function module:addModule(module)
+	module:setParent(self.parent)
+	table.insert(self.modules, module)
+end
+
+function module:removeModule(module)
+	local j = 0
+	for i = 1,#(self.modules) do
+		local tmpModule = self.modules[i]
+		if tmpModule.name == module.name then
+			j = i
+			break
+		end
+	end
+
+	if j == 0 then
+		print(string.format("Error module %s not found!", module.name))
+		return
+	end
+	module:setParent(nil)
+	table.remove(self.modules, j)
+end
+
+return module

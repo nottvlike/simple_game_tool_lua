@@ -1,0 +1,10 @@
+{
+	"Mods" : [
+		{
+			"ModName" : "AITank",
+			"ModPath" : "Mod/AITank",
+			"ModType" : "Standlone",
+			"ModVersion" : "1.0.0"
+		}
+	]
+}

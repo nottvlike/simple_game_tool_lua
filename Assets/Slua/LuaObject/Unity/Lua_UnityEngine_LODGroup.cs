@@ -30,12 +30,25 @@ public class Lua_UnityEngine_LODGroup : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int SetLODS(IntPtr l) {
+	static public int GetLODs(IntPtr l) {
+		try {
+			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
+			var ret=self.GetLODs();
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetLODs(IntPtr l) {
 		try {
 			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
 			UnityEngine.LOD[] a1;
 			checkArray(l,2,out a1);
-			self.SetLODS(a1);
+			self.SetLODs(a1);
 			pushValue(l,true);
 			return 1;
 		}
@@ -122,6 +135,58 @@ public class Lua_UnityEngine_LODGroup : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_fadeMode(IntPtr l) {
+		try {
+			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.fadeMode);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_fadeMode(IntPtr l) {
+		try {
+			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
+			UnityEngine.LODFadeMode v;
+			checkEnum(l,2,out v);
+			self.fadeMode=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_animateCrossFading(IntPtr l) {
+		try {
+			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.animateCrossFading);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_animateCrossFading(IntPtr l) {
+		try {
+			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.animateCrossFading=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_enabled(IntPtr l) {
 		try {
 			UnityEngine.LODGroup self=(UnityEngine.LODGroup)checkSelf(l);
@@ -147,15 +212,43 @@ public class Lua_UnityEngine_LODGroup : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_crossFadeAnimationDuration(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.LODGroup.crossFadeAnimationDuration);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_crossFadeAnimationDuration(IntPtr l) {
+		try {
+			float v;
+			checkType(l,2,out v);
+			UnityEngine.LODGroup.crossFadeAnimationDuration=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LODGroup");
 		addMember(l,RecalculateBounds);
-		addMember(l,SetLODS);
+		addMember(l,GetLODs);
+		addMember(l,SetLODs);
 		addMember(l,ForceLOD);
 		addMember(l,"localReferencePoint",get_localReferencePoint,set_localReferencePoint,true);
 		addMember(l,"size",get_size,set_size,true);
 		addMember(l,"lodCount",get_lodCount,null,true);
+		addMember(l,"fadeMode",get_fadeMode,set_fadeMode,true);
+		addMember(l,"animateCrossFading",get_animateCrossFading,set_animateCrossFading,true);
 		addMember(l,"enabled",get_enabled,set_enabled,true);
+		addMember(l,"crossFadeAnimationDuration",get_crossFadeAnimationDuration,set_crossFadeAnimationDuration,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.LODGroup),typeof(UnityEngine.Component));
 	}
 }

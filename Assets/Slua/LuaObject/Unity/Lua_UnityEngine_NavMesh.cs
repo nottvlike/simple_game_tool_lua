@@ -151,33 +151,59 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int AddOffMeshLinks_s(IntPtr l) {
-		try {
-			UnityEngine.NavMesh.AddOffMeshLinks();
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int RestoreNavMesh_s(IntPtr l) {
-		try {
-			UnityEngine.NavMesh.RestoreNavMesh();
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_AllAreas(IntPtr l) {
 		try {
 			pushValue(l,true);
 			pushValue(l,UnityEngine.NavMesh.AllAreas);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_avoidancePredictionTime(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.NavMesh.avoidancePredictionTime);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_avoidancePredictionTime(IntPtr l) {
+		try {
+			float v;
+			checkType(l,2,out v);
+			UnityEngine.NavMesh.avoidancePredictionTime=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pathfindingIterationsPerFrame(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.NavMesh.pathfindingIterationsPerFrame);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_pathfindingIterationsPerFrame(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.NavMesh.pathfindingIterationsPerFrame=v;
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -193,9 +219,9 @@ public class Lua_UnityEngine_NavMesh : LuaObject {
 		addMember(l,GetAreaCost_s);
 		addMember(l,GetAreaFromName_s);
 		addMember(l,CalculateTriangulation_s);
-		addMember(l,AddOffMeshLinks_s);
-		addMember(l,RestoreNavMesh_s);
 		addMember(l,"AllAreas",get_AllAreas,null,false);
+		addMember(l,"avoidancePredictionTime",get_avoidancePredictionTime,set_avoidancePredictionTime,false);
+		addMember(l,"pathfindingIterationsPerFrame",get_pathfindingIterationsPerFrame,set_pathfindingIterationsPerFrame,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.NavMesh));
 	}
 }

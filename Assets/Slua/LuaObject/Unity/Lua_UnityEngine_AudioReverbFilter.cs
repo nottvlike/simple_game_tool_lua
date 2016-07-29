@@ -408,11 +408,11 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_lFReference(IntPtr l) {
+	static public int get_lfReference(IntPtr l) {
 		try {
 			UnityEngine.AudioReverbFilter self=(UnityEngine.AudioReverbFilter)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.lFReference);
+			pushValue(l,self.lfReference);
 			return 2;
 		}
 		catch(Exception e) {
@@ -420,12 +420,12 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_lFReference(IntPtr l) {
+	static public int set_lfReference(IntPtr l) {
 		try {
 			UnityEngine.AudioReverbFilter self=(UnityEngine.AudioReverbFilter)checkSelf(l);
 			float v;
 			checkType(l,2,out v);
-			self.lFReference=v;
+			self.lfReference=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -450,7 +450,7 @@ public class Lua_UnityEngine_AudioReverbFilter : LuaObject {
 		addMember(l,"density",get_density,set_density,true);
 		addMember(l,"hfReference",get_hfReference,set_hfReference,true);
 		addMember(l,"roomLF",get_roomLF,set_roomLF,true);
-		addMember(l,"lFReference",get_lFReference,set_lFReference,true);
+		addMember(l,"lfReference",get_lfReference,set_lfReference,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AudioReverbFilter),typeof(UnityEngine.Behaviour));
 	}
 }

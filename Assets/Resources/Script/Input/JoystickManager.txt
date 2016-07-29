@@ -1,0 +1,51 @@
+local joystick = {}
+
+joystick.__index = joystick
+
+function joystick.setMainPlayer(mainPlayer)
+	joystick.mainPlayer = mainPlayer
+end
+
+function joystick.onTouchDown()
+
+end
+
+function joystick.onLeftClick(param)
+	if param == "KeyDown" then
+		joystick.mainPlayer:turn({x = -1, y = 0, z = 0})
+	end
+end
+
+function joystick.onRightClick(param)
+	if param == "KeyDown" then
+		joystick.mainPlayer:turn({x = 1, y = 0, z = 0})
+	end
+end
+
+function joystick.onUpClick(param)
+	if param == "KeyDown" then
+		joystick.mainPlayer:run()
+	end
+end
+
+function joystick.onDownClick(param)
+	if param == "KeyDown" then
+		joystick.mainPlayer:stop()
+	end
+end
+
+function joystick.onAttackClick(param)
+	if param == "KeyDown" then
+		joystick.mainPlayer:attack()
+	else
+		--joystick.mainPlayer:cancelAttack()
+	end
+end
+
+--JoystickManager.GetInstance():AddKeyEvent(KeyCode.A, joystick.onLeftClick)
+--JoystickManager.GetInstance():AddKeyEvent(KeyCode.D, joystick.onRightClick)
+--JoystickManager.GetInstance():AddKeyEvent(KeyCode.W, joystick.onUpClick)
+--JoystickManager.GetInstance():AddKeyEvent(KeyCode.S, joystick.onDownClick)
+--JoystickManager.GetInstance():AddKeyEvent(KeyCode.Space, joystick.onAttackClick)
+
+return joystick

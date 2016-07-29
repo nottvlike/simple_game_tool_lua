@@ -622,10 +622,10 @@ end
 			int loaderFunc = LuaDLL.lua_gettop(L);
 
 			LuaDLL.lua_getglobal(L, "package");
-#if LUA_5_3
-			LuaDLL.lua_getfield(L, -1, "searchers");
+#if LUA_OLD
+            LuaDLL.lua_getfield(L, -1, "loaders");
 #else
-			LuaDLL.lua_getfield(L, -1, "loaders");
+            LuaDLL.lua_getfield(L, -1, "searchers"); 
 #endif
 			int loaderTable = LuaDLL.lua_gettop(L);
 

@@ -44,6 +44,160 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetVertices(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			System.Collections.Generic.List<UnityEngine.Vector3> a1;
+			checkType(l,2,out a1);
+			self.SetVertices(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetNormals(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			System.Collections.Generic.List<UnityEngine.Vector3> a1;
+			checkType(l,2,out a1);
+			self.SetNormals(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetTangents(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			System.Collections.Generic.List<UnityEngine.Vector4> a1;
+			checkType(l,2,out a1);
+			self.SetTangents(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetUVs(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(int),typeof(List<UnityEngine.Vector4>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				System.Collections.Generic.List<UnityEngine.Vector4> a2;
+				checkType(l,3,out a2);
+				self.SetUVs(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(int),typeof(List<UnityEngine.Vector3>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				System.Collections.Generic.List<UnityEngine.Vector3> a2;
+				checkType(l,3,out a2);
+				self.SetUVs(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(int),typeof(List<UnityEngine.Vector2>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				System.Collections.Generic.List<UnityEngine.Vector2> a2;
+				checkType(l,3,out a2);
+				self.SetUVs(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetUVs(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(int),typeof(List<UnityEngine.Vector4>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				System.Collections.Generic.List<UnityEngine.Vector4> a2;
+				checkType(l,3,out a2);
+				self.GetUVs(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(int),typeof(List<UnityEngine.Vector3>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				System.Collections.Generic.List<UnityEngine.Vector3> a2;
+				checkType(l,3,out a2);
+				self.GetUVs(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(int),typeof(List<UnityEngine.Vector2>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Int32 a1;
+				checkType(l,2,out a1);
+				System.Collections.Generic.List<UnityEngine.Vector2> a2;
+				checkType(l,3,out a2);
+				self.GetUVs(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetColors(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(List<UnityEngine.Color32>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Collections.Generic.List<UnityEngine.Color32> a1;
+				checkType(l,2,out a1);
+				self.SetColors(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(List<UnityEngine.Color>))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Collections.Generic.List<UnityEngine.Color> a1;
+				checkType(l,2,out a1);
+				self.SetColors(a1);
+				pushValue(l,true);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RecalculateBounds(IntPtr l) {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
@@ -97,14 +251,30 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetTriangles(IntPtr l) {
 		try {
-			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
-			System.Int32[] a1;
-			checkArray(l,2,out a1);
-			System.Int32 a2;
-			checkType(l,3,out a2);
-			self.SetTriangles(a1,a2);
-			pushValue(l,true);
-			return 1;
+			int argc = LuaDLL.lua_gettop(l);
+			if(matchType(l,argc,2,typeof(List<System.Int32>),typeof(int))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Collections.Generic.List<System.Int32> a1;
+				checkType(l,2,out a1);
+				System.Int32 a2;
+				checkType(l,3,out a2);
+				self.SetTriangles(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			else if(matchType(l,argc,2,typeof(System.Int32[]),typeof(int))){
+				UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+				System.Int32[] a1;
+				checkArray(l,2,out a1);
+				System.Int32 a2;
+				checkType(l,3,out a2);
+				self.SetTriangles(a1,a2);
+				pushValue(l,true);
+				return 1;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -227,6 +397,21 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetBlendShapeIndex(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			var ret=self.GetBlendShapeIndex(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetBlendShapeName(IntPtr l) {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
@@ -242,15 +427,88 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetBlendShapeIndex(IntPtr l) {
+	static public int GetBlendShapeFrameCount(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			var ret=self.GetBlendShapeFrameCount(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetBlendShapeFrameWeight(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			var ret=self.GetBlendShapeFrameWeight(a1,a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetBlendShapeFrameVertices(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			System.Int32 a2;
+			checkType(l,3,out a2);
+			UnityEngine.Vector3[] a3;
+			checkArray(l,4,out a3);
+			UnityEngine.Vector3[] a4;
+			checkArray(l,5,out a4);
+			UnityEngine.Vector3[] a5;
+			checkArray(l,6,out a5);
+			self.GetBlendShapeFrameVertices(a1,a2,a3,a4,a5);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int ClearBlendShapes(IntPtr l) {
+		try {
+			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
+			self.ClearBlendShapes();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int AddBlendShapeFrame(IntPtr l) {
 		try {
 			UnityEngine.Mesh self=(UnityEngine.Mesh)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
-			var ret=self.GetBlendShapeIndex(a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			UnityEngine.Vector3[] a3;
+			checkArray(l,4,out a3);
+			UnityEngine.Vector3[] a4;
+			checkArray(l,5,out a4);
+			UnityEngine.Vector3[] a5;
+			checkArray(l,6,out a5);
+			self.AddBlendShapeFrame(a1,a2,a3,a4,a5);
 			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -659,6 +917,12 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Mesh");
 		addMember(l,Clear);
+		addMember(l,SetVertices);
+		addMember(l,SetNormals);
+		addMember(l,SetTangents);
+		addMember(l,SetUVs);
+		addMember(l,GetUVs);
+		addMember(l,SetColors);
 		addMember(l,RecalculateBounds);
 		addMember(l,RecalculateNormals);
 		addMember(l,Optimize);
@@ -670,8 +934,13 @@ public class Lua_UnityEngine_Mesh : LuaObject {
 		addMember(l,CombineMeshes);
 		addMember(l,MarkDynamic);
 		addMember(l,UploadMeshData);
-		addMember(l,GetBlendShapeName);
 		addMember(l,GetBlendShapeIndex);
+		addMember(l,GetBlendShapeName);
+		addMember(l,GetBlendShapeFrameCount);
+		addMember(l,GetBlendShapeFrameWeight);
+		addMember(l,GetBlendShapeFrameVertices);
+		addMember(l,ClearBlendShapes);
+		addMember(l,AddBlendShapeFrame);
 		addMember(l,"isReadable",get_isReadable,null,true);
 		addMember(l,"vertices",get_vertices,set_vertices,true);
 		addMember(l,"normals",get_normals,set_normals,true);

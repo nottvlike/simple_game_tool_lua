@@ -119,12 +119,12 @@ public class Lua_UnityEngine_EventSystems_RaycastResult : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_go(IntPtr l) {
+	static public int get_depth(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.RaycastResult self;
 			checkValueType(l,1,out self);
 			pushValue(l,true);
-			pushValue(l,self.go);
+			pushValue(l,self.depth);
 			return 2;
 		}
 		catch(Exception e) {
@@ -132,13 +132,187 @@ public class Lua_UnityEngine_EventSystems_RaycastResult : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_go(IntPtr l) {
+	static public int set_depth(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			System.Int32 v;
+			checkType(l,2,out v);
+			self.depth=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sortingLayer(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.sortingLayer);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sortingLayer(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			System.Int32 v;
+			checkType(l,2,out v);
+			self.sortingLayer=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sortingOrder(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.sortingOrder);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_sortingOrder(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			System.Int32 v;
+			checkType(l,2,out v);
+			self.sortingOrder=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_worldPosition(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.worldPosition);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_worldPosition(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector3 v;
+			checkType(l,2,out v);
+			self.worldPosition=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_worldNormal(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.worldNormal);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_worldNormal(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector3 v;
+			checkType(l,2,out v);
+			self.worldNormal=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_screenPosition(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.screenPosition);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_screenPosition(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector2 v;
+			checkType(l,2,out v);
+			self.screenPosition=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_gameObject(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.RaycastResult self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.gameObject);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_gameObject(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.RaycastResult self;
 			checkValueType(l,1,out self);
 			UnityEngine.GameObject v;
 			checkType(l,2,out v);
-			self.go=v;
+			self.gameObject=v;
 			setBack(l,self);
 			pushValue(l,true);
 			return 1;
@@ -166,7 +340,13 @@ public class Lua_UnityEngine_EventSystems_RaycastResult : LuaObject {
 		addMember(l,"module",get_module,set_module,true);
 		addMember(l,"distance",get_distance,set_distance,true);
 		addMember(l,"index",get_index,set_index,true);
-		addMember(l,"go",get_go,set_go,true);
+		addMember(l,"depth",get_depth,set_depth,true);
+		addMember(l,"sortingLayer",get_sortingLayer,set_sortingLayer,true);
+		addMember(l,"sortingOrder",get_sortingOrder,set_sortingOrder,true);
+		addMember(l,"worldPosition",get_worldPosition,set_worldPosition,true);
+		addMember(l,"worldNormal",get_worldNormal,set_worldNormal,true);
+		addMember(l,"screenPosition",get_screenPosition,set_screenPosition,true);
+		addMember(l,"gameObject",get_gameObject,set_gameObject,true);
 		addMember(l,"isValid",get_isValid,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.EventSystems.RaycastResult),typeof(System.ValueType));
 	}

@@ -20,7 +20,7 @@ public class UpdateManager : Singleton<UpdateManager>
         None
     }
 
-    public class DownloadFileRequest
+    public class DownloadFileRequest : BaseObject
     {
         public int Id;
         public string fileUrl;
@@ -28,6 +28,16 @@ public class UpdateManager : Singleton<UpdateManager>
         public DownloadFileType fileType;
         public OnScriptDownloadFinishedEvent onScriptDownloaded;
 		public bool isSaved;
+
+        public override void Reset()
+		{
+			Id = 0;
+			fileUrl = "";
+			filePath = "";
+			fileType = DownloadFileType.None;
+			onScriptDownloaded = null;
+			isSaved = false;
+		}
     }
 
     public delegate void OnScriptDownloadFinishedEvent(string script);
@@ -35,7 +45,9 @@ public class UpdateManager : Singleton<UpdateManager>
 #if UNITY_EDITOR
 	public static string UpdateTest = Application.streamingAssetsPath;
 #else
+    #if UNITY_ANDROID
 	public static string UpdateTest = "jar:file://" + Application.dataPath + "/!/assets";
+    #endif
 #endif
 
     public OnUpdateStateChangedEvent OnUpdateStateChanged = null;
@@ -71,7 +83,7 @@ public class UpdateManager : Singleton<UpdateManager>
     public void Download(string url, string targetPath, DownloadFileType fileType, 
 	                     OnScriptDownloadFinishedEvent downloadedEvent = null, bool isSaved = false)
     {
-        var file = new DownloadFileRequest();
+		var file = PoolManager.GetInstance().Get<DownloadFileRequest>("DownloadFileRequest");
         file.Id = System.DateTime.Now.Millisecond;
         file.fileUrl = url;
         file.filePath = targetPath;
@@ -120,7 +132,6 @@ public class UpdateManager : Singleton<UpdateManager>
 
     void MoveFile(DownloadFileRequest req, string info, byte[] bytes, int length)
     {
-		Debug.Log ("MoveFile" + req.filePath);
         if (req.fileType == DownloadFileType.TypeText)
         {
             FileManager.CreateFileWithString(req.filePath, info);

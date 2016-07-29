@@ -12,6 +12,7 @@ public class Lua_UnityEngine_TextureFormat : LuaObject {
 		addMember(l,4,"RGBA32");
 		addMember(l,5,"ARGB32");
 		addMember(l,7,"RGB565");
+		addMember(l,9,"R16");
 		addMember(l,10,"DXT1");
 		addMember(l,12,"DXT5");
 		addMember(l,13,"RGBA4444");
@@ -22,6 +23,9 @@ public class Lua_UnityEngine_TextureFormat : LuaObject {
 		addMember(l,18,"RFloat");
 		addMember(l,19,"RGFloat");
 		addMember(l,20,"RGBAFloat");
+		addMember(l,21,"YUY2");
+		addMember(l,28,"DXT1Crunched");
+		addMember(l,29,"DXT5Crunched");
 		addMember(l,30,"PVRTC_RGB2");
 		addMember(l,31,"PVRTC_RGBA2");
 		addMember(l,32,"PVRTC_RGB4");
@@ -48,10 +52,12 @@ public class Lua_UnityEngine_TextureFormat : LuaObject {
 		addMember(l,57,"ASTC_RGBA_8x8");
 		addMember(l,58,"ASTC_RGBA_10x10");
 		addMember(l,59,"ASTC_RGBA_12x12");
-		addMember(l,-127,"PVRTC_4BPP_RGBA");
-		addMember(l,-127,"PVRTC_4BPP_RGBA");
-		addMember(l,-127,"PVRTC_4BPP_RGBA");
-		addMember(l,-127,"PVRTC_4BPP_RGBA");
+		addMember(l,60,"ETC_RGB4_3DS");
+		addMember(l,61,"ETC_RGBA8_3DS");
+		addMember(l,-127,"PVRTC_4BPP_RGB");
+		addMember(l,-127,"PVRTC_4BPP_RGB");
+		addMember(l,-127,"PVRTC_4BPP_RGB");
+		addMember(l,-127,"PVRTC_4BPP_RGB");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

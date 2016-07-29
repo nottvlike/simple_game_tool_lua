@@ -46,6 +46,6 @@ public class Lua_UnityEngine_LightProbeGroup : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.LightProbeGroup");
 		addMember(l,"probePositions",get_probePositions,set_probePositions,true);
-		createTypeMetatable(l,constructor, typeof(UnityEngine.LightProbeGroup),typeof(UnityEngine.Component));
+		createTypeMetatable(l,constructor, typeof(UnityEngine.LightProbeGroup),typeof(UnityEngine.Behaviour));
 	}
 }

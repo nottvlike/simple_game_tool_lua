@@ -213,6 +213,78 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_shadowNearPlaneOffset(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.shadowNearPlaneOffset);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_shadowNearPlaneOffset(IntPtr l) {
+		try {
+			float v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.shadowNearPlaneOffset=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_shadowCascade2Split(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.shadowCascade2Split);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_shadowCascade2Split(IntPtr l) {
+		try {
+			float v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.shadowCascade2Split=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_shadowCascade4Split(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.shadowCascade4Split);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_shadowCascade4Split(IntPtr l) {
+		try {
+			UnityEngine.Vector3 v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.shadowCascade4Split=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_masterTextureLimit(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -381,6 +453,30 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_billboardsFaceCameraPosition(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.billboardsFaceCameraPosition);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_billboardsFaceCameraPosition(IntPtr l) {
+		try {
+			bool v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.billboardsFaceCameraPosition=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maxQueuedFrames(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -498,6 +594,54 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_asyncUploadTimeSlice(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.asyncUploadTimeSlice);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_asyncUploadTimeSlice(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.asyncUploadTimeSlice=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_asyncUploadBufferSize(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.QualitySettings.asyncUploadBufferSize);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_asyncUploadBufferSize(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.QualitySettings.asyncUploadBufferSize=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.QualitySettings");
 		addMember(l,GetQualityLevel_s);
@@ -509,6 +653,9 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		addMember(l,"shadowProjection",get_shadowProjection,set_shadowProjection,false);
 		addMember(l,"shadowCascades",get_shadowCascades,set_shadowCascades,false);
 		addMember(l,"shadowDistance",get_shadowDistance,set_shadowDistance,false);
+		addMember(l,"shadowNearPlaneOffset",get_shadowNearPlaneOffset,set_shadowNearPlaneOffset,false);
+		addMember(l,"shadowCascade2Split",get_shadowCascade2Split,set_shadowCascade2Split,false);
+		addMember(l,"shadowCascade4Split",get_shadowCascade4Split,set_shadowCascade4Split,false);
 		addMember(l,"masterTextureLimit",get_masterTextureLimit,set_masterTextureLimit,false);
 		addMember(l,"anisotropicFiltering",get_anisotropicFiltering,set_anisotropicFiltering,false);
 		addMember(l,"lodBias",get_lodBias,set_lodBias,false);
@@ -516,12 +663,15 @@ public class Lua_UnityEngine_QualitySettings : LuaObject {
 		addMember(l,"particleRaycastBudget",get_particleRaycastBudget,set_particleRaycastBudget,false);
 		addMember(l,"softVegetation",get_softVegetation,set_softVegetation,false);
 		addMember(l,"realtimeReflectionProbes",get_realtimeReflectionProbes,set_realtimeReflectionProbes,false);
+		addMember(l,"billboardsFaceCameraPosition",get_billboardsFaceCameraPosition,set_billboardsFaceCameraPosition,false);
 		addMember(l,"maxQueuedFrames",get_maxQueuedFrames,set_maxQueuedFrames,false);
 		addMember(l,"vSyncCount",get_vSyncCount,set_vSyncCount,false);
 		addMember(l,"antiAliasing",get_antiAliasing,set_antiAliasing,false);
 		addMember(l,"desiredColorSpace",get_desiredColorSpace,null,false);
 		addMember(l,"activeColorSpace",get_activeColorSpace,null,false);
 		addMember(l,"blendWeights",get_blendWeights,set_blendWeights,false);
+		addMember(l,"asyncUploadTimeSlice",get_asyncUploadTimeSlice,set_asyncUploadTimeSlice,false);
+		addMember(l,"asyncUploadBufferSize",get_asyncUploadBufferSize,set_asyncUploadBufferSize,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.QualitySettings),typeof(UnityEngine.Object));
 	}
 }

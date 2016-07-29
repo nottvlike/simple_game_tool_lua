@@ -7,15 +7,31 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RectangleContainsScreenPoint_s(IntPtr l) {
 		try {
-			UnityEngine.RectTransform a1;
-			checkType(l,1,out a1);
-			UnityEngine.Vector2 a2;
-			checkType(l,2,out a2);
-			UnityEngine.Camera a3;
-			checkType(l,3,out a3);
-			var ret=UnityEngine.RectTransformUtility.RectangleContainsScreenPoint(a1,a2,a3);
-			pushValue(l,true);
-			pushValue(l,ret);
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.RectTransform a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector2 a2;
+				checkType(l,2,out a2);
+				var ret=UnityEngine.RectTransformUtility.RectangleContainsScreenPoint(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==3){
+				UnityEngine.RectTransform a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector2 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Camera a3;
+				checkType(l,3,out a3);
+				var ret=UnityEngine.RectTransformUtility.RectangleContainsScreenPoint(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
 			return 2;
 		}
 		catch(Exception e) {
@@ -158,6 +174,42 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FlipLayoutOnAxis_s(IntPtr l) {
+		try {
+			UnityEngine.RectTransform a1;
+			checkType(l,1,out a1);
+			System.Int32 a2;
+			checkType(l,2,out a2);
+			System.Boolean a3;
+			checkType(l,3,out a3);
+			System.Boolean a4;
+			checkType(l,4,out a4);
+			UnityEngine.RectTransformUtility.FlipLayoutOnAxis(a1,a2,a3,a4);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FlipLayoutAxes_s(IntPtr l) {
+		try {
+			UnityEngine.RectTransform a1;
+			checkType(l,1,out a1);
+			System.Boolean a2;
+			checkType(l,2,out a2);
+			System.Boolean a3;
+			checkType(l,3,out a3);
+			UnityEngine.RectTransformUtility.FlipLayoutAxes(a1,a2,a3);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.RectTransformUtility");
 		addMember(l,RectangleContainsScreenPoint_s);
@@ -168,6 +220,8 @@ public class Lua_UnityEngine_RectTransformUtility : LuaObject {
 		addMember(l,ScreenPointToRay_s);
 		addMember(l,WorldToScreenPoint_s);
 		addMember(l,CalculateRelativeRectTransformBounds_s);
+		addMember(l,FlipLayoutOnAxis_s);
+		addMember(l,FlipLayoutAxes_s);
 		createTypeMetatable(l,null, typeof(UnityEngine.RectTransformUtility));
 	}
 }

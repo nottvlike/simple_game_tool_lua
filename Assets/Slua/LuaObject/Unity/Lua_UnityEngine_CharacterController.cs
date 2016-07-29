@@ -214,6 +214,32 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_skinWidth(IntPtr l) {
+		try {
+			UnityEngine.CharacterController self=(UnityEngine.CharacterController)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.skinWidth);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_skinWidth(IntPtr l) {
+		try {
+			UnityEngine.CharacterController self=(UnityEngine.CharacterController)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.skinWidth=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_detectCollisions(IntPtr l) {
 		try {
 			UnityEngine.CharacterController self=(UnityEngine.CharacterController)checkSelf(l);
@@ -251,6 +277,7 @@ public class Lua_UnityEngine_CharacterController : LuaObject {
 		addMember(l,"center",get_center,set_center,true);
 		addMember(l,"slopeLimit",get_slopeLimit,set_slopeLimit,true);
 		addMember(l,"stepOffset",get_stepOffset,set_stepOffset,true);
+		addMember(l,"skinWidth",get_skinWidth,set_skinWidth,true);
 		addMember(l,"detectCollisions",get_detectCollisions,set_detectCollisions,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CharacterController),typeof(UnityEngine.Collider));
 	}

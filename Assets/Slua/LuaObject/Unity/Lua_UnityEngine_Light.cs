@@ -18,6 +18,79 @@ public class Lua_UnityEngine_Light : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int AddCommandBuffer(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			UnityEngine.Rendering.LightEvent a1;
+			checkEnum(l,2,out a1);
+			UnityEngine.Rendering.CommandBuffer a2;
+			checkType(l,3,out a2);
+			self.AddCommandBuffer(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RemoveCommandBuffer(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			UnityEngine.Rendering.LightEvent a1;
+			checkEnum(l,2,out a1);
+			UnityEngine.Rendering.CommandBuffer a2;
+			checkType(l,3,out a2);
+			self.RemoveCommandBuffer(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RemoveCommandBuffers(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			UnityEngine.Rendering.LightEvent a1;
+			checkEnum(l,2,out a1);
+			self.RemoveCommandBuffers(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RemoveAllCommandBuffers(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			self.RemoveAllCommandBuffers();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetCommandBuffers(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			UnityEngine.Rendering.LightEvent a1;
+			checkEnum(l,2,out a1);
+			var ret=self.GetCommandBuffers(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetLights_s(IntPtr l) {
 		try {
 			UnityEngine.LightType a1;
@@ -112,6 +185,32 @@ public class Lua_UnityEngine_Light : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_bounceIntensity(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.bounceIntensity);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_bounceIntensity(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.bounceIntensity=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_shadows(IntPtr l) {
 		try {
 			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
@@ -190,11 +289,11 @@ public class Lua_UnityEngine_Light : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_shadowSoftness(IntPtr l) {
+	static public int get_shadowNormalBias(IntPtr l) {
 		try {
 			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.shadowSoftness);
+			pushValue(l,self.shadowNormalBias);
 			return 2;
 		}
 		catch(Exception e) {
@@ -202,12 +301,12 @@ public class Lua_UnityEngine_Light : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_shadowSoftness(IntPtr l) {
+	static public int set_shadowNormalBias(IntPtr l) {
 		try {
 			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
 			float v;
 			checkType(l,2,out v);
-			self.shadowSoftness=v;
+			self.shadowNormalBias=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -216,11 +315,11 @@ public class Lua_UnityEngine_Light : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_shadowSoftnessFade(IntPtr l) {
+	static public int get_shadowNearPlane(IntPtr l) {
 		try {
 			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.shadowSoftnessFade);
+			pushValue(l,self.shadowNearPlane);
 			return 2;
 		}
 		catch(Exception e) {
@@ -228,12 +327,12 @@ public class Lua_UnityEngine_Light : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_shadowSoftnessFade(IntPtr l) {
+	static public int set_shadowNearPlane(IntPtr l) {
 		try {
 			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
 			float v;
 			checkType(l,2,out v);
-			self.shadowSoftnessFade=v;
+			self.shadowNearPlane=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -449,17 +548,35 @@ public class Lua_UnityEngine_Light : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_commandBufferCount(IntPtr l) {
+		try {
+			UnityEngine.Light self=(UnityEngine.Light)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.commandBufferCount);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Light");
+		addMember(l,AddCommandBuffer);
+		addMember(l,RemoveCommandBuffer);
+		addMember(l,RemoveCommandBuffers);
+		addMember(l,RemoveAllCommandBuffers);
+		addMember(l,GetCommandBuffers);
 		addMember(l,GetLights_s);
 		addMember(l,"type",get_type,set_type,true);
 		addMember(l,"color",get_color,set_color,true);
 		addMember(l,"intensity",get_intensity,set_intensity,true);
+		addMember(l,"bounceIntensity",get_bounceIntensity,set_bounceIntensity,true);
 		addMember(l,"shadows",get_shadows,set_shadows,true);
 		addMember(l,"shadowStrength",get_shadowStrength,set_shadowStrength,true);
 		addMember(l,"shadowBias",get_shadowBias,set_shadowBias,true);
-		addMember(l,"shadowSoftness",get_shadowSoftness,set_shadowSoftness,true);
-		addMember(l,"shadowSoftnessFade",get_shadowSoftnessFade,set_shadowSoftnessFade,true);
+		addMember(l,"shadowNormalBias",get_shadowNormalBias,set_shadowNormalBias,true);
+		addMember(l,"shadowNearPlane",get_shadowNearPlane,set_shadowNearPlane,true);
 		addMember(l,"range",get_range,set_range,true);
 		addMember(l,"spotAngle",get_spotAngle,set_spotAngle,true);
 		addMember(l,"cookieSize",get_cookieSize,set_cookieSize,true);
@@ -468,6 +585,7 @@ public class Lua_UnityEngine_Light : LuaObject {
 		addMember(l,"renderMode",get_renderMode,set_renderMode,true);
 		addMember(l,"alreadyLightmapped",get_alreadyLightmapped,set_alreadyLightmapped,true);
 		addMember(l,"cullingMask",get_cullingMask,set_cullingMask,true);
+		addMember(l,"commandBufferCount",get_commandBufferCount,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Light),typeof(UnityEngine.Behaviour));
 	}
 }

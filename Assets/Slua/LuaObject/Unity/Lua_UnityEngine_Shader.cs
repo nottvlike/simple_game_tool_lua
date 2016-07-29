@@ -58,6 +58,20 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsKeywordEnabled_s(IntPtr l) {
+		try {
+			System.String a1;
+			checkType(l,1,out a1);
+			var ret=UnityEngine.Shader.IsKeywordEnabled(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalColor_s(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -356,6 +370,7 @@ public class Lua_UnityEngine_Shader : LuaObject {
 		addMember(l,Find_s);
 		addMember(l,EnableKeyword_s);
 		addMember(l,DisableKeyword_s);
+		addMember(l,IsKeywordEnabled_s);
 		addMember(l,SetGlobalColor_s);
 		addMember(l,SetGlobalVector_s);
 		addMember(l,SetGlobalFloat_s);

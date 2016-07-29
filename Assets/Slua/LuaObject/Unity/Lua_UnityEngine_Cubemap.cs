@@ -191,6 +191,18 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_mipmapCount(IntPtr l) {
+		try {
+			UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.mipmapCount);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_format(IntPtr l) {
 		try {
 			UnityEngine.Cubemap self=(UnityEngine.Cubemap)checkSelf(l);
@@ -210,6 +222,7 @@ public class Lua_UnityEngine_Cubemap : LuaObject {
 		addMember(l,SetPixels);
 		addMember(l,Apply);
 		addMember(l,SmoothEdges);
+		addMember(l,"mipmapCount",get_mipmapCount,null,true);
 		addMember(l,"format",get_format,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Cubemap),typeof(UnityEngine.Texture));
 	}

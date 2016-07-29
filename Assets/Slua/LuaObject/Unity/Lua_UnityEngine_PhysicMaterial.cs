@@ -108,84 +108,6 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_frictionDirection2(IntPtr l) {
-		try {
-			UnityEngine.PhysicMaterial self=(UnityEngine.PhysicMaterial)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.frictionDirection2);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_frictionDirection2(IntPtr l) {
-		try {
-			UnityEngine.PhysicMaterial self=(UnityEngine.PhysicMaterial)checkSelf(l);
-			UnityEngine.Vector3 v;
-			checkType(l,2,out v);
-			self.frictionDirection2=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_dynamicFriction2(IntPtr l) {
-		try {
-			UnityEngine.PhysicMaterial self=(UnityEngine.PhysicMaterial)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.dynamicFriction2);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_dynamicFriction2(IntPtr l) {
-		try {
-			UnityEngine.PhysicMaterial self=(UnityEngine.PhysicMaterial)checkSelf(l);
-			float v;
-			checkType(l,2,out v);
-			self.dynamicFriction2=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_staticFriction2(IntPtr l) {
-		try {
-			UnityEngine.PhysicMaterial self=(UnityEngine.PhysicMaterial)checkSelf(l);
-			pushValue(l,true);
-			pushValue(l,self.staticFriction2);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_staticFriction2(IntPtr l) {
-		try {
-			UnityEngine.PhysicMaterial self=(UnityEngine.PhysicMaterial)checkSelf(l);
-			float v;
-			checkType(l,2,out v);
-			self.staticFriction2=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_frictionCombine(IntPtr l) {
 		try {
 			UnityEngine.PhysicMaterial self=(UnityEngine.PhysicMaterial)checkSelf(l);
@@ -242,9 +164,6 @@ public class Lua_UnityEngine_PhysicMaterial : LuaObject {
 		addMember(l,"dynamicFriction",get_dynamicFriction,set_dynamicFriction,true);
 		addMember(l,"staticFriction",get_staticFriction,set_staticFriction,true);
 		addMember(l,"bounciness",get_bounciness,set_bounciness,true);
-		addMember(l,"frictionDirection2",get_frictionDirection2,set_frictionDirection2,true);
-		addMember(l,"dynamicFriction2",get_dynamicFriction2,set_dynamicFriction2,true);
-		addMember(l,"staticFriction2",get_staticFriction2,set_staticFriction2,true);
 		addMember(l,"frictionCombine",get_frictionCombine,set_frictionCombine,true);
 		addMember(l,"bounceCombine",get_bounceCombine,set_bounceCombine,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.PhysicMaterial),typeof(UnityEngine.Object));

@@ -62,6 +62,36 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LoadAsync_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==1){
+				System.String a1;
+				checkType(l,1,out a1);
+				var ret=UnityEngine.Resources.LoadAsync(a1);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==2){
+				System.String a1;
+				checkType(l,1,out a1);
+				System.Type a2;
+				checkType(l,2,out a2);
+				var ret=UnityEngine.Resources.LoadAsync(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int LoadAll_s(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -136,6 +166,7 @@ public class Lua_UnityEngine_Resources : LuaObject {
 		getTypeTable(l,"UnityEngine.Resources");
 		addMember(l,FindObjectsOfTypeAll_s);
 		addMember(l,Load_s);
+		addMember(l,LoadAsync_s);
 		addMember(l,LoadAll_s);
 		addMember(l,GetBuiltinResource_s);
 		addMember(l,UnloadAsset_s);

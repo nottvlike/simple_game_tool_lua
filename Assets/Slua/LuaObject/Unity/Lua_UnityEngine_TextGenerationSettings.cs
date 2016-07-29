@@ -163,6 +163,35 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_scaleFactor(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.scaleFactor);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_scaleFactor(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			System.Single v;
+			checkType(l,2,out v);
+			self.scaleFactor=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_fontStyle(IntPtr l) {
 		try {
 			UnityEngine.TextGenerationSettings self;
@@ -212,6 +241,35 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 			UnityEngine.TextAnchor v;
 			checkEnum(l,2,out v);
 			self.textAnchor=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.alignByGeometry);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_alignByGeometry(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			System.Boolean v;
+			checkType(l,2,out v);
+			self.alignByGeometry=v;
 			setBack(l,self);
 			pushValue(l,true);
 			return 1;
@@ -452,6 +510,35 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_generateOutOfBounds(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.generateOutOfBounds);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_generateOutOfBounds(IntPtr l) {
+		try {
+			UnityEngine.TextGenerationSettings self;
+			checkValueType(l,1,out self);
+			System.Boolean v;
+			checkType(l,2,out v);
+			self.generateOutOfBounds=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.TextGenerationSettings");
 		addMember(l,"font",get_font,set_font,true);
@@ -459,8 +546,10 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 		addMember(l,"fontSize",get_fontSize,set_fontSize,true);
 		addMember(l,"lineSpacing",get_lineSpacing,set_lineSpacing,true);
 		addMember(l,"richText",get_richText,set_richText,true);
+		addMember(l,"scaleFactor",get_scaleFactor,set_scaleFactor,true);
 		addMember(l,"fontStyle",get_fontStyle,set_fontStyle,true);
 		addMember(l,"textAnchor",get_textAnchor,set_textAnchor,true);
+		addMember(l,"alignByGeometry",get_alignByGeometry,set_alignByGeometry,true);
 		addMember(l,"resizeTextForBestFit",get_resizeTextForBestFit,set_resizeTextForBestFit,true);
 		addMember(l,"resizeTextMinSize",get_resizeTextMinSize,set_resizeTextMinSize,true);
 		addMember(l,"resizeTextMaxSize",get_resizeTextMaxSize,set_resizeTextMaxSize,true);
@@ -469,6 +558,7 @@ public class Lua_UnityEngine_TextGenerationSettings : LuaObject {
 		addMember(l,"horizontalOverflow",get_horizontalOverflow,set_horizontalOverflow,true);
 		addMember(l,"generationExtents",get_generationExtents,set_generationExtents,true);
 		addMember(l,"pivot",get_pivot,set_pivot,true);
+		addMember(l,"generateOutOfBounds",get_generateOutOfBounds,set_generateOutOfBounds,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.TextGenerationSettings),typeof(System.ValueType));
 	}
 }

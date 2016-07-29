@@ -17,12 +17,12 @@ public class Lua_UnityEngine_EventSystems_BaseInputModule : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int IsPointerOverEventSystemObject(IntPtr l) {
+	static public int IsPointerOverGameObject(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.BaseInputModule self=(UnityEngine.EventSystems.BaseInputModule)checkSelf(l);
 			System.Int32 a1;
 			checkType(l,2,out a1);
-			var ret=self.IsPointerOverEventSystemObject(a1);
+			var ret=self.IsPointerOverGameObject(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -96,7 +96,7 @@ public class Lua_UnityEngine_EventSystems_BaseInputModule : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.EventSystems.BaseInputModule");
 		addMember(l,Process);
-		addMember(l,IsPointerOverEventSystemObject);
+		addMember(l,IsPointerOverGameObject);
 		addMember(l,ShouldActivateModule);
 		addMember(l,DeactivateModule);
 		addMember(l,ActivateModule);

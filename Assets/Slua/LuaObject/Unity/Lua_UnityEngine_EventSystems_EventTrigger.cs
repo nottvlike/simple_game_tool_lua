@@ -173,11 +173,81 @@ public class Lua_UnityEngine_EventSystems_EventTrigger : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_delegates(IntPtr l) {
+	static public int OnInitializePotentialDrag(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.EventTrigger self=(UnityEngine.EventSystems.EventTrigger)checkSelf(l);
+			UnityEngine.EventSystems.PointerEventData a1;
+			checkType(l,2,out a1);
+			self.OnInitializePotentialDrag(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OnBeginDrag(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.EventTrigger self=(UnityEngine.EventSystems.EventTrigger)checkSelf(l);
+			UnityEngine.EventSystems.PointerEventData a1;
+			checkType(l,2,out a1);
+			self.OnBeginDrag(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OnEndDrag(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.EventTrigger self=(UnityEngine.EventSystems.EventTrigger)checkSelf(l);
+			UnityEngine.EventSystems.PointerEventData a1;
+			checkType(l,2,out a1);
+			self.OnEndDrag(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OnSubmit(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.EventTrigger self=(UnityEngine.EventSystems.EventTrigger)checkSelf(l);
+			UnityEngine.EventSystems.BaseEventData a1;
+			checkType(l,2,out a1);
+			self.OnSubmit(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OnCancel(IntPtr l) {
+		try {
+			UnityEngine.EventSystems.EventTrigger self=(UnityEngine.EventSystems.EventTrigger)checkSelf(l);
+			UnityEngine.EventSystems.BaseEventData a1;
+			checkType(l,2,out a1);
+			self.OnCancel(a1);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_triggers(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.EventTrigger self=(UnityEngine.EventSystems.EventTrigger)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,self.delegates);
+			pushValue(l,self.triggers);
 			return 2;
 		}
 		catch(Exception e) {
@@ -185,12 +255,12 @@ public class Lua_UnityEngine_EventSystems_EventTrigger : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_delegates(IntPtr l) {
+	static public int set_triggers(IntPtr l) {
 		try {
 			UnityEngine.EventSystems.EventTrigger self=(UnityEngine.EventSystems.EventTrigger)checkSelf(l);
-			System.Collections.Generic.List<UnityEngine.EventSystems.EventTrigger.Entry> v;
+			List<UnityEngine.EventSystems.EventTrigger.Entry> v;
 			checkType(l,2,out v);
-			self.delegates=v;
+			self.triggers=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -212,7 +282,12 @@ public class Lua_UnityEngine_EventSystems_EventTrigger : LuaObject {
 		addMember(l,OnScroll);
 		addMember(l,OnMove);
 		addMember(l,OnUpdateSelected);
-		addMember(l,"delegates",get_delegates,set_delegates,true);
+		addMember(l,OnInitializePotentialDrag);
+		addMember(l,OnBeginDrag);
+		addMember(l,OnEndDrag);
+		addMember(l,OnSubmit);
+		addMember(l,OnCancel);
+		addMember(l,"triggers",get_triggers,set_triggers,true);
 		createTypeMetatable(l,null, typeof(UnityEngine.EventSystems.EventTrigger),typeof(UnityEngine.MonoBehaviour));
 	}
 }

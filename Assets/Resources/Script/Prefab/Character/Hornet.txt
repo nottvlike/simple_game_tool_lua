@@ -1,0 +1,11 @@
+local Creature = require 'Script.Base.Creature.Creature'
+local joystick = require 'Script.Input.JoystickManager'
+local hornet = Class("Hornet", Creature)
+
+function hornet:ctor(parent, isMainPlayer)
+	Creature.ctor(self, parent, isMainPlayer)
+	self.prefabName = "MonsterHornet-Red"
+	self:init()
+end
+
+return hornet

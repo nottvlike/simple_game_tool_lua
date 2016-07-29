@@ -1,0 +1,27 @@
+local attribute = Class("Attribute")
+
+local CurrentAttribute = {
+	["HP"] = 0,
+	["MP"] = 0,
+	["ATK"] = 0,
+	["DEF"] = 0
+}
+
+function attribute:ctor(parent)
+	self.parent = parent
+	self.buffs = {}
+
+	for name,attr in pairs(CurrentAttribute) do
+		self[name] = 0
+	end
+
+	self:init()
+end
+
+function attribute:init()
+	--TODO:从配置中或者服务器上获取属性信息
+
+	self["HP"] = 1000
+end
+
+return attribute

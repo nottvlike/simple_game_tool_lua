@@ -1,0 +1,48 @@
+local runTimeManager = {}
+
+runTimeManager.__index = runTimeManager
+
+CreatureType = {
+	["Golem"] = function(...)
+		local golem = require 'Script.Prefab.Character.Golem'
+		return golem.new(...)
+	end,
+
+	["Hornet"] = function(...)
+		local hornet = require 'Script.Prefab.Character.Hornet'
+		return hornet.new(...)
+	end,
+}
+
+runTimeManager.creatureList = {}
+
+function runTimeManager.createCreature(creatureType, ...)
+	if CreatureType[creatureType] then
+		local creature = CreatureType[creatureType](...)
+		table.insert(runTimeManager.creatureList, creature)
+
+		return creature
+	else
+		print("warning can't find creature type " .. creatureType)
+	end
+end
+
+function runTimeManager.deleteRole(creature)
+	for i = 1,#(runTimeManager.creatureList) do
+		local target = runTimeManager.creatureList[i]
+		if target.gameObject == creature.gameObject then
+			table.remove(runTimeManager.creatureList, i)
+		end
+	end
+end
+
+function runTimeManager.getCreature(gameObject)
+	for i = 1,#(runTimeManager.creatureList) do
+		local target = runTimeManager.creatureList[i]
+		if target.gameObject == gameObject then
+			return target
+		end
+	end
+end
+
+return runTimeManager

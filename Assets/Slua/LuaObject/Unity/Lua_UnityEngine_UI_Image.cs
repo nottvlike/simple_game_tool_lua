@@ -17,6 +17,18 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OnAfterDeserialize(IntPtr l) {
+		try {
+			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
+			self.OnAfterDeserialize();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetNativeSize(IntPtr l) {
 		try {
 			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
@@ -47,6 +59,23 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 			self.CalculateLayoutInputVertical();
 			pushValue(l,true);
 			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsRaycastLocationValid(IntPtr l) {
+		try {
+			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
+			UnityEngine.Vector2 a1;
+			checkType(l,2,out a1);
+			UnityEngine.Camera a2;
+			checkType(l,3,out a2);
+			var ret=self.IsRaycastLocationValid(a1,a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -287,6 +316,32 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_eventAlphaThreshold(IntPtr l) {
+		try {
+			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.eventAlphaThreshold);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_eventAlphaThreshold(IntPtr l) {
+		try {
+			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.eventAlphaThreshold=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_mainTexture(IntPtr l) {
 		try {
 			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
@@ -304,6 +359,18 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
 			pushValue(l,true);
 			pushValue(l,self.hasBorder);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_pixelsPerUnit(IntPtr l) {
+		try {
+			UnityEngine.UI.Image self=(UnityEngine.UI.Image)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.pixelsPerUnit);
 			return 2;
 		}
 		catch(Exception e) {
@@ -397,9 +464,11 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.Image");
 		addMember(l,OnBeforeSerialize);
+		addMember(l,OnAfterDeserialize);
 		addMember(l,SetNativeSize);
 		addMember(l,CalculateLayoutInputHorizontal);
 		addMember(l,CalculateLayoutInputVertical);
+		addMember(l,IsRaycastLocationValid);
 		addMember(l,"sprite",get_sprite,set_sprite,true);
 		addMember(l,"overrideSprite",get_overrideSprite,set_overrideSprite,true);
 		addMember(l,"type",get_type,set_type,true);
@@ -409,8 +478,10 @@ public class Lua_UnityEngine_UI_Image : LuaObject {
 		addMember(l,"fillAmount",get_fillAmount,set_fillAmount,true);
 		addMember(l,"fillClockwise",get_fillClockwise,set_fillClockwise,true);
 		addMember(l,"fillOrigin",get_fillOrigin,set_fillOrigin,true);
+		addMember(l,"eventAlphaThreshold",get_eventAlphaThreshold,set_eventAlphaThreshold,true);
 		addMember(l,"mainTexture",get_mainTexture,null,true);
 		addMember(l,"hasBorder",get_hasBorder,null,true);
+		addMember(l,"pixelsPerUnit",get_pixelsPerUnit,null,true);
 		addMember(l,"minWidth",get_minWidth,null,true);
 		addMember(l,"preferredWidth",get_preferredWidth,null,true);
 		addMember(l,"flexibleWidth",get_flexibleWidth,null,true);

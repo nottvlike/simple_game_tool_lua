@@ -5,19 +5,6 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int constructor(IntPtr l) {
-		try {
-			UnityEngine.ProceduralMaterial o;
-			o=new UnityEngine.ProceduralMaterial();
-			pushValue(l,true);
-			pushValue(l,o);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetProceduralPropertyDescriptions(IntPtr l) {
 		try {
 			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
@@ -52,6 +39,21 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 			System.String a1;
 			checkType(l,2,out a1);
 			var ret=self.GetProceduralBoolean(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsProceduralPropertyVisible(IntPtr l) {
+		try {
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			var ret=self.IsProceduralPropertyVisible(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -327,6 +329,18 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int FreezeAndReleaseSourceData(IntPtr l) {
+		try {
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
+			self.FreezeAndReleaseSourceData();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int StopRebuilds_s(IntPtr l) {
 		try {
 			UnityEngine.ProceduralMaterial.StopRebuilds();
@@ -538,11 +552,24 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isFrozen(IntPtr l) {
+		try {
+			UnityEngine.ProceduralMaterial self=(UnityEngine.ProceduralMaterial)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.isFrozen);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.ProceduralMaterial");
 		addMember(l,GetProceduralPropertyDescriptions);
 		addMember(l,HasProceduralProperty);
 		addMember(l,GetProceduralBoolean);
+		addMember(l,IsProceduralPropertyVisible);
 		addMember(l,SetProceduralBoolean);
 		addMember(l,GetProceduralFloat);
 		addMember(l,SetProceduralFloat);
@@ -561,6 +588,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		addMember(l,RebuildTexturesImmediately);
 		addMember(l,GetGeneratedTextures);
 		addMember(l,GetGeneratedTexture);
+		addMember(l,FreezeAndReleaseSourceData);
 		addMember(l,StopRebuilds_s);
 		addMember(l,"cacheSize",get_cacheSize,set_cacheSize,true);
 		addMember(l,"animationUpdateRate",get_animationUpdateRate,set_animationUpdateRate,true);
@@ -572,6 +600,7 @@ public class Lua_UnityEngine_ProceduralMaterial : LuaObject {
 		addMember(l,"substanceProcessorUsage",get_substanceProcessorUsage,set_substanceProcessorUsage,false);
 		addMember(l,"preset",get_preset,set_preset,true);
 		addMember(l,"isReadable",get_isReadable,set_isReadable,true);
-		createTypeMetatable(l,constructor, typeof(UnityEngine.ProceduralMaterial),typeof(UnityEngine.Material));
+		addMember(l,"isFrozen",get_isFrozen,null,true);
+		createTypeMetatable(l,null, typeof(UnityEngine.ProceduralMaterial),typeof(UnityEngine.Material));
 	}
 }

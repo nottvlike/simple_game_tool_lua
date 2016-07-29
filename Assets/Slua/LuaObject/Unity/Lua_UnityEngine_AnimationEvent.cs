@@ -200,11 +200,59 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isFiredByLegacy(IntPtr l) {
+		try {
+			UnityEngine.AnimationEvent self=(UnityEngine.AnimationEvent)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.isFiredByLegacy);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isFiredByAnimator(IntPtr l) {
+		try {
+			UnityEngine.AnimationEvent self=(UnityEngine.AnimationEvent)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.isFiredByAnimator);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_animationState(IntPtr l) {
 		try {
 			UnityEngine.AnimationEvent self=(UnityEngine.AnimationEvent)checkSelf(l);
 			pushValue(l,true);
 			pushValue(l,self.animationState);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_animatorStateInfo(IntPtr l) {
+		try {
+			UnityEngine.AnimationEvent self=(UnityEngine.AnimationEvent)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.animatorStateInfo);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_animatorClipInfo(IntPtr l) {
+		try {
+			UnityEngine.AnimationEvent self=(UnityEngine.AnimationEvent)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.animatorClipInfo);
 			return 2;
 		}
 		catch(Exception e) {
@@ -220,7 +268,11 @@ public class Lua_UnityEngine_AnimationEvent : LuaObject {
 		addMember(l,"functionName",get_functionName,set_functionName,true);
 		addMember(l,"time",get_time,set_time,true);
 		addMember(l,"messageOptions",get_messageOptions,set_messageOptions,true);
+		addMember(l,"isFiredByLegacy",get_isFiredByLegacy,null,true);
+		addMember(l,"isFiredByAnimator",get_isFiredByAnimator,null,true);
 		addMember(l,"animationState",get_animationState,null,true);
+		addMember(l,"animatorStateInfo",get_animatorStateInfo,null,true);
+		addMember(l,"animatorClipInfo",get_animatorClipInfo,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimationEvent));
 	}
 }

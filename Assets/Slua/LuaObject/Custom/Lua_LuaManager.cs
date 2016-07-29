@@ -42,9 +42,11 @@ public class Lua_LuaManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetAssetBundlePath_s(IntPtr l) {
+	static public int GetExternalDir_s(IntPtr l) {
 		try {
-			var ret=LuaManager.GetAssetBundlePath();
+			System.Boolean a1;
+			checkType(l,1,out a1);
+			var ret=LuaManager.GetExternalDir(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -54,23 +56,11 @@ public class Lua_LuaManager : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetScriptPath_s(IntPtr l) {
+	static public int get_L(IntPtr l) {
 		try {
-			var ret=LuaManager.GetScriptPath();
+			LuaManager self=(LuaManager)checkSelf(l);
 			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetConfigPath_s(IntPtr l) {
-		try {
-			var ret=LuaManager.GetConfigPath();
-			pushValue(l,true);
-			pushValue(l,ret);
+			pushValue(l,self.L);
 			return 2;
 		}
 		catch(Exception e) {
@@ -81,9 +71,8 @@ public class Lua_LuaManager : LuaObject {
 		getTypeTable(l,"LuaManager");
 		addMember(l,Init);
 		addMember(l,GetInstance_s);
-		addMember(l,GetAssetBundlePath_s);
-		addMember(l,GetScriptPath_s);
-		addMember(l,GetConfigPath_s);
+		addMember(l,GetExternalDir_s);
+		addMember(l,"L",get_L,null,true);
 		createTypeMetatable(l,constructor, typeof(LuaManager),typeof(Singleton<LuaManager>));
 	}
 }

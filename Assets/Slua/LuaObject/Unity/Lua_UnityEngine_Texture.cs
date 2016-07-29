@@ -31,19 +31,6 @@ public class Lua_UnityEngine_Texture : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int GetNativeTextureID(IntPtr l) {
-		try {
-			UnityEngine.Texture self=(UnityEngine.Texture)checkSelf(l);
-			var ret=self.GetNativeTextureID();
-			pushValue(l,true);
-			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int SetGlobalAnisotropicFilteringLimits_s(IntPtr l) {
 		try {
 			System.Int32 a1;
@@ -277,7 +264,6 @@ public class Lua_UnityEngine_Texture : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Texture");
 		addMember(l,GetNativeTexturePtr);
-		addMember(l,GetNativeTextureID);
 		addMember(l,SetGlobalAnisotropicFilteringLimits_s);
 		addMember(l,"masterTextureLimit",get_masterTextureLimit,set_masterTextureLimit,false);
 		addMember(l,"anisotropicFiltering",get_anisotropicFiltering,set_anisotropicFiltering,false);

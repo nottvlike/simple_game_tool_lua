@@ -60,9 +60,10 @@ public class Lua_UnityEngine_Audio_AudioMixer : LuaObject {
 			checkType(l,2,out a1);
 			System.Single a2;
 			checkType(l,3,out a2);
-			self.SetFloat(a1,a2);
+			var ret=self.SetFloat(a1,a2);
 			pushValue(l,true);
-			return 1;
+			pushValue(l,ret);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -74,9 +75,10 @@ public class Lua_UnityEngine_Audio_AudioMixer : LuaObject {
 			UnityEngine.Audio.AudioMixer self=(UnityEngine.Audio.AudioMixer)checkSelf(l);
 			System.String a1;
 			checkType(l,2,out a1);
-			self.ClearFloat(a1);
+			var ret=self.ClearFloat(a1);
 			pushValue(l,true);
-			return 1;
+			pushValue(l,ret);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -125,6 +127,32 @@ public class Lua_UnityEngine_Audio_AudioMixer : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_updateMode(IntPtr l) {
+		try {
+			UnityEngine.Audio.AudioMixer self=(UnityEngine.Audio.AudioMixer)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.updateMode);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_updateMode(IntPtr l) {
+		try {
+			UnityEngine.Audio.AudioMixer self=(UnityEngine.Audio.AudioMixer)checkSelf(l);
+			UnityEngine.Audio.AudioMixerUpdateMode v;
+			checkEnum(l,2,out v);
+			self.updateMode=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Audio.AudioMixer");
 		addMember(l,FindMatchingGroups);
@@ -134,6 +162,7 @@ public class Lua_UnityEngine_Audio_AudioMixer : LuaObject {
 		addMember(l,ClearFloat);
 		addMember(l,GetFloat);
 		addMember(l,"outputAudioMixerGroup",get_outputAudioMixerGroup,set_outputAudioMixerGroup,true);
+		addMember(l,"updateMode",get_updateMode,set_updateMode,true);
 		createTypeMetatable(l,null, typeof(UnityEngine.Audio.AudioMixer),typeof(UnityEngine.Object));
 	}
 }

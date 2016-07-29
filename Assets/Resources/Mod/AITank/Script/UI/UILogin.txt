@@ -1,0 +1,54 @@
+local UIManager = require 'Mod.AITank.Script.Manager.UIManager'
+local BaseWindow = require 'Mod.AITank.Script.Base.UIWindow'
+local login = Class("UILogin", BaseWindow)
+
+function login:ctor()
+	self.prefabName = "Login"
+	self.gameObject = nil
+end
+
+function login:init(func)
+	if not self.gameObject then
+		BaseWindow.init(self, function()
+			self.startButton = self.transform:Find("StartButton").gameObject:GetComponent(UI.Button)
+			self.moduleButton = self.transform:Find("ModuleButton").gameObject:GetComponent(UI.Button)
+			self.exitButton = self.transform:Find("ExitButton").gameObject:GetComponent(UI.Button)
+
+			self.startButton.onClick:AddListener(
+				function()
+					self:startGame()
+				end)
+			self.moduleButton.onClick:AddListener(
+				function()
+					self:openModuleBag()
+				end)
+			self.exitButton.onClick:AddListener(
+				function()
+					self:exitGame()
+				end)
+
+			if func then
+				func()
+			end
+		end)
+	else
+		if func then
+			func()
+		end
+	end
+end
+
+function login:startGame()
+
+end
+
+function login:openModuleBag()
+	local UIManager = require 'Mod.AITank.Script.Manager.UIManager'
+	UIManager:show("UIModuleBag")
+end
+
+function login:exitGame()
+	print("exitGame")
+end
+
+UIManager:register("UILogin", login)

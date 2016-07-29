@@ -1,0 +1,56 @@
+local UIManager = Class("UIManager")
+
+function UIManager:ctor()
+	self.current = nil
+end
+
+function UIManager:register(name, cls)
+	if not self[name] then
+		self[name] = cls.new()
+	end
+end
+
+function UIManager:show(name)
+	if not self[name] then
+		print(string.format("Error window %s not found!", name))
+		return
+	end
+
+	local current = self[name]
+	local lastName = self.current
+	
+	--隐藏当前界面
+	if lastName then
+		self[lastName]:hide()
+	end
+
+	self.current = name
+	--显示新界面
+	current:init(function()
+		current:push(lastName)
+		current:show()
+	end)
+end
+
+function UIManager:require()
+	require 'Mod.AITank.Script.UI.UILogin'
+	require 'Mod.AITank.Script.UI.UIModuleBag'
+end
+
+function UIManager:close()
+	local lastName = self.current
+	local currentName = self[lastName].last
+	self.current = currentName
+
+	--显示上一个界面
+	if self[currentName] then
+		self[currentName]:show()
+	end
+
+	--关闭当前界面
+	self[lastName]:hide()
+	self[lastName]:pop()
+end
+
+local manager = UIManager.new()
+return manager

@@ -124,6 +124,18 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int UnPause(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			self.UnPause();
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int PlayOneShot(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -147,6 +159,37 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 			}
 			pushValue(l,false);
 			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetCustomCurve(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			UnityEngine.AudioSourceCurveType a1;
+			checkEnum(l,2,out a1);
+			UnityEngine.AnimationCurve a2;
+			checkType(l,3,out a2);
+			self.SetCustomCurve(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetCustomCurve(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			UnityEngine.AudioSourceCurveType a1;
+			checkEnum(l,2,out a1);
+			var ret=self.GetCustomCurve(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
 			return 2;
 		}
 		catch(Exception e) {
@@ -182,6 +225,40 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 			self.GetSpectrumData(a1,a2,a3);
 			pushValue(l,true);
 			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetSpatializerFloat(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			System.Single a2;
+			checkType(l,3,out a2);
+			var ret=self.SetSpatializerFloat(a1,a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int GetSpatializerFloat(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			System.Int32 a1;
+			checkType(l,2,out a1);
+			System.Single a2;
+			var ret=self.GetSpatializerFloat(a1,out a2);
+			pushValue(l,true);
+			pushValue(l,ret);
+			pushValue(l,a2);
+			return 3;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -388,6 +465,18 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_isVirtual(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.isVirtual);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_loop(IntPtr l) {
 		try {
 			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
@@ -562,6 +651,58 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 			float v;
 			checkType(l,2,out v);
 			self.spatialBlend=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_spatialize(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.spatialize);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_spatialize(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			bool v;
+			checkType(l,2,out v);
+			self.spatialize=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_reverbZoneMix(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.reverbZoneMix);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_reverbZoneMix(IntPtr l) {
+		try {
+			UnityEngine.AudioSource self=(UnityEngine.AudioSource)checkSelf(l);
+			float v;
+			checkType(l,2,out v);
+			self.reverbZoneMix=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -838,9 +979,14 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		addMember(l,SetScheduledEndTime);
 		addMember(l,Stop);
 		addMember(l,Pause);
+		addMember(l,UnPause);
 		addMember(l,PlayOneShot);
+		addMember(l,SetCustomCurve);
+		addMember(l,GetCustomCurve);
 		addMember(l,GetOutputData);
 		addMember(l,GetSpectrumData);
+		addMember(l,SetSpatializerFloat);
+		addMember(l,GetSpatializerFloat);
 		addMember(l,PlayClipAtPoint_s);
 		addMember(l,"volume",get_volume,set_volume,true);
 		addMember(l,"pitch",get_pitch,set_pitch,true);
@@ -849,6 +995,7 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		addMember(l,"clip",get_clip,set_clip,true);
 		addMember(l,"outputAudioMixerGroup",get_outputAudioMixerGroup,set_outputAudioMixerGroup,true);
 		addMember(l,"isPlaying",get_isPlaying,null,true);
+		addMember(l,"isVirtual",get_isVirtual,null,true);
 		addMember(l,"loop",get_loop,set_loop,true);
 		addMember(l,"ignoreListenerVolume",get_ignoreListenerVolume,set_ignoreListenerVolume,true);
 		addMember(l,"playOnAwake",get_playOnAwake,set_playOnAwake,true);
@@ -856,6 +1003,8 @@ public class Lua_UnityEngine_AudioSource : LuaObject {
 		addMember(l,"velocityUpdateMode",get_velocityUpdateMode,set_velocityUpdateMode,true);
 		addMember(l,"panStereo",get_panStereo,set_panStereo,true);
 		addMember(l,"spatialBlend",get_spatialBlend,set_spatialBlend,true);
+		addMember(l,"spatialize",get_spatialize,set_spatialize,true);
+		addMember(l,"reverbZoneMix",get_reverbZoneMix,set_reverbZoneMix,true);
 		addMember(l,"bypassEffects",get_bypassEffects,set_bypassEffects,true);
 		addMember(l,"bypassListenerEffects",get_bypassListenerEffects,set_bypassListenerEffects,true);
 		addMember(l,"bypassReverbZones",get_bypassReverbZones,set_bypassReverbZones,true);

@@ -102,6 +102,32 @@ public class Lua_UnityEngine_AnimatorStateInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_speed(IntPtr l) {
+		try {
+			UnityEngine.AnimatorStateInfo self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.speed);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_speedMultiplier(IntPtr l) {
+		try {
+			UnityEngine.AnimatorStateInfo self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.speedMultiplier);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_tagHash(IntPtr l) {
 		try {
 			UnityEngine.AnimatorStateInfo self;
@@ -135,6 +161,8 @@ public class Lua_UnityEngine_AnimatorStateInfo : LuaObject {
 		addMember(l,"shortNameHash",get_shortNameHash,null,true);
 		addMember(l,"normalizedTime",get_normalizedTime,null,true);
 		addMember(l,"length",get_length,null,true);
+		addMember(l,"speed",get_speed,null,true);
+		addMember(l,"speedMultiplier",get_speedMultiplier,null,true);
 		addMember(l,"tagHash",get_tagHash,null,true);
 		addMember(l,"loop",get_loop,null,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.AnimatorStateInfo),typeof(System.ValueType));

@@ -9,15 +9,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
 			UnityEngine.Material o;
-			if(matchType(l,argc,2,typeof(string))){
-				System.String a1;
-				checkType(l,2,out a1);
-				o=new UnityEngine.Material(a1);
-				pushValue(l,true);
-				pushValue(l,o);
-				return 2;
-			}
-			else if(matchType(l,argc,2,typeof(UnityEngine.Shader))){
+			if(matchType(l,argc,2,typeof(UnityEngine.Shader))){
 				UnityEngine.Shader a1;
 				checkType(l,2,out a1);
 				o=new UnityEngine.Material(a1);
@@ -556,6 +548,22 @@ public class Lua_UnityEngine_Material : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SetOverrideTag(IntPtr l) {
+		try {
+			UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			System.String a2;
+			checkType(l,3,out a2);
+			self.SetOverrideTag(a1,a2);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Lerp(IntPtr l) {
 		try {
 			UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
@@ -625,6 +633,21 @@ public class Lua_UnityEngine_Material : LuaObject {
 			self.DisableKeyword(a1);
 			pushValue(l,true);
 			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int IsKeywordEnabled(IntPtr l) {
+		try {
+			UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
+			System.String a1;
+			checkType(l,2,out a1);
+			var ret=self.IsKeywordEnabled(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -824,6 +847,32 @@ public class Lua_UnityEngine_Material : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_globalIlluminationFlags(IntPtr l) {
+		try {
+			UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.globalIlluminationFlags);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_globalIlluminationFlags(IntPtr l) {
+		try {
+			UnityEngine.Material self=(UnityEngine.Material)checkSelf(l);
+			UnityEngine.MaterialGlobalIlluminationFlags v;
+			checkEnum(l,2,out v);
+			self.globalIlluminationFlags=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Material");
 		addMember(l,SetColor);
@@ -845,11 +894,13 @@ public class Lua_UnityEngine_Material : LuaObject {
 		addMember(l,SetBuffer);
 		addMember(l,HasProperty);
 		addMember(l,GetTag);
+		addMember(l,SetOverrideTag);
 		addMember(l,Lerp);
 		addMember(l,SetPass);
 		addMember(l,CopyPropertiesFromMaterial);
 		addMember(l,EnableKeyword);
 		addMember(l,DisableKeyword);
+		addMember(l,IsKeywordEnabled);
 		addMember(l,"shader",get_shader,set_shader,true);
 		addMember(l,"color",get_color,set_color,true);
 		addMember(l,"mainTexture",get_mainTexture,set_mainTexture,true);
@@ -858,6 +909,7 @@ public class Lua_UnityEngine_Material : LuaObject {
 		addMember(l,"passCount",get_passCount,null,true);
 		addMember(l,"renderQueue",get_renderQueue,set_renderQueue,true);
 		addMember(l,"shaderKeywords",get_shaderKeywords,set_shaderKeywords,true);
+		addMember(l,"globalIlluminationFlags",get_globalIlluminationFlags,set_globalIlluminationFlags,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Material),typeof(UnityEngine.Object));
 	}
 }

@@ -1,0 +1,44 @@
+{
+	"Prefabs" : [
+		{
+			"PrefabName" : "Golem",
+			"AssetbundlePath" : "AssetBunle/Creature/Golem.assetbundle",
+			"PrefabPath" : "Prefab/Creature/Golem",
+			"version" : "1.0.0",
+			"IsShared" : "false",
+			"Dependency" : []
+		},
+		{
+			"PrefabName" : "MonsterHornet-Red",
+			"AssetbundlePath" : "AssetBunle/Creature/Hornet.assetbundle",
+			"PrefabPath" : "Prefab/Creature/Hornet/MonsterHornet-Red",
+			"version" : "1.0.0",
+			"IsShared" : "false",
+			"Dependency" : []
+		},
+		{
+			"PrefabName" : "LevelTest",
+			"AssetbundlePath" : "AssetBunle/Level/LevelTest.assetbundle",
+			"PrefabPath" : "Prefab/Level/LevelTest",
+			"version" : "1.0.0",
+			"IsShared" : "false",
+			"Dependency" : []
+		},
+		{
+			"PrefabName" : "Fight",
+			"AssetbundlePath" : "AssetBunle/UI/Fight/Fight.assetbundle",
+			"PrefabPath" : "Prefab/UI/Fight/Fight",
+			"version" : "1.0.0",
+			"IsShared" : "false",
+			"Dependency" : []
+		},
+		{
+			"PrefabName" : "SceneUpdate",
+			"AssetbundlePath" : "AssetBunle/UI/Update/SceneUpdate.assetbundle",
+			"PrefabPath" : "Prefab/UI/Update/SceneUpdate",
+			"version" : "1.0.0",
+			"IsShared" : "false",
+			"Dependency" : []
+		}
+	]
+}

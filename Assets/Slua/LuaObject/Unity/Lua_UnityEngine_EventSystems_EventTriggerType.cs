@@ -18,6 +18,11 @@ public class Lua_UnityEngine_EventSystems_EventTriggerType : LuaObject {
 		addMember(l,9,"Select");
 		addMember(l,10,"Deselect");
 		addMember(l,11,"Move");
+		addMember(l,12,"InitializePotentialDrag");
+		addMember(l,13,"BeginDrag");
+		addMember(l,14,"EndDrag");
+		addMember(l,15,"Submit");
+		addMember(l,16,"Cancel");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

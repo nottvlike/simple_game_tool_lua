@@ -156,6 +156,58 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_constraint(IntPtr l) {
+		try {
+			UnityEngine.UI.GridLayoutGroup self=(UnityEngine.UI.GridLayoutGroup)checkSelf(l);
+			pushValue(l,true);
+			pushEnum(l,(int)self.constraint);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_constraint(IntPtr l) {
+		try {
+			UnityEngine.UI.GridLayoutGroup self=(UnityEngine.UI.GridLayoutGroup)checkSelf(l);
+			UnityEngine.UI.GridLayoutGroup.Constraint v;
+			checkEnum(l,2,out v);
+			self.constraint=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_constraintCount(IntPtr l) {
+		try {
+			UnityEngine.UI.GridLayoutGroup self=(UnityEngine.UI.GridLayoutGroup)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.constraintCount);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_constraintCount(IntPtr l) {
+		try {
+			UnityEngine.UI.GridLayoutGroup self=(UnityEngine.UI.GridLayoutGroup)checkSelf(l);
+			int v;
+			checkType(l,2,out v);
+			self.constraintCount=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.GridLayoutGroup");
 		addMember(l,CalculateLayoutInputHorizontal);
@@ -166,6 +218,8 @@ public class Lua_UnityEngine_UI_GridLayoutGroup : LuaObject {
 		addMember(l,"startAxis",get_startAxis,set_startAxis,true);
 		addMember(l,"cellSize",get_cellSize,set_cellSize,true);
 		addMember(l,"spacing",get_spacing,set_spacing,true);
+		addMember(l,"constraint",get_constraint,set_constraint,true);
+		addMember(l,"constraintCount",get_constraintCount,set_constraintCount,true);
 		createTypeMetatable(l,null, typeof(UnityEngine.UI.GridLayoutGroup),typeof(UnityEngine.UI.LayoutGroup));
 	}
 }

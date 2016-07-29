@@ -29,16 +29,6 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
-			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float))){
-				UnityEngine.Ray a1;
-				checkValueType(l,1,out a1);
-				System.Single a2;
-				checkType(l,2,out a2);
-				var ret=UnityEngine.Physics.Raycast(a1,a2);
-				pushValue(l,true);
-				pushValue(l,ret);
-				return 2;
-			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(LuaOut))){
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
@@ -59,6 +49,16 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				var ret=UnityEngine.Physics.Raycast(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(int))){
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
@@ -70,6 +70,18 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,true);
 				pushValue(l,ret);
 				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit a3;
+				var ret=UnityEngine.Physics.Raycast(a1,a2,out a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a3);
+				return 3;
 			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float))){
 				UnityEngine.Vector3 a1;
@@ -95,17 +107,19 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,a2);
 				return 3;
 			}
-			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut))){
-				UnityEngine.Vector3 a1;
-				checkType(l,1,out a1);
-				UnityEngine.Vector3 a2;
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
 				checkType(l,2,out a2);
-				UnityEngine.RaycastHit a3;
-				var ret=UnityEngine.Physics.Raycast(a1,a2,out a3);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.QueryTriggerInteraction a4;
+				checkEnum(l,4,out a4);
+				var ret=UnityEngine.Physics.Raycast(a1,a2,a3,a4);
 				pushValue(l,true);
 				pushValue(l,ret);
-				pushValue(l,a3);
-				return 3;
+				return 2;
 			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(int))){
 				UnityEngine.Vector3 a1;
@@ -149,7 +163,23 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,a2);
 				return 3;
 			}
-			else if(argc==5){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.Raycast(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(float),typeof(int))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -160,6 +190,40 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a5;
 				checkType(l,5,out a5);
 				var ret=UnityEngine.Physics.Raycast(a1,a2,out a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a3);
+				return 3;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(LuaOut),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				UnityEngine.RaycastHit a2;
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.Raycast(a1,out a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a2);
+				return 3;
+			}
+			else if(argc==6){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit a3;
+				System.Single a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				UnityEngine.QueryTriggerInteraction a6;
+				checkEnum(l,6,out a6);
+				var ret=UnityEngine.Physics.Raycast(a1,a2,out a3,a4,a5,a6);
 				pushValue(l,true);
 				pushValue(l,ret);
 				pushValue(l,a3);
@@ -229,7 +293,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
-			else if(argc==4){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(int))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -239,6 +303,160 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				var ret=UnityEngine.Physics.RaycastAll(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.QueryTriggerInteraction a4;
+				checkEnum(l,4,out a4);
+				var ret=UnityEngine.Physics.RaycastAll(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.RaycastAll(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RaycastNonAlloc_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				UnityEngine.RaycastHit[] a2;
+				checkArray(l,2,out a2);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.RaycastHit[]))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(UnityEngine.RaycastHit[]),typeof(float))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				UnityEngine.RaycastHit[] a2;
+				checkArray(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.RaycastHit[]),typeof(float))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(UnityEngine.RaycastHit[]),typeof(float),typeof(int))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				UnityEngine.RaycastHit[] a2;
+				checkArray(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.RaycastHit[]),typeof(float),typeof(int))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(UnityEngine.RaycastHit[]),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				UnityEngine.RaycastHit[] a2;
+				checkArray(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==6){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				UnityEngine.QueryTriggerInteraction a6;
+				checkEnum(l,6,out a6);
+				var ret=UnityEngine.Physics.RaycastNonAlloc(a1,a2,a3,a4,a5,a6);
 				pushValue(l,true);
 				pushValue(l,ret);
 				return 2;
@@ -289,7 +507,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
-			else if(argc==4){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(int))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -298,6 +516,36 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a4;
 				checkType(l,4,out a4);
 				var ret=UnityEngine.Physics.Linecast(a1,a2,out a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a3);
+				return 3;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.QueryTriggerInteraction a4;
+				checkEnum(l,4,out a4);
+				var ret=UnityEngine.Physics.Linecast(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit a3;
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.Linecast(a1,a2,out a3,a4,a5);
 				pushValue(l,true);
 				pushValue(l,ret);
 				pushValue(l,a3);
@@ -333,6 +581,74 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				var ret=UnityEngine.Physics.OverlapSphere(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.QueryTriggerInteraction a4;
+				checkEnum(l,4,out a4);
+				var ret=UnityEngine.Physics.OverlapSphere(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OverlapSphereNonAlloc_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Collider[] a3;
+				checkArray(l,3,out a3);
+				var ret=UnityEngine.Physics.OverlapSphereNonAlloc(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Collider[] a3;
+				checkArray(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.OverlapSphereNonAlloc(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Collider[] a3;
+				checkArray(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.OverlapSphereNonAlloc(a1,a2,a3,a4,a5);
 				pushValue(l,true);
 				pushValue(l,ret);
 				return 2;
@@ -431,7 +747,27 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
-			else if(argc==7){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.Vector3 a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				UnityEngine.QueryTriggerInteraction a7;
+				checkEnum(l,7,out a7);
+				var ret=UnityEngine.Physics.CapsuleCast(a1,a2,a3,a4,a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(float),typeof(int))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				UnityEngine.Vector3 a2;
@@ -446,6 +782,28 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a7;
 				checkType(l,7,out a7);
 				var ret=UnityEngine.Physics.CapsuleCast(a1,a2,a3,a4,out a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a5);
+				return 3;
+			}
+			else if(argc==8){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.Vector3 a4;
+				checkType(l,4,out a4);
+				UnityEngine.RaycastHit a5;
+				System.Single a6;
+				checkType(l,6,out a6);
+				System.Int32 a7;
+				checkType(l,7,out a7);
+				UnityEngine.QueryTriggerInteraction a8;
+				checkEnum(l,8,out a8);
+				var ret=UnityEngine.Physics.CapsuleCast(a1,a2,a3,a4,out a5,a6,a7,a8);
 				pushValue(l,true);
 				pushValue(l,ret);
 				pushValue(l,a5);
@@ -497,6 +855,20 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,a3);
 				return 3;
 			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(LuaOut))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit a4;
+				var ret=UnityEngine.Physics.SphereCast(a1,a2,a3,out a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 3;
+			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(float),typeof(int))){
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
@@ -525,20 +897,6 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,a3);
 				return 3;
 			}
-			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(LuaOut))){
-				UnityEngine.Vector3 a1;
-				checkType(l,1,out a1);
-				System.Single a2;
-				checkType(l,2,out a2);
-				UnityEngine.Vector3 a3;
-				checkType(l,3,out a3);
-				UnityEngine.RaycastHit a4;
-				var ret=UnityEngine.Physics.SphereCast(a1,a2,a3,out a4);
-				pushValue(l,true);
-				pushValue(l,ret);
-				pushValue(l,a4);
-				return 3;
-			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(LuaOut),typeof(float),typeof(int))){
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
@@ -554,6 +912,22 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				pushValue(l,a3);
 				return 3;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.SphereCast(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
 			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(float))){
 				UnityEngine.Vector3 a1;
@@ -571,7 +945,7 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,a4);
 				return 3;
 			}
-			else if(argc==6){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(float),typeof(int))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -584,6 +958,44 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a6;
 				checkType(l,6,out a6);
 				var ret=UnityEngine.Physics.SphereCast(a1,a2,a3,out a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 3;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(LuaOut),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit a3;
+				System.Single a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				UnityEngine.QueryTriggerInteraction a6;
+				checkEnum(l,6,out a6);
+				var ret=UnityEngine.Physics.SphereCast(a1,a2,out a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a3);
+				return 3;
+			}
+			else if(argc==7){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit a4;
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				UnityEngine.QueryTriggerInteraction a7;
+				checkEnum(l,7,out a7);
+				var ret=UnityEngine.Physics.SphereCast(a1,a2,a3,out a4,a5,a6,a7);
 				pushValue(l,true);
 				pushValue(l,ret);
 				pushValue(l,a4);
@@ -649,6 +1061,114 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
+			else if(argc==7){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.Vector3 a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				UnityEngine.QueryTriggerInteraction a7;
+				checkEnum(l,7,out a7);
+				var ret=UnityEngine.Physics.CapsuleCastAll(a1,a2,a3,a4,a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CapsuleCastNonAlloc_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.Vector3 a4;
+				checkType(l,4,out a4);
+				UnityEngine.RaycastHit[] a5;
+				checkArray(l,5,out a5);
+				var ret=UnityEngine.Physics.CapsuleCastNonAlloc(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==6){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.Vector3 a4;
+				checkType(l,4,out a4);
+				UnityEngine.RaycastHit[] a5;
+				checkArray(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				var ret=UnityEngine.Physics.CapsuleCastNonAlloc(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==7){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.Vector3 a4;
+				checkType(l,4,out a4);
+				UnityEngine.RaycastHit[] a5;
+				checkArray(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				System.Int32 a7;
+				checkType(l,7,out a7);
+				var ret=UnityEngine.Physics.CapsuleCastNonAlloc(a1,a2,a3,a4,a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==8){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				UnityEngine.Vector3 a4;
+				checkType(l,4,out a4);
+				UnityEngine.RaycastHit[] a5;
+				checkArray(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				System.Int32 a7;
+				checkType(l,7,out a7);
+				UnityEngine.QueryTriggerInteraction a8;
+				checkEnum(l,8,out a8);
+				var ret=UnityEngine.Physics.CapsuleCastNonAlloc(a1,a2,a3,a4,a5,a6,a7,a8);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
 			pushValue(l,false);
 			LuaDLL.lua_pushstring(l,"No matched override function to call");
 			return 2;
@@ -695,20 +1215,6 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
-			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(float))){
-				UnityEngine.Vector3 a1;
-				checkType(l,1,out a1);
-				System.Single a2;
-				checkType(l,2,out a2);
-				UnityEngine.Vector3 a3;
-				checkType(l,3,out a3);
-				System.Single a4;
-				checkType(l,4,out a4);
-				var ret=UnityEngine.Physics.SphereCastAll(a1,a2,a3,a4);
-				pushValue(l,true);
-				pushValue(l,ret);
-				return 2;
-			}
 			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(float),typeof(int))){
 				UnityEngine.Ray a1;
 				checkValueType(l,1,out a1);
@@ -723,7 +1229,21 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,ret);
 				return 2;
 			}
-			else if(argc==5){
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(float))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.SphereCastAll(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(float),typeof(int))){
 				UnityEngine.Vector3 a1;
 				checkType(l,1,out a1);
 				System.Single a2;
@@ -735,6 +1255,180 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a5;
 				checkType(l,5,out a5);
 				var ret=UnityEngine.Physics.SphereCastAll(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.SphereCastAll(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==6){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				UnityEngine.QueryTriggerInteraction a6;
+				checkEnum(l,6,out a6);
+				var ret=UnityEngine.Physics.SphereCastAll(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SphereCastNonAlloc_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(UnityEngine.RaycastHit[]),typeof(float))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(UnityEngine.RaycastHit[]))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(UnityEngine.RaycastHit[]),typeof(float),typeof(int))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(UnityEngine.RaycastHit[]),typeof(float))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(float),typeof(UnityEngine.Vector3),typeof(UnityEngine.RaycastHit[]),typeof(float),typeof(int))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Ray),typeof(float),typeof(UnityEngine.RaycastHit[]),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Ray a1;
+				checkValueType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.RaycastHit[] a3;
+				checkArray(l,3,out a3);
+				System.Single a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				UnityEngine.QueryTriggerInteraction a6;
+				checkEnum(l,6,out a6);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==7){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				UnityEngine.QueryTriggerInteraction a7;
+				checkEnum(l,7,out a7);
+				var ret=UnityEngine.Physics.SphereCastNonAlloc(a1,a2,a3,a4,a5,a6,a7);
 				pushValue(l,true);
 				pushValue(l,ret);
 				return 2;
@@ -769,6 +1463,20 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				System.Int32 a3;
 				checkType(l,3,out a3);
 				var ret=UnityEngine.Physics.CheckSphere(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				System.Single a2;
+				checkType(l,2,out a2);
+				System.Int32 a3;
+				checkType(l,3,out a3);
+				UnityEngine.QueryTriggerInteraction a4;
+				checkEnum(l,4,out a4);
+				var ret=UnityEngine.Physics.CheckSphere(a1,a2,a3,a4);
 				pushValue(l,true);
 				pushValue(l,ret);
 				return 2;
@@ -810,6 +1518,598 @@ public class Lua_UnityEngine_Physics : LuaObject {
 				pushValue(l,true);
 				pushValue(l,ret);
 				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				System.Single a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.CheckCapsule(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int CheckBox_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				var ret=UnityEngine.Physics.CheckBox(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==3){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Quaternion a3;
+				checkType(l,3,out a3);
+				var ret=UnityEngine.Physics.CheckBox(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Quaternion a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.CheckBox(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Quaternion a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.CheckBox(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OverlapBox_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==2){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				var ret=UnityEngine.Physics.OverlapBox(a1,a2);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==3){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Quaternion a3;
+				checkType(l,3,out a3);
+				var ret=UnityEngine.Physics.OverlapBox(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Quaternion a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.OverlapBox(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Quaternion a3;
+				checkType(l,3,out a3);
+				System.Int32 a4;
+				checkType(l,4,out a4);
+				UnityEngine.QueryTriggerInteraction a5;
+				checkEnum(l,5,out a5);
+				var ret=UnityEngine.Physics.OverlapBox(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int OverlapBoxNonAlloc_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Collider[] a3;
+				checkArray(l,3,out a3);
+				var ret=UnityEngine.Physics.OverlapBoxNonAlloc(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Collider[] a3;
+				checkArray(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.OverlapBoxNonAlloc(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Collider[] a3;
+				checkArray(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.OverlapBoxNonAlloc(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==6){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Collider[] a3;
+				checkArray(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Int32 a5;
+				checkType(l,5,out a5);
+				UnityEngine.QueryTriggerInteraction a6;
+				checkEnum(l,6,out a6);
+				var ret=UnityEngine.Physics.OverlapBoxNonAlloc(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int BoxCastAll_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				var ret=UnityEngine.Physics.BoxCastAll(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.BoxCastAll(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.BoxCastAll(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==6){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				var ret=UnityEngine.Physics.BoxCastAll(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==7){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				UnityEngine.QueryTriggerInteraction a7;
+				checkEnum(l,7,out a7);
+				var ret=UnityEngine.Physics.BoxCastAll(a1,a2,a3,a4,a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int BoxCastNonAlloc_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==4){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				var ret=UnityEngine.Physics.BoxCastNonAlloc(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==5){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.BoxCastNonAlloc(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==6){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				var ret=UnityEngine.Physics.BoxCastNonAlloc(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==7){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				System.Int32 a7;
+				checkType(l,7,out a7);
+				var ret=UnityEngine.Physics.BoxCastNonAlloc(a1,a2,a3,a4,a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(argc==8){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit[] a4;
+				checkArray(l,4,out a4);
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				System.Int32 a7;
+				checkType(l,7,out a7);
+				UnityEngine.QueryTriggerInteraction a8;
+				checkEnum(l,8,out a8);
+				var ret=UnityEngine.Physics.BoxCastNonAlloc(a1,a2,a3,a4,a5,a6,a7,a8);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			pushValue(l,false);
+			LuaDLL.lua_pushstring(l,"No matched override function to call");
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int BoxCast_s(IntPtr l) {
+		try {
+			int argc = LuaDLL.lua_gettop(l);
+			if(argc==3){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit a4;
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,out a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 3;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,a4);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion),typeof(float))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(UnityEngine.Quaternion))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit a4;
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,out a4,a5);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 3;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(UnityEngine.Quaternion),typeof(float))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit a4;
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,out a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 3;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion),typeof(float),typeof(int))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,a4,a5,a6);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Quaternion),typeof(float),typeof(int),typeof(UnityEngine.QueryTriggerInteraction))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.Quaternion a4;
+				checkType(l,4,out a4);
+				System.Single a5;
+				checkType(l,5,out a5);
+				System.Int32 a6;
+				checkType(l,6,out a6);
+				UnityEngine.QueryTriggerInteraction a7;
+				checkEnum(l,7,out a7);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,a4,a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				return 2;
+			}
+			else if(matchType(l,argc,1,typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(UnityEngine.Vector3),typeof(LuaOut),typeof(UnityEngine.Quaternion),typeof(float),typeof(int))){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit a4;
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				System.Int32 a7;
+				checkType(l,7,out a7);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,out a4,a5,a6,a7);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 3;
+			}
+			else if(argc==8){
+				UnityEngine.Vector3 a1;
+				checkType(l,1,out a1);
+				UnityEngine.Vector3 a2;
+				checkType(l,2,out a2);
+				UnityEngine.Vector3 a3;
+				checkType(l,3,out a3);
+				UnityEngine.RaycastHit a4;
+				UnityEngine.Quaternion a5;
+				checkType(l,5,out a5);
+				System.Single a6;
+				checkType(l,6,out a6);
+				System.Int32 a7;
+				checkType(l,7,out a7);
+				UnityEngine.QueryTriggerInteraction a8;
+				checkEnum(l,8,out a8);
+				var ret=UnityEngine.Physics.BoxCast(a1,a2,a3,out a4,a5,a6,a7,a8);
+				pushValue(l,true);
+				pushValue(l,ret);
+				pushValue(l,a4);
+				return 3;
 			}
 			pushValue(l,false);
 			LuaDLL.lua_pushstring(l,"No matched override function to call");
@@ -900,39 +2200,6 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_kIgnoreRaycastLayer(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics.kIgnoreRaycastLayer);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_kDefaultRaycastLayers(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics.kDefaultRaycastLayers);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_kAllLayers(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics.kAllLayers);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_IgnoreRaycastLayer(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -990,10 +2257,10 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_minPenetrationForPenalty(IntPtr l) {
+	static public int get_defaultContactOffset(IntPtr l) {
 		try {
 			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics.minPenetrationForPenalty);
+			pushValue(l,UnityEngine.Physics.defaultContactOffset);
 			return 2;
 		}
 		catch(Exception e) {
@@ -1001,11 +2268,11 @@ public class Lua_UnityEngine_Physics : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_minPenetrationForPenalty(IntPtr l) {
+	static public int set_defaultContactOffset(IntPtr l) {
 		try {
 			float v;
 			checkType(l,2,out v);
-			UnityEngine.Physics.minPenetrationForPenalty=v;
+			UnityEngine.Physics.defaultContactOffset=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -1030,78 +2297,6 @@ public class Lua_UnityEngine_Physics : LuaObject {
 			float v;
 			checkType(l,2,out v);
 			UnityEngine.Physics.bounceThreshold=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sleepVelocity(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics.sleepVelocity);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sleepVelocity(IntPtr l) {
-		try {
-			float v;
-			checkType(l,2,out v);
-			UnityEngine.Physics.sleepVelocity=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_sleepAngularVelocity(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics.sleepAngularVelocity);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_sleepAngularVelocity(IntPtr l) {
-		try {
-			float v;
-			checkType(l,2,out v);
-			UnityEngine.Physics.sleepAngularVelocity=v;
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_maxAngularVelocity(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Physics.maxAngularVelocity);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_maxAngularVelocity(IntPtr l) {
-		try {
-			float v;
-			checkType(l,2,out v);
-			UnityEngine.Physics.maxAngularVelocity=v;
 			pushValue(l,true);
 			return 1;
 		}
@@ -1157,35 +2352,64 @@ public class Lua_UnityEngine_Physics : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_queriesHitTriggers(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Physics.queriesHitTriggers);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_queriesHitTriggers(IntPtr l) {
+		try {
+			bool v;
+			checkType(l,2,out v);
+			UnityEngine.Physics.queriesHitTriggers=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.Physics");
 		addMember(l,Raycast_s);
 		addMember(l,RaycastAll_s);
+		addMember(l,RaycastNonAlloc_s);
 		addMember(l,Linecast_s);
 		addMember(l,OverlapSphere_s);
+		addMember(l,OverlapSphereNonAlloc_s);
 		addMember(l,CapsuleCast_s);
 		addMember(l,SphereCast_s);
 		addMember(l,CapsuleCastAll_s);
+		addMember(l,CapsuleCastNonAlloc_s);
 		addMember(l,SphereCastAll_s);
+		addMember(l,SphereCastNonAlloc_s);
 		addMember(l,CheckSphere_s);
 		addMember(l,CheckCapsule_s);
+		addMember(l,CheckBox_s);
+		addMember(l,OverlapBox_s);
+		addMember(l,OverlapBoxNonAlloc_s);
+		addMember(l,BoxCastAll_s);
+		addMember(l,BoxCastNonAlloc_s);
+		addMember(l,BoxCast_s);
 		addMember(l,IgnoreCollision_s);
 		addMember(l,IgnoreLayerCollision_s);
 		addMember(l,GetIgnoreLayerCollision_s);
-		addMember(l,"kIgnoreRaycastLayer",get_kIgnoreRaycastLayer,null,false);
-		addMember(l,"kDefaultRaycastLayers",get_kDefaultRaycastLayers,null,false);
-		addMember(l,"kAllLayers",get_kAllLayers,null,false);
 		addMember(l,"IgnoreRaycastLayer",get_IgnoreRaycastLayer,null,false);
 		addMember(l,"DefaultRaycastLayers",get_DefaultRaycastLayers,null,false);
 		addMember(l,"AllLayers",get_AllLayers,null,false);
 		addMember(l,"gravity",get_gravity,set_gravity,false);
-		addMember(l,"minPenetrationForPenalty",get_minPenetrationForPenalty,set_minPenetrationForPenalty,false);
+		addMember(l,"defaultContactOffset",get_defaultContactOffset,set_defaultContactOffset,false);
 		addMember(l,"bounceThreshold",get_bounceThreshold,set_bounceThreshold,false);
-		addMember(l,"sleepVelocity",get_sleepVelocity,set_sleepVelocity,false);
-		addMember(l,"sleepAngularVelocity",get_sleepAngularVelocity,set_sleepAngularVelocity,false);
-		addMember(l,"maxAngularVelocity",get_maxAngularVelocity,set_maxAngularVelocity,false);
 		addMember(l,"solverIterationCount",get_solverIterationCount,set_solverIterationCount,false);
 		addMember(l,"sleepThreshold",get_sleepThreshold,set_sleepThreshold,false);
+		addMember(l,"queriesHitTriggers",get_queriesHitTriggers,set_queriesHitTriggers,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Physics));
 	}
 }

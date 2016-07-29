@@ -227,6 +227,30 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_maxNumberOfSamplesPerFrame(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Profiler.maxNumberOfSamplesPerFrame);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_maxNumberOfSamplesPerFrame(IntPtr l) {
+		try {
+			int v;
+			checkType(l,2,out v);
+			UnityEngine.Profiler.maxNumberOfSamplesPerFrame=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_usedHeapSize(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -252,6 +276,7 @@ public class Lua_UnityEngine_Profiler : LuaObject {
 		addMember(l,"logFile",get_logFile,set_logFile,false);
 		addMember(l,"enableBinaryLog",get_enableBinaryLog,set_enableBinaryLog,false);
 		addMember(l,"enabled",get_enabled,set_enabled,false);
+		addMember(l,"maxNumberOfSamplesPerFrame",get_maxNumberOfSamplesPerFrame,set_maxNumberOfSamplesPerFrame,false);
 		addMember(l,"usedHeapSize",get_usedHeapSize,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Profiler));
 	}

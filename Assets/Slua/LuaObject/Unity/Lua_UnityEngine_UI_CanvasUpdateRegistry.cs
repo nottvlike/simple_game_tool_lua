@@ -18,6 +18,20 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int TryRegisterCanvasElementForLayoutRebuild_s(IntPtr l) {
+		try {
+			UnityEngine.UI.ICanvasElement a1;
+			checkType(l,1,out a1);
+			var ret=UnityEngine.UI.CanvasUpdateRegistry.TryRegisterCanvasElementForLayoutRebuild(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int RegisterCanvasElementForGraphicRebuild_s(IntPtr l) {
 		try {
 			UnityEngine.UI.ICanvasElement a1;
@@ -25,6 +39,20 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 			UnityEngine.UI.CanvasUpdateRegistry.RegisterCanvasElementForGraphicRebuild(a1);
 			pushValue(l,true);
 			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int TryRegisterCanvasElementForGraphicRebuild_s(IntPtr l) {
+		try {
+			UnityEngine.UI.ICanvasElement a1;
+			checkType(l,1,out a1);
+			var ret=UnityEngine.UI.CanvasUpdateRegistry.TryRegisterCanvasElementForGraphicRebuild(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -81,7 +109,9 @@ public class Lua_UnityEngine_UI_CanvasUpdateRegistry : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.UI.CanvasUpdateRegistry");
 		addMember(l,RegisterCanvasElementForLayoutRebuild_s);
+		addMember(l,TryRegisterCanvasElementForLayoutRebuild_s);
 		addMember(l,RegisterCanvasElementForGraphicRebuild_s);
+		addMember(l,TryRegisterCanvasElementForGraphicRebuild_s);
 		addMember(l,UnRegisterCanvasElementForRebuild_s);
 		addMember(l,IsRebuildingLayout_s);
 		addMember(l,IsRebuildingGraphics_s);

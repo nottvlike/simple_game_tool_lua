@@ -118,6 +118,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_advance(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.advance=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_glyphWidth(IntPtr l) {
 		try {
 			UnityEngine.CharacterInfo self;
@@ -125,6 +141,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 			pushValue(l,true);
 			pushValue(l,self.glyphWidth);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_glyphWidth(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.glyphWidth=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -144,6 +176,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_glyphHeight(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.glyphHeight=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_bearing(IntPtr l) {
 		try {
 			UnityEngine.CharacterInfo self;
@@ -151,6 +199,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 			pushValue(l,true);
 			pushValue(l,self.bearing);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_bearing(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.bearing=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -170,6 +234,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_minY(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.minY=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maxY(IntPtr l) {
 		try {
 			UnityEngine.CharacterInfo self;
@@ -177,6 +257,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 			pushValue(l,true);
 			pushValue(l,self.maxY);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_maxY(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.maxY=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -196,6 +292,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_minX(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.minX=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_maxX(IntPtr l) {
 		try {
 			UnityEngine.CharacterInfo self;
@@ -203,6 +315,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 			pushValue(l,true);
 			pushValue(l,self.maxX);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_maxX(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			int v;
+			checkType(l,2,out v);
+			self.maxX=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -222,6 +350,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_uvBottomLeft(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector2 v;
+			checkType(l,2,out v);
+			self.uvBottomLeft=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_uvBottomRight(IntPtr l) {
 		try {
 			UnityEngine.CharacterInfo self;
@@ -229,6 +373,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 			pushValue(l,true);
 			pushValue(l,self.uvBottomRight);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_uvBottomRight(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector2 v;
+			checkType(l,2,out v);
+			self.uvBottomRight=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -248,6 +408,22 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_uvTopRight(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector2 v;
+			checkType(l,2,out v);
+			self.uvTopRight=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_uvTopLeft(IntPtr l) {
 		try {
 			UnityEngine.CharacterInfo self;
@@ -260,23 +436,39 @@ public class Lua_UnityEngine_CharacterInfo : LuaObject {
 			return error(l,e);
 		}
 	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_uvTopLeft(IntPtr l) {
+		try {
+			UnityEngine.CharacterInfo self;
+			checkValueType(l,1,out self);
+			UnityEngine.Vector2 v;
+			checkType(l,2,out v);
+			self.uvTopLeft=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.CharacterInfo");
 		addMember(l,"index",get_index,set_index,true);
 		addMember(l,"size",get_size,set_size,true);
 		addMember(l,"style",get_style,set_style,true);
-		addMember(l,"advance",get_advance,null,true);
-		addMember(l,"glyphWidth",get_glyphWidth,null,true);
-		addMember(l,"glyphHeight",get_glyphHeight,null,true);
-		addMember(l,"bearing",get_bearing,null,true);
-		addMember(l,"minY",get_minY,null,true);
-		addMember(l,"maxY",get_maxY,null,true);
-		addMember(l,"minX",get_minX,null,true);
-		addMember(l,"maxX",get_maxX,null,true);
-		addMember(l,"uvBottomLeft",get_uvBottomLeft,null,true);
-		addMember(l,"uvBottomRight",get_uvBottomRight,null,true);
-		addMember(l,"uvTopRight",get_uvTopRight,null,true);
-		addMember(l,"uvTopLeft",get_uvTopLeft,null,true);
+		addMember(l,"advance",get_advance,set_advance,true);
+		addMember(l,"glyphWidth",get_glyphWidth,set_glyphWidth,true);
+		addMember(l,"glyphHeight",get_glyphHeight,set_glyphHeight,true);
+		addMember(l,"bearing",get_bearing,set_bearing,true);
+		addMember(l,"minY",get_minY,set_minY,true);
+		addMember(l,"maxY",get_maxY,set_maxY,true);
+		addMember(l,"minX",get_minX,set_minX,true);
+		addMember(l,"maxX",get_maxX,set_maxX,true);
+		addMember(l,"uvBottomLeft",get_uvBottomLeft,set_uvBottomLeft,true);
+		addMember(l,"uvBottomRight",get_uvBottomRight,set_uvBottomRight,true);
+		addMember(l,"uvTopRight",get_uvTopRight,set_uvTopRight,true);
+		addMember(l,"uvTopLeft",get_uvTopLeft,set_uvTopLeft,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.CharacterInfo),typeof(System.ValueType));
 	}
 }

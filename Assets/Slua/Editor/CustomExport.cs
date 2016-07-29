@@ -50,6 +50,8 @@ namespace SLua
 			add(typeof(UpdateManager), "UpdateManager");
 			add(typeof(FileManager), "FileManager");
 			add(typeof(TcpSocket), "TcpSocket");
+            add(typeof(iTween), "iTween");
+            add(typeof(PoolManager), "PoolManager");
             // add your custom class here
             // add( type, typename)
             // type is what you want to export

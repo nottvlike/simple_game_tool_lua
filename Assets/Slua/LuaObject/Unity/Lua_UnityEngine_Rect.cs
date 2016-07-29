@@ -23,6 +23,16 @@ public class Lua_UnityEngine_Rect : LuaObject {
 				pushValue(l,o);
 				return 2;
 			}
+			else if(argc==3){
+				UnityEngine.Vector2 a1;
+				checkType(l,2,out a1);
+				UnityEngine.Vector2 a2;
+				checkType(l,3,out a2);
+				o=new UnityEngine.Rect(a1,a2);
+				pushValue(l,true);
+				pushValue(l,o);
+				return 2;
+			}
 			else if(argc==2){
 				UnityEngine.Rect a1;
 				checkValueType(l,2,out a1);

@@ -40,114 +40,6 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevel_s(IntPtr l) {
-		try {
-			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,1,typeof(string))){
-				System.String a1;
-				checkType(l,1,out a1);
-				UnityEngine.Application.LoadLevel(a1);
-				pushValue(l,true);
-				return 1;
-			}
-			else if(matchType(l,argc,1,typeof(int))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				UnityEngine.Application.LoadLevel(a1);
-				pushValue(l,true);
-				return 1;
-			}
-			pushValue(l,false);
-			LuaDLL.lua_pushstring(l,"No matched override function to call");
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevelAsync_s(IntPtr l) {
-		try {
-			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,1,typeof(string))){
-				System.String a1;
-				checkType(l,1,out a1);
-				var ret=UnityEngine.Application.LoadLevelAsync(a1);
-				pushValue(l,true);
-				pushValue(l,ret);
-				return 2;
-			}
-			else if(matchType(l,argc,1,typeof(int))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				var ret=UnityEngine.Application.LoadLevelAsync(a1);
-				pushValue(l,true);
-				pushValue(l,ret);
-				return 2;
-			}
-			pushValue(l,false);
-			LuaDLL.lua_pushstring(l,"No matched override function to call");
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevelAdditiveAsync_s(IntPtr l) {
-		try {
-			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,1,typeof(string))){
-				System.String a1;
-				checkType(l,1,out a1);
-				var ret=UnityEngine.Application.LoadLevelAdditiveAsync(a1);
-				pushValue(l,true);
-				pushValue(l,ret);
-				return 2;
-			}
-			else if(matchType(l,argc,1,typeof(int))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				var ret=UnityEngine.Application.LoadLevelAdditiveAsync(a1);
-				pushValue(l,true);
-				pushValue(l,ret);
-				return 2;
-			}
-			pushValue(l,false);
-			LuaDLL.lua_pushstring(l,"No matched override function to call");
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int LoadLevelAdditive_s(IntPtr l) {
-		try {
-			int argc = LuaDLL.lua_gettop(l);
-			if(matchType(l,argc,1,typeof(string))){
-				System.String a1;
-				checkType(l,1,out a1);
-				UnityEngine.Application.LoadLevelAdditive(a1);
-				pushValue(l,true);
-				return 1;
-			}
-			else if(matchType(l,argc,1,typeof(int))){
-				System.Int32 a1;
-				checkType(l,1,out a1);
-				UnityEngine.Application.LoadLevelAdditive(a1);
-				pushValue(l,true);
-				return 1;
-			}
-			pushValue(l,false);
-			LuaDLL.lua_pushstring(l,"No matched override function to call");
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int GetStreamProgressForLevel_s(IntPtr l) {
 		try {
 			int argc = LuaDLL.lua_gettop(l);
@@ -259,6 +151,20 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int RequestAdvertisingIdentifierAsync_s(IntPtr l) {
+		try {
+			UnityEngine.Application.AdvertisingIdentifierCallback a1;
+			LuaDelegation.checkDelegate(l,1,out a1);
+			var ret=UnityEngine.Application.RequestAdvertisingIdentifierAsync(a1);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int OpenURL_s(IntPtr l) {
 		try {
 			System.String a1;
@@ -293,50 +199,6 @@ public class Lua_UnityEngine_Application : LuaObject {
 			var ret=UnityEngine.Application.HasUserAuthorization(a1);
 			pushValue(l,true);
 			pushValue(l,ret);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_loadedLevel(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Application.loadedLevel);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_loadedLevelName(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Application.loadedLevelName);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_isLoadingLevel(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Application.isLoadingLevel);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_levelCount(IntPtr l) {
-		try {
-			pushValue(l,true);
-			pushValue(l,UnityEngine.Application.levelCount);
 			return 2;
 		}
 		catch(Exception e) {
@@ -522,6 +384,83 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_version(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Application.version);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_bundleIdentifier(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Application.bundleIdentifier);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_installMode(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushEnum(l,(int)UnityEngine.Application.installMode);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_sandboxType(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushEnum(l,(int)UnityEngine.Application.sandboxType);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_productName(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Application.productName);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_companyName(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Application.companyName);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_cloudProjectId(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushValue(l,UnityEngine.Application.cloudProjectId);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_webSecurityEnabled(IntPtr l) {
 		try {
 			pushValue(l,true);
@@ -573,6 +512,30 @@ public class Lua_UnityEngine_Application : LuaObject {
 			pushValue(l,true);
 			pushEnum(l,(int)UnityEngine.Application.systemLanguage);
 			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_stackTraceLogType(IntPtr l) {
+		try {
+			pushValue(l,true);
+			pushEnum(l,(int)UnityEngine.Application.stackTraceLogType);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_stackTraceLogType(IntPtr l) {
+		try {
+			UnityEngine.StackTraceLogType v;
+			checkEnum(l,2,out v);
+			UnityEngine.Application.stackTraceLogType=v;
+			pushValue(l,true);
+			return 1;
 		}
 		catch(Exception e) {
 			return error(l,e);
@@ -636,10 +599,10 @@ public class Lua_UnityEngine_Application : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_bundleIdentifier(IntPtr l) {
+	static public int get_isShowingSplashScreen(IntPtr l) {
 		try {
 			pushValue(l,true);
-			pushValue(l,UnityEngine.Application.bundleIdentifier);
+			pushValue(l,UnityEngine.Application.isShowingSplashScreen);
 			return 2;
 		}
 		catch(Exception e) {
@@ -650,22 +613,15 @@ public class Lua_UnityEngine_Application : LuaObject {
 		getTypeTable(l,"UnityEngine.Application");
 		addMember(l,Quit_s);
 		addMember(l,CancelQuit_s);
-		addMember(l,LoadLevel_s);
-		addMember(l,LoadLevelAsync_s);
-		addMember(l,LoadLevelAdditiveAsync_s);
-		addMember(l,LoadLevelAdditive_s);
 		addMember(l,GetStreamProgressForLevel_s);
 		addMember(l,CanStreamedLevelBeLoaded_s);
 		addMember(l,CaptureScreenshot_s);
 		addMember(l,HasProLicense_s);
 		addMember(l,ExternalCall_s);
+		addMember(l,RequestAdvertisingIdentifierAsync_s);
 		addMember(l,OpenURL_s);
 		addMember(l,RequestUserAuthorization_s);
 		addMember(l,HasUserAuthorization_s);
-		addMember(l,"loadedLevel",get_loadedLevel,null,false);
-		addMember(l,"loadedLevelName",get_loadedLevelName,null,false);
-		addMember(l,"isLoadingLevel",get_isLoadingLevel,null,false);
-		addMember(l,"levelCount",get_levelCount,null,false);
 		addMember(l,"streamedBytes",get_streamedBytes,null,false);
 		addMember(l,"isPlaying",get_isPlaying,null,false);
 		addMember(l,"isEditor",get_isEditor,null,false);
@@ -681,15 +637,23 @@ public class Lua_UnityEngine_Application : LuaObject {
 		addMember(l,"srcValue",get_srcValue,null,false);
 		addMember(l,"absoluteURL",get_absoluteURL,null,false);
 		addMember(l,"unityVersion",get_unityVersion,null,false);
+		addMember(l,"version",get_version,null,false);
+		addMember(l,"bundleIdentifier",get_bundleIdentifier,null,false);
+		addMember(l,"installMode",get_installMode,null,false);
+		addMember(l,"sandboxType",get_sandboxType,null,false);
+		addMember(l,"productName",get_productName,null,false);
+		addMember(l,"companyName",get_companyName,null,false);
+		addMember(l,"cloudProjectId",get_cloudProjectId,null,false);
 		addMember(l,"webSecurityEnabled",get_webSecurityEnabled,null,false);
 		addMember(l,"webSecurityHostUrl",get_webSecurityHostUrl,null,false);
 		addMember(l,"targetFrameRate",get_targetFrameRate,set_targetFrameRate,false);
 		addMember(l,"systemLanguage",get_systemLanguage,null,false);
+		addMember(l,"stackTraceLogType",get_stackTraceLogType,set_stackTraceLogType,false);
 		addMember(l,"backgroundLoadingPriority",get_backgroundLoadingPriority,set_backgroundLoadingPriority,false);
 		addMember(l,"internetReachability",get_internetReachability,null,false);
 		addMember(l,"genuine",get_genuine,null,false);
 		addMember(l,"genuineCheckAvailable",get_genuineCheckAvailable,null,false);
-		addMember(l,"bundleIdentifier",get_bundleIdentifier,null,false);
+		addMember(l,"isShowingSplashScreen",get_isShowingSplashScreen,null,false);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.Application));
 	}
 }

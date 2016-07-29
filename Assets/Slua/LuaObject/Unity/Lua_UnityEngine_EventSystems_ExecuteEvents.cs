@@ -11,6 +11,7 @@ public class Lua_UnityEngine_EventSystems_ExecuteEvents : LuaObject {
 		addMember(l,"pointerDownHandler",null,null,true);
 		addMember(l,"pointerUpHandler",null,null,true);
 		addMember(l,"pointerClickHandler",null,null,true);
+		addMember(l,"initializePotentialDrag",null,null,true);
 		addMember(l,"beginDragHandler",null,null,true);
 		addMember(l,"dragHandler",null,null,true);
 		addMember(l,"endDragHandler",null,null,true);

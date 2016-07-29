@@ -1,0 +1,34 @@
+local BaseModule = require 'Mod.AITank.Script.Base.BaseModule'
+local module = Class("Attack", BaseModule)
+
+function module:ctor()
+	BaseModule.ctor(self)
+
+	self.type = ModuleType.Attack
+	self.name = "Attack"
+	self.info = "random time to rotate the turret and fire."
+	self.lastTime = 0
+end
+
+function module:copy()
+	return module.new()
+end
+
+function module:update()
+	if not self.enable then
+		return
+	end
+
+	local fireSpeed = self.parent.fireSpeed
+	if Time.time - self.lastTime < fireSpeed then
+		return
+	end
+
+	self.lastTime = Time.time
+	local parent = self.parent
+	local angle = math.random() * 360 - 180 
+	parent.animator:rotateTurret(angle)
+	parent:fire()
+end
+
+return module

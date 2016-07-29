@@ -12,16 +12,7 @@ public class LuaBaseEvent : MonoBehaviour
     {
         set
         {
-            if (_luaFunc == null)
-            {
-                _luaFunc = value;
-            }
-            else
-            {
-#if LOG_DEBUG
-                Debug.LogWarning("LuaCallback has been registered!");
-#endif
-            }
+            _luaFunc = value;
         }
     }
 }

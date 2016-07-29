@@ -5,19 +5,6 @@ using SLua;
 using System.Collections.Generic;
 public class Lua_UnityEngine_Avatar : LuaObject {
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int constructor(IntPtr l) {
-		try {
-			UnityEngine.Avatar o;
-			o=new UnityEngine.Avatar();
-			pushValue(l,true);
-			pushValue(l,o);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_isValid(IntPtr l) {
 		try {
 			UnityEngine.Avatar self=(UnityEngine.Avatar)checkSelf(l);
@@ -45,6 +32,6 @@ public class Lua_UnityEngine_Avatar : LuaObject {
 		getTypeTable(l,"UnityEngine.Avatar");
 		addMember(l,"isValid",get_isValid,null,true);
 		addMember(l,"isHuman",get_isHuman,null,true);
-		createTypeMetatable(l,constructor, typeof(UnityEngine.Avatar),typeof(UnityEngine.Object));
+		createTypeMetatable(l,null, typeof(UnityEngine.Avatar),typeof(UnityEngine.Object));
 	}
 }

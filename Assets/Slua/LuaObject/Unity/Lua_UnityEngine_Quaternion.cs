@@ -214,6 +214,24 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int SlerpUnclamped_s(IntPtr l) {
+		try {
+			UnityEngine.Quaternion a1;
+			checkType(l,1,out a1);
+			UnityEngine.Quaternion a2;
+			checkType(l,2,out a2);
+			System.Single a3;
+			checkType(l,3,out a3);
+			var ret=UnityEngine.Quaternion.SlerpUnclamped(a1,a2,a3);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int Lerp_s(IntPtr l) {
 		try {
 			UnityEngine.Quaternion a1;
@@ -223,6 +241,24 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 			System.Single a3;
 			checkType(l,3,out a3);
 			var ret=UnityEngine.Quaternion.Lerp(a1,a2,a3);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LerpUnclamped_s(IntPtr l) {
+		try {
+			UnityEngine.Quaternion a1;
+			checkType(l,1,out a1);
+			UnityEngine.Quaternion a2;
+			checkType(l,2,out a2);
+			System.Single a3;
+			checkType(l,3,out a3);
+			var ret=UnityEngine.Quaternion.LerpUnclamped(a1,a2,a3);
 			pushValue(l,true);
 			pushValue(l,ret);
 			return 2;
@@ -586,7 +622,9 @@ public class Lua_UnityEngine_Quaternion : LuaObject {
 		addMember(l,FromToRotation_s);
 		addMember(l,LookRotation_s);
 		addMember(l,Slerp_s);
+		addMember(l,SlerpUnclamped_s);
 		addMember(l,Lerp_s);
+		addMember(l,LerpUnclamped_s);
 		addMember(l,RotateTowards_s);
 		addMember(l,Inverse_s);
 		addMember(l,Angle_s);

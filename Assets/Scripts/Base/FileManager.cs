@@ -123,14 +123,12 @@ public class FileManager {
 		//使用流的形式读取
 		StreamReader sr =null;
 		try{
-			string filepath = LuaManager.GetScriptPath() + "/" + path;
+			string filepath = LuaManager.GetExternalDir() + path;
 			sr = File.OpenText(filepath);
 		}catch(Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
-			#if LOG_DEBUG
-			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
-			#endif
+			Debug.Log("Failed to open file " + LuaManager.GetExternalDir() + path + " Error : " + e.Message);
 			return;
 		}
 		string line = sr.ReadToEnd();
@@ -168,21 +166,18 @@ public class FileManager {
 		
 		return "";
 #else
-
 		//使用流的形式读取
 		string content = null;
 		StreamReader sr = null;
 		try
 		{
-			string filepath = LuaManager.GetScriptPath() + "/" + path;
+			string filepath = LuaManager.GetExternalDir() + path;
 			sr = File.OpenText(filepath);
 		}
 		catch (Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
-#if LOG_DEBUG
-			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
-#endif
+			Debug.Log("Failed to open file " + LuaManager.GetExternalDir() + path + " Error : " + e.Message);
 			return "";
 		}
 		content = sr.ReadToEnd();

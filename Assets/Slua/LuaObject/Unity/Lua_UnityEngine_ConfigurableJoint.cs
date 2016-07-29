@@ -200,6 +200,84 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_linearLimitSpring(IntPtr l) {
+		try {
+			UnityEngine.ConfigurableJoint self=(UnityEngine.ConfigurableJoint)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.linearLimitSpring);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_linearLimitSpring(IntPtr l) {
+		try {
+			UnityEngine.ConfigurableJoint self=(UnityEngine.ConfigurableJoint)checkSelf(l);
+			UnityEngine.SoftJointLimitSpring v;
+			checkValueType(l,2,out v);
+			self.linearLimitSpring=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_angularXLimitSpring(IntPtr l) {
+		try {
+			UnityEngine.ConfigurableJoint self=(UnityEngine.ConfigurableJoint)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.angularXLimitSpring);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_angularXLimitSpring(IntPtr l) {
+		try {
+			UnityEngine.ConfigurableJoint self=(UnityEngine.ConfigurableJoint)checkSelf(l);
+			UnityEngine.SoftJointLimitSpring v;
+			checkValueType(l,2,out v);
+			self.angularXLimitSpring=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_angularYZLimitSpring(IntPtr l) {
+		try {
+			UnityEngine.ConfigurableJoint self=(UnityEngine.ConfigurableJoint)checkSelf(l);
+			pushValue(l,true);
+			pushValue(l,self.angularYZLimitSpring);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_angularYZLimitSpring(IntPtr l) {
+		try {
+			UnityEngine.ConfigurableJoint self=(UnityEngine.ConfigurableJoint)checkSelf(l);
+			UnityEngine.SoftJointLimitSpring v;
+			checkValueType(l,2,out v);
+			self.angularYZLimitSpring=v;
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_linearLimit(IntPtr l) {
 		try {
 			UnityEngine.ConfigurableJoint self=(UnityEngine.ConfigurableJoint)checkSelf(l);
@@ -754,6 +832,9 @@ public class Lua_UnityEngine_ConfigurableJoint : LuaObject {
 		addMember(l,"angularXMotion",get_angularXMotion,set_angularXMotion,true);
 		addMember(l,"angularYMotion",get_angularYMotion,set_angularYMotion,true);
 		addMember(l,"angularZMotion",get_angularZMotion,set_angularZMotion,true);
+		addMember(l,"linearLimitSpring",get_linearLimitSpring,set_linearLimitSpring,true);
+		addMember(l,"angularXLimitSpring",get_angularXLimitSpring,set_angularXLimitSpring,true);
+		addMember(l,"angularYZLimitSpring",get_angularYZLimitSpring,set_angularYZLimitSpring,true);
 		addMember(l,"linearLimit",get_linearLimit,set_linearLimit,true);
 		addMember(l,"lowAngularXLimit",get_lowAngularXLimit,set_lowAngularXLimit,true);
 		addMember(l,"highAngularXLimit",get_highAngularXLimit,set_highAngularXLimit,true);

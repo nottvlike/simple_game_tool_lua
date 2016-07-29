@@ -136,6 +136,24 @@ public class Lua_UnityEngine_Vector4 : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int LerpUnclamped_s(IntPtr l) {
+		try {
+			UnityEngine.Vector4 a1;
+			checkType(l,1,out a1);
+			UnityEngine.Vector4 a2;
+			checkType(l,2,out a2);
+			System.Single a3;
+			checkType(l,3,out a3);
+			var ret=UnityEngine.Vector4.LerpUnclamped(a1,a2,a3);
+			pushValue(l,true);
+			pushValue(l,ret);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int MoveTowards_s(IntPtr l) {
 		try {
 			UnityEngine.Vector4 a1;
@@ -645,6 +663,7 @@ public class Lua_UnityEngine_Vector4 : LuaObject {
 		addMember(l,Normalize);
 		addMember(l,SqrMagnitude);
 		addMember(l,Lerp_s);
+		addMember(l,LerpUnclamped_s);
 		addMember(l,MoveTowards_s);
 		addMember(l,Scale_s);
 		addMember(l,Normalize_s);

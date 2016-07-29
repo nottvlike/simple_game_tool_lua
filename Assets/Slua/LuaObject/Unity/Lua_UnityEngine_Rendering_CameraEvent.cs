@@ -27,6 +27,8 @@ public class Lua_UnityEngine_Rendering_CameraEvent : LuaObject {
 		addMember(l,18,"BeforeImageEffects");
 		addMember(l,19,"AfterImageEffects");
 		addMember(l,20,"AfterEverything");
+		addMember(l,21,"BeforeReflections");
+		addMember(l,22,"AfterReflections");
 		LuaDLL.lua_pop(l, 1);
 	}
 }

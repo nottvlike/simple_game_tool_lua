@@ -47,35 +47,6 @@ public class Lua_UnityEngine_JointLimits : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_minBounce(IntPtr l) {
-		try {
-			UnityEngine.JointLimits self;
-			checkValueType(l,1,out self);
-			pushValue(l,true);
-			pushValue(l,self.minBounce);
-			return 2;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_minBounce(IntPtr l) {
-		try {
-			UnityEngine.JointLimits self;
-			checkValueType(l,1,out self);
-			float v;
-			checkType(l,2,out v);
-			self.minBounce=v;
-			setBack(l,self);
-			pushValue(l,true);
-			return 1;
-		}
-		catch(Exception e) {
-			return error(l,e);
-		}
-	}
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static public int get_max(IntPtr l) {
 		try {
 			UnityEngine.JointLimits self;
@@ -105,12 +76,12 @@ public class Lua_UnityEngine_JointLimits : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int get_maxBounce(IntPtr l) {
+	static public int get_bounciness(IntPtr l) {
 		try {
 			UnityEngine.JointLimits self;
 			checkValueType(l,1,out self);
 			pushValue(l,true);
-			pushValue(l,self.maxBounce);
+			pushValue(l,self.bounciness);
 			return 2;
 		}
 		catch(Exception e) {
@@ -118,13 +89,42 @@ public class Lua_UnityEngine_JointLimits : LuaObject {
 		}
 	}
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static public int set_maxBounce(IntPtr l) {
+	static public int set_bounciness(IntPtr l) {
 		try {
 			UnityEngine.JointLimits self;
 			checkValueType(l,1,out self);
 			float v;
 			checkType(l,2,out v);
-			self.maxBounce=v;
+			self.bounciness=v;
+			setBack(l,self);
+			pushValue(l,true);
+			return 1;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int get_bounceMinVelocity(IntPtr l) {
+		try {
+			UnityEngine.JointLimits self;
+			checkValueType(l,1,out self);
+			pushValue(l,true);
+			pushValue(l,self.bounceMinVelocity);
+			return 2;
+		}
+		catch(Exception e) {
+			return error(l,e);
+		}
+	}
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static public int set_bounceMinVelocity(IntPtr l) {
+		try {
+			UnityEngine.JointLimits self;
+			checkValueType(l,1,out self);
+			float v;
+			checkType(l,2,out v);
+			self.bounceMinVelocity=v;
 			setBack(l,self);
 			pushValue(l,true);
 			return 1;
@@ -165,9 +165,9 @@ public class Lua_UnityEngine_JointLimits : LuaObject {
 	static public void reg(IntPtr l) {
 		getTypeTable(l,"UnityEngine.JointLimits");
 		addMember(l,"min",get_min,set_min,true);
-		addMember(l,"minBounce",get_minBounce,set_minBounce,true);
 		addMember(l,"max",get_max,set_max,true);
-		addMember(l,"maxBounce",get_maxBounce,set_maxBounce,true);
+		addMember(l,"bounciness",get_bounciness,set_bounciness,true);
+		addMember(l,"bounceMinVelocity",get_bounceMinVelocity,set_bounceMinVelocity,true);
 		addMember(l,"contactDistance",get_contactDistance,set_contactDistance,true);
 		createTypeMetatable(l,constructor, typeof(UnityEngine.JointLimits),typeof(System.ValueType));
 	}
