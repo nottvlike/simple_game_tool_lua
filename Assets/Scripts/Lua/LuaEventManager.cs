@@ -7,6 +7,9 @@ public class LuaEventManager{
 	static void AddBaseCallback<T>(GameObject obj, LuaFunction func) where T : LuaBaseEvent
 	{
         if (obj == null)
+            obj = GameObject.Find("LuaBaseCallback");
+
+        if (obj == null)
             obj = new GameObject("LuaBaseCallback");
 
 		if(obj.GetComponent<T>() == null)

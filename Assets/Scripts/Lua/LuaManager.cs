@@ -24,15 +24,10 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	public static string GetExternalDir(bool hasPrefix = false)
 	{
-#if UNITY_EDITOR
-    #if RESOURCE_DEBUG
-		return "";
-    #endif
-#else
-    #if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
 		return "jar:file://" + Application.dataPath + "/!/assets/";
-    #endif
 #endif
+
         if (hasPrefix)
         {
             return "file:///" + Application.dataPath + "/StreamingAssets" + "/";
@@ -42,10 +37,7 @@ public class LuaManager : Singleton<LuaManager> {
 
 	public void Init()
 	{
-#if !RESOURCE_DEBUG
 		LuaState.loaderDelegate += LoaderDelegate;
-#endif
-        ModManager.Instance.Init();
 
 		l = new LuaSvr();
 		l.init(null, Complete, LuaSvrFlag.LSF_EXTLIB);
@@ -54,36 +46,24 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	void Complete()
 	{
-        //若是载入了独立mod，则无需再执行本地游戏逻辑了
-        if (ModManager.Instance.LoadMod())
-            return;
-
-#if RESOURCE_DEBUG
 		l.start(START_SCRIPT.Replace(".txt", ""));
-#else
-		UpdateManager.Instance.Download (
-			string.Format ("{0}/{1}", GetExternalDir(true), START_SCRIPT),
-			"",
-			UpdateManager.DownloadFileType.TypeText,
-			LoadLuaString,
-			false);
-#endif
-	}
-	
-	void LoadLuaString(string str)
-	{
-        l.startDoString(str);
 	}
 	
 	byte[] LoaderDelegate(string filePath)
 	{
 		byte[] list = null;
 		
-		_sb.Remove(0, _sb.Length);
+        _sb.Remove(0, _sb.Length);
 		_sb.Append(filePath);
 		_sb = _sb.Replace('.', '/');
-		_sb.Append(".txt");
 
+        var text = Resources.Load<TextAsset>(_sb.ToString());
+        if (text != null)
+        {
+            return text.bytes;
+        }
+
+		_sb.Append(".txt");
 		FileManager.LoadFileWithBytes(_sb.ToString(), out list);
 		if(list != null)
 		{

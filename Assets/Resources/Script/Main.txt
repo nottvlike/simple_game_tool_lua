@@ -1,5 +1,5 @@
-require 'Script.Utils.Class'
-require 'Script.Utils.GlobalFunctions'
+require 'Common.Script.Util.Class'
+require 'Common.Script.Util.GlobalFunctions'
 --local networkTest = require 'Script.Network.NetworkTest'
 local runTimeManager = require 'Script.Manager.RunTimeManager'
 

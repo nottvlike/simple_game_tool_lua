@@ -42,6 +42,7 @@ class ProjectBuild : Editor{
 	//shell脚本直接调用这个静态方法
 	static void BuildForIPhone()
 	{ 
+#if UNITY_5_3
 		//打包之前先设置一下 预定义标签， 我建议大家最好 做一些  91 同步推 快用 PP助手一类的标签。 这样在代码中可以灵活的开启 或者关闭 一些代码。
 		//因为 这里我是承接 上一篇文章， 我就以sharesdk做例子 ，这样方便大家学习 ，
 		PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.iOS, "USE_SHARE");
@@ -50,5 +51,6 @@ class ProjectBuild : Editor{
 		//参数2 需要打包的名子， 这里取到的就是 shell传进来的字符串 91
 		//参数3 打包平台
 		BuildPipeline.BuildPlayer(GetBuildScenes(), projectName, BuildTarget.iOS, BuildOptions.None);
+#endif
 	}
 }

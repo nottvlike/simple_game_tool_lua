@@ -9,11 +9,6 @@
 			"ConfigName" : "AttackDataBase",
 			"ResourcePath" : "Config/AttackDataBase",
 			"version" : "1.0.0"
-		},
-		{
-			"ConfigName" : "ModConfig",
-			"ResourcePath" : "Config/ModConfig",
-			"version" : "1.0.0"
 		}
 	]
 }

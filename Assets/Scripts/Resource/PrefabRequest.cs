@@ -65,11 +65,11 @@ public class PrefabRequest{
 		
 		if (_isAssetBundle)
 		{
-			ResourceManager.Instance.StartCoroutine(StartLoadAssetBundle());
+            StartLoadResource();
 		}
 		else
 		{
-			StartLoadResource();
+            ResourceManager.Instance.StartCoroutine(StartLoadAssetBundle());
 		}
 	}
 
@@ -93,7 +93,11 @@ public class PrefabRequest{
             bundle = depend.assetBundle;
 
             //没保存prefab name,所以使用loadall方法，有明显卡顿的话再改
+#if UNITY_5_3
 			dependency.DependenciesObject.AddRange(bundle.LoadAllAssets());
+#else 
+			dependency.DependenciesObject.AddRange(bundle.LoadAll());
+#endif
             dependency.IsLoaded = true;
             bundle.Unload(false);
         }
@@ -104,7 +108,11 @@ public class PrefabRequest{
 		yield return www;
 		bundle = www.assetBundle;
 
+#if UNITY_5_3
 		request = bundle.LoadAssetAsync<GameObject>(_prefabName);
+#else 
+		request = bundle.LoadAsync(_prefabName, typeof(GameObject));
+#endif
 		yield return request;
 		_prefab = request.asset as GameObject;
 		bundle.Unload(false);

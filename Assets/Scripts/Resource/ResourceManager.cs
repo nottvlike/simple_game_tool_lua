@@ -64,7 +64,6 @@ public class ResourceManager : Singleton<ResourceManager>
     List<SingleLineResource> _prefabLoadRequestList = new List<SingleLineResource>();
 
     ResourceLoadStateType _state = ResourceLoadStateType.None;
-    bool _isAssetBundle = false;
     bool _isInit = false;
 
     public ResourceLoadStateType ResourceLoadState 
@@ -107,9 +106,6 @@ public class ResourceManager : Singleton<ResourceManager>
         if (!_isInit)
         {
             _isInit = true;
-#if !RESOURCE_DEBUG
-			_isAssetBundle = true;
-#endif
 
             LoadConfigurationConfig(prefix);
             LoadAssetBundleConfig();
@@ -121,7 +117,7 @@ public class ResourceManager : Singleton<ResourceManager>
         string config = "";
 
 		_configRequestDict.Clear ();
-        config = LoadConfigFileByPath(string.Format("{0}/{1}", prefix, CONFIG_FILE));
+        config = LoadConfigFileByPath(string.Format("{0}{1}", prefix, CONFIG_FILE));
 
         JsonData jsonData = JsonMapper.ToObject(config);
         if (jsonData["Configs"].IsArray)
@@ -154,7 +150,7 @@ public class ResourceManager : Singleton<ResourceManager>
             var assetbundlePath = prefabInfo["AssetbundlePath"].ToString();
             var prefabPath = prefabInfo["PrefabPath"].ToString();
             var isShared = bool.Parse(prefabInfo["IsShared"].ToString());
-
+            var isAssetBundle = bool.Parse(prefabInfo["IsAssetBundle"].ToString());
             if (isShared)
             {
                 var dependency = new Dependency();
@@ -175,19 +171,18 @@ public class ResourceManager : Singleton<ResourceManager>
             }
 
             var request = new PrefabRequest();
-            request.Init(prefabName, assetbundlePath, prefabPath, dependenciesList, _isAssetBundle);
+            request.Init(prefabName, assetbundlePath, prefabPath, dependenciesList, isAssetBundle);
             _prefabRequestDict.Add(prefabName, request);
         }
     }
 
     public string LoadConfigFileByPath(string configPath)
     {
-#if RESOURCE_DEBUG
         TextAsset text = Resources.Load<TextAsset>(configPath);
-        return text.text;
-#else 
+        if (text != null)
+            return text.text;
+
 		return FileManager.LoadFileWithString(configPath + ".txt");
-#endif
     }
 
     public string LoadConfigFile(string configName)
@@ -198,11 +193,8 @@ public class ResourceManager : Singleton<ResourceManager>
         {
             return "";
         }
-#if RESOURCE_DEBUG
-		TextAsset text = Resources.Load<TextAsset>(configReq.ConfigResourcePath);
-		return text.text;
-#endif
-        return FileManager.LoadFileWithString(configReq.ConfigResourcePath + ".txt");
+
+        return LoadConfigFileByPath(configReq.ConfigResourcePath);
     }
 
 	//线性载入prefab，牺牲载入时间，保证prefab载入的速度和内存占用

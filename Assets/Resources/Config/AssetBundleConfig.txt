@@ -6,6 +6,7 @@
 			"PrefabPath" : "Prefab/Creature/Golem",
 			"version" : "1.0.0",
 			"IsShared" : "false",
+			"IsAssetBundle" : "false",
 			"Dependency" : []
 		},
 		{
@@ -14,6 +15,7 @@
 			"PrefabPath" : "Prefab/Creature/Hornet/MonsterHornet-Red",
 			"version" : "1.0.0",
 			"IsShared" : "false",
+			"IsAssetBundle" : "false",
 			"Dependency" : []
 		},
 		{
@@ -22,6 +24,7 @@
 			"PrefabPath" : "Prefab/Level/LevelTest",
 			"version" : "1.0.0",
 			"IsShared" : "false",
+			"IsAssetBundle" : "false",
 			"Dependency" : []
 		},
 		{
@@ -30,6 +33,7 @@
 			"PrefabPath" : "Prefab/UI/Fight/Fight",
 			"version" : "1.0.0",
 			"IsShared" : "false",
+			"IsAssetBundle" : "false",
 			"Dependency" : []
 		},
 		{
@@ -38,6 +42,7 @@
 			"PrefabPath" : "Prefab/UI/Update/SceneUpdate",
 			"version" : "1.0.0",
 			"IsShared" : "false",
+			"IsAssetBundle" : "false",
 			"Dependency" : []
 		}
 	]
