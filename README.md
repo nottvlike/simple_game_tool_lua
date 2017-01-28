@@ -1,11 +1,11 @@
 #目录
-*	[1.前言](#1)
-	*	[1.1.Unity3d开发版本](#1.1)
+*    [1.前言](#1)
+    *	[1.1.Unity3d开发版本](#1.1)
 	*	[1.2.第三方插件](#1.2)
+    *   [1.3.开始](#1.3)
 *	[2.基本约定](#2)
-	*	[2.1.两种开发模式](#2.1)
-	*	[2.2.三个路径](*2.2)
-	*	[2.3.四类资源文件夹](*2.3)
+	*	[2.1.路径](*2.2)
+	*	[2.2.四类资源文件夹](*2.3)
 *	[3.主要模块介绍](#3)
 	*	[3.1.Slua模块](#3.1)
 		*	[3.1.1 lua常用函数介绍](#3.1.1)
@@ -41,45 +41,51 @@ OpenWorldGame是希望自己在学习unity3d的过程中，慢慢实现一个相
 
 <h3 id="1.1">1.1	Unity3d版本</h3>
 
-Unity3d 5.0.1
+Unity3d 5.3.6
 
 <h3 id="1.2">1.2	第三方插件</h3>
+
 *	slua : https://github.com/pangweiwei/slua
 
+<h3 id="1.3">1.3    开始</h3>
+
+demo中的资源涉及到了一些收费的作品，所以没有上传到github，场景文件start.scene对于unity3d 5.3以下版本都无法打开，主要包含下面两个gameobject
+
+*   Main Camera : 挂载GameStart.cs组件，挂载CameraMove.cs组件（参数依次是空，3，5，2，3）
+*   EventSystem : 随便添加一个ugui界面，unity就会自动添加的gameobject.
+
 <h2 id="2">2.	基本约定</h2>
-<h3 id="2.1">2.1	两种开发模式</h3>
-即Debug和Release模式，通过宏RESOURCE_DEBUG和LOG_DEBUG控制。
 
-RESOURCE_DEBUG设定是否使用Resources.Load()方法载入资源，在AssetBundleEditor.cs和LuaManager.cs文件中都有设置，在AssetBundleEditor.cs设置是因为将prefab打包成为assetbundle时需要使用Resources.Load()载入prefab，我这边第一次打开工程可以正常生成.assetbundle文件，运行几次程序之后，就会有报错，这个稍后修复。
+<h3 id="2.1">2.1	路径</h3>
 
-LOG_DEBUG意思是是否开启日志，这个我一般都留着。
+Unity3d是有三种的(ResourcesPath, StreamAssetsPath, PersistentDataPath):
 
-因为我没有上传资源文件(例如Resources，Animations，Animators，Models等文件夹)，只上传了.assetbundle文件，所以github上的工程默认就是Release模式。
+*   ResourcesPath : c#支持异步和同步加载，只读；
+*   StreamAssetsPath : c#支持异步加载，只读；
+*   PersistentDataPath : c#支持同步和异步加载，可读写。
 
-*	DEBUG:	#define RESOURCE_DEBUG 时开启，使用Resources.Load()加载资源，只能使用Resources目录下的资源；
-*	RELEASE:注释LuaManager.cs中的 #define RESOURCE_DEBUG 时开启，使用www加载资源，只能使用LuaManager.GetAssetBundlePath()路径下的资源。
+而在代码中目前只设计了两种路径:
 
-补充下，unity3d不能通过#define来设置全局宏定义（#define 宏只能用在定义宏的那个类里，其它文件的类就是undef的状态），设置全局宏定义的方法倒是还有两种，一个是smcs.rsp或者gmcs.rsp，另一个就是各个平台在playersetting里面设置symbols了，第一种方法我试过不行（应该是我哪里操作错了），第二种我只是在editor里调试用的，playersetting那个对我没用。我这边网速慢就不贴官方的地址了，在本地的unity3d文档里面搜下Platform Dependent Compilation就能够看到官方的介绍了，百度下应该也是可以的。
+*   Resources路径 ：
+*   External路径 ：位置在LuaManager.cs中设置，FileManager.cs也有涉及，目前是StreamAssetsPath。
 
+为了同步读取StreamAssetsPath里的资源，我在FileManager.cs里加了使用android底层api同步读取StreamAssetsPath文件的代码，这始终有些不合理，毕竟External路径有两种，同步读取的方法却不同，强制放在一个方法里面不妥当。
 
-<h3 id="2.2">2.2	三种路径</h3>
+添加External路径本身就不妥当，不如使用unity3d自带的分类，算了，以后再考虑这个吧。
 
-*	Resources路径：未做打包，加密等处理的原始资源，仅在DEBUG模式下使用；
-*	GetAssetBundlePath/GetScriptPath/GetConfigPath路径：经过打包，加密处理后的资源，在RELEASE模式下使用，需要先下载；
-*	Update路径：热更新地址，目前暂时使用文件系统内的一个文件夹代替
+<h3 id="2.2">2.2 四类资源文件夹</h3>
 
-我为了调试方便，将UpdateManager.UpdateTest和GetAssetBundlePath()都设置为Application.streamingAssetsPath，这样在热更时会从Application.streamingAssetsPath获取文件，下载到Application.streamingAssetsPath目录里面，然后再执行。我在mac上面测试没问题，windows具体没有测试过 。
-
-若是不想走热更新流程，将Update/Update.txt中的disableUpdate设置为true就行了，我这边改代码一般会改动Resources目录中的资源，然后自动打包将assetbundle,config,script,update拷贝到Application.streamingAssetsPath再执行，不过你们还是直接修改Application.streamingAssetsPath中的资源吧。
-
-<h3 id="2.3">2.3 四类资源文件夹</h3>
-
-*	Prefab/AssetBundle：	在debug开发模式是Prefab文件夹，而在release模式下是AssetBundle文件夹
+*	Prefab/AssetBundle ：
 *	Config：		保存配置文件
 *	Script：		lua脚本文件夹
 *	Update：		提供热更新功能的Lua代码
 
+谈一下资源加载的顺序吧，首先会使用Resources.Load加载Resources的资源，失败了的话就加载AsssetBundle资源，配置中对于Prefab/AssetBundle做了简化，你需要保证无论在Assets/Resources/Prefab里还是ExternalDir/AssetBundle里，它的相对路径都是需要保持一致的，不太懂的话可以看下AssetBundleConfig.txt。
+
+例如名为Golem的Resource,它的路径配置的是Creature/Golem，这意味着它的读取路径可能有两种，首先读取Assets/Resources/Prefab/Creature/Golem.prefab，失败的话就读取External/AssetBundle/Creature/Golem.assetbundle文件。
+
 <h2 id="3">3.	主要功能模块介绍</h2>
+
 <h3 id="3.1">3.1	Slua模块</h3>
 
 unity3d常用的lua插件有slua,ulua和nlua，选择slua的主要原因是官方宣称slua相对于其它插件速度更快（当然并非是lua语言执行的速度，而是lua调用unity3d接口执行的速度），这一点以后会做验证。
@@ -143,6 +149,8 @@ Behavior3是偶然在网上找到一个行为树的代码实现，作者只实�
 
 具体可以看下ResourceManager.cs里面的注释，只是将一个assetbundle细化，粒度更小，当然目前只写了针对5.x以下的依赖打包方式，而且还没有测试过，以后我会先完善5.x以下的打包，再实现5.x以上版本的打包。
 
+PS:这一块暂时就不做了，主要因为unity5和unity4在AssetBundle这一块变动很大，先实现unity5里的再考虑吧。
+
 <h3 id="3.5">3.5 Buff系统</h3>
 战斗相关的buff系统已经加上了，主要包含了这几个方面：
 
@@ -157,22 +165,12 @@ buff都统一放在被施加者身上，例如A对B施法，那么buff放在B身
 
 关于监听器，为了方便，我将所有监听器的消息先中转到了root节点，然后才传递到lua脚本里，这样或许有隐含的问题，主要是担心buff计算错了碰撞目前，这个我先想想是否会出问题，以及出了问题怎么处理。
 
-<h3 id="3.6">3.6 Mod系统</h3>
+<h3 id="3.6">3.6 Mod系统（废弃）</h3>
 取名为Mod系统其实名不副实，因为一个是2d游戏，一个是3d游戏，而且游戏类型完全不同。只是我懒得在为一个新游戏建立一个同样的架构，因此写了Mod系统将这个2d游戏强行放进来。我确实打算写一个mod系统，具体怎么写我暂时并没有好的想法(肯定是一堆的callback事件),这个2d游戏目前也只能使用Resources.Load加载(所以记得添加RESOURCE_DEBUG宏)，打包出assetbundle这一块我还需要补充和debug。
 
 新添加了一个文件夹Mod,这件事Commit里倒是忘记提了，里面是准备存放各种插件的。
 
 新添加了一个文件夹Common,主要是一些所有mod公共使用的资源，每个mod下面的目录架构其实都是一样的，都有Prefabs,Config,Script这几个目录构成，而且Script目录下的脚本架构也是一样。
-
-<h2 id="4">4. Android支持</h2>
-最近两周一直忙着android方面的工作，主要是slua，遇到的问题有两个：
-
-*	StreamAssets中的资源unity3d只支持www异步加载，对于assetbundle还好，对于脚本来说就悲剧了；
-*	GameObject.Instantiate第二次执行时奔溃，这是我暂时没解决的问题，slua加入debug标签后，想看看奔溃信息却没有奔溃了；
-
-第一个问题比较简单，android使用java或者jni都可以访问assets目录，我这里用了jni，写了个getAssets()方法传递给了c#，具体可以看下slua里的jni/FileManagerAndroid.cpp和LuaDLL.cs文件
-第二个问题，我查了几天，始终没有收获，开始我以为是自己的ResourceManager写的有问题，将ResourceManager改为同步访问后，依旧没有效果。
-
 
 <h2 id="5">5.	后续计划</h2>
 
