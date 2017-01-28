@@ -42,10 +42,10 @@ function joystick.onAttackClick(param)
 	end
 end
 
---JoystickManager.GetInstance():AddKeyEvent(KeyCode.A, joystick.onLeftClick)
---JoystickManager.GetInstance():AddKeyEvent(KeyCode.D, joystick.onRightClick)
---JoystickManager.GetInstance():AddKeyEvent(KeyCode.W, joystick.onUpClick)
---JoystickManager.GetInstance():AddKeyEvent(KeyCode.S, joystick.onDownClick)
---JoystickManager.GetInstance():AddKeyEvent(KeyCode.Space, joystick.onAttackClick)
+JoystickManager.GetInstance():AddKeyEvent(KeyCode.A, joystick.onLeftClick)
+JoystickManager.GetInstance():AddKeyEvent(KeyCode.D, joystick.onRightClick)
+JoystickManager.GetInstance():AddKeyEvent(KeyCode.W, joystick.onUpClick)
+JoystickManager.GetInstance():AddKeyEvent(KeyCode.S, joystick.onDownClick)
+JoystickManager.GetInstance():AddKeyEvent(KeyCode.Space, joystick.onAttackClick)
 
 return joystick

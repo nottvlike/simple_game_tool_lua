@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+
+#if UNITY_5
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -29,3 +31,8 @@ public class LuaOnDragEvent : LuaBaseEvent, IDragHandler, IEndDragHandler, IBegi
         }
     }
 }
+#else
+public class LuaOnDragEvent : LuaBaseEvent {
+
+}
+#endif

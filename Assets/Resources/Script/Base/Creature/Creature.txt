@@ -24,7 +24,7 @@ function creature:ctor(parent, isMainPlayer)
 	self.prefabPath = ""
 	self.targetPos = Vector3.zero
 	self.rotation = 2
-	self.speed = 3
+	self.speed = 3.0
 	self.useVelocity = true
 	self.velocity = Vector3.zero
 	self.isAttack = false

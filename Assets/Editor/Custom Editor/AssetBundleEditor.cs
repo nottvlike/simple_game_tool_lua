@@ -198,8 +198,8 @@ public class AssetBundleEditor {
 		foreach (var obj in _prefabDict)
         {
 			var request = obj.Value;
-			var assetbundlePath = request.AssetbundlePath;
-			var prefabPath = request.PrefabPath;
+			var assetbundlePath = request.ResourcePath;
+			var prefabPath = request.ResourcePath;
 
 			AssetBundleRequest assetbundleRequest = null;
 			if (_assetBundleDict.TryGetValue(assetbundlePath, out assetbundleRequest))
@@ -210,7 +210,7 @@ public class AssetBundleEditor {
             else
             {
 				assetbundleRequest = new AssetBundleRequest();
-				assetbundleRequest.Name = request.PrefabName;
+				assetbundleRequest.Name = request.ResourceName;
 				assetbundleRequest.PrefabList = new List<string>();
 				assetbundleRequest.PrefabList.Add(prefabPath);
                 assetbundleRequest.IsShared = false;

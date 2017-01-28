@@ -55,11 +55,15 @@ public class ConfigRequest {
 
 public class ResourceManager : Singleton<ResourceManager> 
 {
+	public const string PREFIX_PREFAB_PATH = "Prefab";
+	public const string PREFIX_ASSETBUNDLE_PATH = "AssetBundle";
+	public const string SUFFIX_ASSETBUNDLE_PATH = ".assetbundle";
+
     const string ASSETBUNDLE_CONFIG = "AssetBundleConfig";
     const string CONFIG_FILE = "Config/Configuration";
 
     Dictionary<string, ConfigRequest> _configRequestDict = new Dictionary<string, ConfigRequest>();
-	Dictionary<string, PrefabRequest> _prefabRequestDict = new Dictionary<string, PrefabRequest>();
+	Dictionary<string, ResourceRequest> _resourceRequestDict = new Dictionary<string, ResourceRequest>();
     Dictionary<string, Dependency> _sharedAssetbundleDict = new Dictionary<string, Dependency>();
     List<SingleLineResource> _prefabLoadRequestList = new List<SingleLineResource>();
 
@@ -79,11 +83,11 @@ public class ResourceManager : Singleton<ResourceManager>
     }
 
 #if UNITY_EDITOR
-    public Dictionary<string, PrefabRequest> PrefabRequestDict
+    public Dictionary<string, ResourceRequest> PrefabRequestDict
     {
         get
         {
-            return _prefabRequestDict;
+            return _resourceRequestDict;
         }
     }
 
@@ -136,44 +140,23 @@ public class ResourceManager : Singleton<ResourceManager>
 
     void LoadAssetBundleConfig()
     {
-		_prefabRequestDict.Clear ();
+		_resourceRequestDict.Clear ();
 
-        var txt = LoadConfigFile(ASSETBUNDLE_CONFIG);
-        if (txt.Length <= 0)
-            return;
+		var txt = LoadConfigFile(ASSETBUNDLE_CONFIG);
+		if (txt.Length <= 0)
+			return;
 
-        JsonData jsonData = JsonMapper.ToObject(txt);
-        for (int i = 0; i < jsonData["Prefabs"].Count; i++)
-        {
-            var prefabInfo = jsonData["Prefabs"][i];
-            var prefabName = prefabInfo["PrefabName"].ToString();
-            var assetbundlePath = prefabInfo["AssetbundlePath"].ToString();
-            var prefabPath = prefabInfo["PrefabPath"].ToString();
-            var isShared = bool.Parse(prefabInfo["IsShared"].ToString());
-            var isAssetBundle = bool.Parse(prefabInfo["IsAssetBundle"].ToString());
-            if (isShared)
-            {
-                var dependency = new Dependency();
-                dependency.PrefabName = prefabName;
-                dependency.PrefabPath = prefabPath;
-                dependency.AssetbundlePath = assetbundlePath;
-                dependency.DependenciesObject = new List<Object>();
-                dependency.IsLoaded = false;
-                _sharedAssetbundleDict.Add(prefabName, dependency);
-                continue;
-            }
+		JsonData jsonData = JsonMapper.ToObject(txt);
+		for (int i = 0; i < jsonData["Resources"].Count; i++)
+		{
+			var prefabInfo = jsonData["Resources"][i];
+			var resourceName = prefabInfo["ResourceName"].ToString();
+			var resourcePath = prefabInfo["ResourcePath"].ToString();
 
-            var dependenciesList = new List<string>();
-            for (int j = 0; j < prefabInfo["Dependency"].Count; j++)
-            {
-                var depend = prefabInfo["Dependency"][j].ToString();
-                dependenciesList.Add(depend);
-            }
-
-            var request = new PrefabRequest();
-            request.Init(prefabName, assetbundlePath, prefabPath, dependenciesList, isAssetBundle);
-            _prefabRequestDict.Add(prefabName, request);
-        }
+			var request = new ResourceRequest();
+			request.Init(resourceName, resourcePath);
+			_resourceRequestDict.Add(resourceName, request);
+		}
     }
 
     public string LoadConfigFileByPath(string configPath)
@@ -228,8 +211,8 @@ public class ResourceManager : Singleton<ResourceManager>
         _prefabLoadRequestList.Remove(request);
 		PoolManager.GetInstance().ReleaseObject<SingleLineResource> ("SingleLineResource", request);
 
-        PrefabRequest prefabRequest = null;
-        if (_prefabRequestDict.TryGetValue(prefabName, out prefabRequest))
+        ResourceRequest prefabRequest = null;
+        if (_resourceRequestDict.TryGetValue(prefabName, out prefabRequest))
 		{
 			_state = ResourceLoadStateType.Loading;
 			prefabRequest.Load(callBack);
@@ -254,7 +237,7 @@ public class ResourceManager : Singleton<ResourceManager>
     public void Clear()
     {
         //暂时先用foreach,clear毕竟不是很长使用
-		foreach (KeyValuePair<string, PrefabRequest> obj in _prefabRequestDict)
+		foreach (KeyValuePair<string, ResourceRequest> obj in _resourceRequestDict)
         {
 			obj.Value.ClearPrefab();
         }

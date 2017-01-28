@@ -24,15 +24,15 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	public static string GetExternalDir(bool hasPrefix = false)
 	{
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID
 		return "jar:file://" + Application.dataPath + "/!/assets/";
 #endif
 
-        if (hasPrefix)
-        {
-            return "file:///" + Application.dataPath + "/StreamingAssets" + "/";
-        }
-        return Application.dataPath + "/StreamingAssets" + "/";
+		if (hasPrefix)
+		{
+			return string.Format("file:///{0}/StreamingAssets/" + Application.dataPath);
+		}
+		return string.Format("{0}/StreamingAssets/", Application.dataPath);
 	}
 
 	public void Init()

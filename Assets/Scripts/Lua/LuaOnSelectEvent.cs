@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+
+#if UNITY_5
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -13,3 +15,8 @@ public class LuaOnSelectEvent : LuaBaseEvent, ISelectHandler {
         }
     }
 }
+#else
+public class LuaOnSelectEvent : LuaBaseEvent {
+
+}
+#endif
