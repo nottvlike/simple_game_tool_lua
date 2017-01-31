@@ -1,4 +1,4 @@
-local skillDataBase = require 'Config.SkillDataBase'
+local skillDataBase = require 'Config.SkillDataBaseTest'
 local runTimeManager = require 'Script.Manager.RunTimeManager'
 local buffManager = require 'Script.Manager.BuffManager'
 local buffHandler = Class("BuffHandler")

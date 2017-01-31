@@ -29,7 +29,7 @@ UpdateState = {
 
 function main()
 	if disableUpdate then
-		local Test = require 'Script.Main'
+		local Test = require 'Script.MainTest'
 		Test()
 		return
 	end

@@ -1,0 +1,14 @@
+{
+	"Configs" : [
+		{
+			"ConfigName" : "AssetBundleConfigTest",
+			"ResourcePath" : "Config/AssetBundleConfigTest",
+			"version" : "1.0.0"
+		},
+		{
+			"ConfigName" : "AttackDataBaseTest",
+			"ResourcePath" : "Config/AttackDataBaseTest",
+			"version" : "1.0.0"
+		}
+	]
+}

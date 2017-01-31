@@ -55,12 +55,12 @@ public class ConfigRequest {
 
 public class ResourceManager : Singleton<ResourceManager> 
 {
+	public string ConfigurationConfig = "Config/ConfigurationTest";
+	public string AssetBundleConfig = "AssetBundleConfigTest";
+
 	public const string PREFIX_PREFAB_PATH = "Prefab";
 	public const string PREFIX_ASSETBUNDLE_PATH = "AssetBundle";
 	public const string SUFFIX_ASSETBUNDLE_PATH = ".assetbundle";
-
-    const string ASSETBUNDLE_CONFIG = "AssetBundleConfig";
-    const string CONFIG_FILE = "Config/Configuration";
 
     Dictionary<string, ConfigRequest> _configRequestDict = new Dictionary<string, ConfigRequest>();
 	Dictionary<string, ResourceRequest> _resourceRequestDict = new Dictionary<string, ResourceRequest>();
@@ -121,7 +121,7 @@ public class ResourceManager : Singleton<ResourceManager>
         string config = "";
 
 		_configRequestDict.Clear ();
-        config = LoadConfigFileByPath(string.Format("{0}{1}", prefix, CONFIG_FILE));
+        config = LoadConfigFileByPath(string.Format("{0}{1}", prefix, ConfigurationConfig));
 
         JsonData jsonData = JsonMapper.ToObject(config);
         if (jsonData["Configs"].IsArray)
@@ -142,7 +142,7 @@ public class ResourceManager : Singleton<ResourceManager>
     {
 		_resourceRequestDict.Clear ();
 
-		var txt = LoadConfigFile(ASSETBUNDLE_CONFIG);
+		var txt = LoadConfigFile(AssetBundleConfig);
 		if (txt.Length <= 0)
 			return;
 

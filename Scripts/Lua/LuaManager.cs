@@ -7,7 +7,8 @@ public class LuaManager : Singleton<LuaManager> {
 
 	LuaSvr l;
 	StringBuilder _sb = new StringBuilder();
-	const string START_SCRIPT = "Update/Update.txt";
+
+	string _startScriptName = "";
 
     public LuaSvr L
     {
@@ -35,8 +36,10 @@ public class LuaManager : Singleton<LuaManager> {
 		return string.Format("{0}/StreamingAssets/", Application.dataPath);
 	}
 
-	public void Init()
+	public void Init(string startScriptName = "")
 	{
+		_startScriptName = startScriptName;
+
 		LuaState.loaderDelegate += LoaderDelegate;
 
 		l = new LuaSvr();
@@ -46,7 +49,7 @@ public class LuaManager : Singleton<LuaManager> {
 	
 	void Complete()
 	{
-		l.start(START_SCRIPT.Replace(".txt", ""));
+		l.start(_startScriptName.Replace(".txt", ""));
 	}
 	
 	byte[] LoaderDelegate(string filePath)
