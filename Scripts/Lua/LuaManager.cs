@@ -31,7 +31,7 @@ public class LuaManager : Singleton<LuaManager> {
 
 		if (hasPrefix)
 		{
-			return string.Format("file:///{0}/StreamingAssets/" + Application.dataPath);
+			return string.Format("file:///{0}/StreamingAssets/", Application.dataPath);
 		}
 		return string.Format("{0}/StreamingAssets/", Application.dataPath);
 	}
