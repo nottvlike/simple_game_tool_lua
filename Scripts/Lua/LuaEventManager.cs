@@ -52,7 +52,12 @@ public class LuaEventManager{
         AddBaseCallback<LuaOnSelectEvent>(obj, func);
     }
 
-	public static void AddLateUpdateEvent(GameObject obj, LuaFunction func)
+    public static void AddOnPointerClickEvent(GameObject obj, LuaFunction func)
+    {
+        AddBaseCallback<LuaOnPointerClickEvent>(obj, func);
+    }
+
+    public static void AddLateUpdateEvent(GameObject obj, LuaFunction func)
 	{
 		AddBaseCallback<LuaLateUpdateEvent>(obj, func);
 	}
