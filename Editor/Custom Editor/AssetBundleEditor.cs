@@ -193,7 +193,7 @@ public class AssetBundleEditor {
     static void InitAssetBundleDict()
     {
 		ResourceManager.Instance.Init ("");
-        var _prefabDict = ResourceManager.Instance.PrefabRequestDict;
+        var _prefabDict = ResourceManager.Instance.ResourceInfoDict;
 
 		foreach (var obj in _prefabDict)
         {
@@ -215,31 +215,6 @@ public class AssetBundleEditor {
 				assetbundleRequest.PrefabList.Add(prefabPath);
                 assetbundleRequest.IsShared = false;
 				_assetBundleDict.Add(assetbundlePath, assetbundleRequest);
-            }
-        }
-
-        var sharedDict = ResourceManager.Instance.SharedAssetbundleDict;
-        foreach(var obj in sharedDict)
-        {
-            var request = obj.Value;
-
-			var assetbundlePath = request.AssetbundlePath;
-			var prefabPath = request.PrefabPath;
-
-            AssetBundleRequest assetbundleRequest = null;
-            if (_assetBundleDict.TryGetValue(assetbundlePath, out assetbundleRequest))
-            {
-                //assetbundlePath目录一致，则打到同一个assetbundle中
-                assetbundleRequest.PrefabList.Add(prefabPath);
-            }
-            else
-            {
-                assetbundleRequest = new AssetBundleRequest();
-                assetbundleRequest.Name = request.PrefabName;
-                assetbundleRequest.PrefabList = new List<string>();
-                assetbundleRequest.PrefabList.Add(prefabPath);
-                assetbundleRequest.IsShared = true;
-                _assetBundleDict.Add(assetbundlePath, assetbundleRequest);
             }
         }
     }

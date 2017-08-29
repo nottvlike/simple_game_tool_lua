@@ -1,128 +1,144 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using SLua;
 
 public class ResourceRequest{
-    string _resourceName = "";
-    string _resourcePath = "";
+
+    ResourceInfo _resourceInfo;
 
     LuaFunction _callBack = null;
-    GameObject _prefab = null;
+    GameObject _resource = null;
 
-    public string ResourceName
+    public ResourceInfo ResourceInfo
     {
-        get 
+        get
         {
-            return _resourceName;
+            return _resourceInfo;
         }
     }
 
-    public string AssetbundlePath
+    public GameObject Resource
     {
-        get 
+        get
         {
-            return _resourcePath;
+            return _resource;
         }
     }
 
-    public string ResourcePath
+    public void Init(ResourceInfo resourceInfo)
     {
-        get 
-        {
-			return _resourcePath;
-        }
+        _resourceInfo = resourceInfo;
     }
 
-    public void Init(string resourceName, string resourcePath)
+    public void Init(string resourceName, string resourcePath, bool isFromAssetBundle)
     {
-        _resourceName = resourceName;
-        _resourcePath = resourcePath;
+        _resourceInfo.ResourceName = resourceName;
+        _resourceInfo.ResourcePath = resourcePath;
+        _resourceInfo.IsFromAssetBundle = isFromAssetBundle;
     }
 
-	public void Load(LuaFunction func)
+	public void LoadAsync(LuaFunction func)
 	{
 		_callBack = func;
-		if (_prefab != null)
+		if (_resource != null)
 		{
 			LoadFinished();
 		}
 
-		//从Resources目录中载入失败的话，就从AssetBundle中载入
-		if (!StartLoadResource())
-		{
-			ResourceManager.Instance.StartCoroutine(StartLoadAssetBundle());
-		}
+		if (_resourceInfo.IsFromAssetBundle)
+        {
+            ResourceManager.Instance.StartCoroutine(LoadAssetBundleAsync());
+        }
+        else
+        {
+            ResourceManager.Instance.StartCoroutine(LoadResourceAsync());
+        }
 	}
 
-	IEnumerator StartLoadAssetBundle()
+	IEnumerator LoadAssetBundleAsync()
 	{
 		AssetBundle bundle;
 		AssetBundleRequest request;
-		
-		/*
-        //预先载入共享assetbundle
-        for (int i = 0; i < _dependenciesPath.Count; ++i)
-        {
-            var dependName = _dependenciesPath[i];
-            Dependency dependency = null;
-            if (!ResourceManager.Instance.GetSharedDependencies(dependName, out dependency) || dependency.IsLoaded)
-            {
-                continue;
-            }
 
-            WWW depend = new WWW(dependency.AssetbundlePath);
-            yield return depend;
-            bundle = depend.assetBundle;
-			//没保存prefab name,所以使用loadall方法，有明显卡顿的话再改
-#if UNITY_5
-			dependency.DependenciesObject.AddRange(bundle.LoadAllAssets());
-#else
-			dependency.DependenciesObject.AddRange(bundle.LoadAll());
-#endif
-            dependency.IsLoaded = true;
-            bundle.Unload(false);
-        }*/
-
-        //载入主assetbundle
+        //载入assetbundle
 		var assetbundlePath = string.Format("{0}{1}/{2}{3}", LuaManager.GetExternalDir(true), ResourceManager.PREFIX_ASSETBUNDLE_PATH
-				, _resourcePath, ResourceManager.SUFFIX_ASSETBUNDLE_PATH);
+				, _resourceInfo.ResourcePath, ResourceManager.SUFFIX_ASSETBUNDLE_PATH);
 		WWW www = new WWW(assetbundlePath);
 		yield return www;
 		bundle = www.assetBundle;
-		
+
+        //载入prefab
 #if UNITY_5
-		request = bundle.LoadAssetAsync<GameObject>(_resourceName);
+        request = bundle.LoadAssetAsync<GameObject>(_resourceInfo.ResourceName);
 #else
 		request = bundle.LoadAsync(_prefabName, typeof(GameObject));
 #endif
 		
 		yield return request;
-		_prefab = request.asset as GameObject;
+		_resource = request.asset as GameObject;
 		bundle.Unload(false);
 		
 		LoadFinished();
 	}
-	
-	bool StartLoadResource()
+
+    IEnumerator LoadResourceAsync()
 	{
-		var prefabPath = string.Format("{0}/{1}", ResourceManager.PREFIX_PREFAB_PATH, _resourcePath);
-		_prefab = Resources.Load<GameObject>(prefabPath);
-		if (_prefab == null)
-		{
-				return false;
-		}
+		var resourcePath = string.Format("{0}/{1}", ResourceManager.PREFIX_RESOURCE_PATH, _resourceInfo.ResourcePath);
+		var resourceRequest = Resources.LoadAsync<GameObject>(resourcePath);
+        yield return resourceRequest;
+        _resource = resourceRequest.asset as GameObject;
 
 		LoadFinished();
-		return true;
 	}
+
+    public void Load()
+    {
+        _callBack = null;
+        if (_resource != null)
+        {
+            LoadFinished();
+        }
+
+        if (_resourceInfo.IsFromAssetBundle)
+        {
+            LoadFromAssetBundle();
+        }
+        else
+        {
+            LoadFromResource();
+        }
+    }
+
+    public void LoadFromAssetBundle()
+    {
+        var assetbundlePath = string.Format("{0}{1}/{2}{3}", LuaManager.GetExternalDir(), ResourceManager.PREFIX_ASSETBUNDLE_PATH
+        , _resourceInfo.ResourcePath, ResourceManager.SUFFIX_ASSETBUNDLE_PATH);
+        byte[] assetBundleContent = null;
+        FileManager.LoadFileWithBytes(assetbundlePath, out assetBundleContent);
+
+        var bundle = AssetBundle.LoadFromMemory(assetBundleContent);
+#if UNITY_5
+        _resource = bundle.LoadAsset<GameObject>(_resourceInfo.ResourceName);
+#else
+        _resource = bundle.Load<GameObject>(_resourceInfo.ResourceName);
+#endif
+        bundle.Unload(true);
+
+        LoadFinished();
+    }
+
+    public void LoadFromResource()
+    {
+        _resource = Resources.Load<GameObject>(_resourceInfo.ResourceName);
+
+        LoadFinished();
+    }
 
 	public void LoadFinished()
 	{
-		if (_prefab == null) 
+		if (_resource == null) 
         {
-			Debug.LogWarning(string.Format("Warning : Failed to load prefab {0}", _resourceName));
+			Debug.LogWarning(string.Format("Warning : Failed to load prefab {0}", _resourceInfo.ResourceName));
 			ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
 			return;
 		}
@@ -133,21 +149,9 @@ public class ResourceRequest{
 			return;
 		}
 
-		_callBack.call (_prefab);
+		_callBack.call (_resource);
 		_callBack = null;
 
 		ResourceManager.Instance.ResourceLoadState = ResourceLoadStateType.Finished;
 	}
-
-    public void ClearPrefab()
-    {
-        _prefab = null;
-        _callBack = null;
-    }
-
-    public void Reset(string resourceName, string resourcePath)
-    {
-        ClearPrefab();
-        Init(resourceName, resourcePath);
-    }
 }

@@ -1,26 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class LuaCollisionTriggerEvent : LuaBaseEvent {
+public class LuaCollisionTriggerEvent : LuaBaseEvent
+{
 
     public void OnTriggerEnter(Collider col)
     {
-		if (_luaFunc != null) {
-			_luaFunc.call("onTriggerEnter", col.gameObject);		
-		}
+        Execute("onTriggerEnter", col.gameObject);
     }
 
     public void OnTriggerStay(Collider col)
     {
-		if (_luaFunc != null) {
-			_luaFunc.call("onTriggerStay", col.gameObject);		
-		}
+        Execute("onTriggerStay", col.gameObject);
     }
 
     public void OnTriggerExit(Collider col)
     {
-		if (_luaFunc != null) {
-			_luaFunc.call("onTriggerExit", col.gameObject);		
-		}
+        Execute("onTriggerExit", col.gameObject);
     }
 }

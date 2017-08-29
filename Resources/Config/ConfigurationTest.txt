@@ -6,8 +6,8 @@
 			"version" : "1.0.0"
 		},
 		{
-			"ConfigName" : "AttackDataBaseTest",
-			"ResourcePath" : "Config/AttackDataBaseTest",
+			"ConfigName" : "SkillDataBaseTest",
+			"ResourcePath" : "Config/SkillDataBaseTest",
 			"version" : "1.0.0"
 		}
 	]

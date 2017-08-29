@@ -1,16 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections;
-using System;
+﻿using UnityEngine.EventSystems;
 
 public class LuaOnPointerClickEvent : LuaBaseEvent, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_luaFunc != null)
-        {
-            _luaFunc.call("onClick", null);
-        }
+        Execute("onClick", null);
     }
 }

@@ -1,38 +1,26 @@
-﻿using UnityEngine;
-
-#if UNITY_5
-using System.Collections;
-using UnityEngine.UI;
+﻿#if UNITY_5
 using UnityEngine.EventSystems;
 
-public class LuaOnDragEvent : LuaBaseEvent, IDragHandler, IEndDragHandler, IBeginDragHandler {
+public class LuaOnDragEvent : LuaBaseEvent, IDragHandler, IEndDragHandler, IBeginDragHandler
+{
 
     public void OnBeginDrag(PointerEventData data)
     {
-        if (_luaFunc != null)
-        {
-            _luaFunc.call("onBeginDrag", data);
-        }
+        Execute("onBeginDrag", data);
     }
 
-    public void OnDrag (PointerEventData data)
+    public void OnDrag(PointerEventData data)
     {
-        if (_luaFunc != null)
-        {
-            _luaFunc.call("onDrag", data);
-        }
+        Execute("onDrag", data);
     }
 
     public void OnEndDrag(PointerEventData data)
     {
-        if (_luaFunc != null)
-        {
-            _luaFunc.call("onEndDrag", data);
-        }
+        Execute("onEndDrag", data);
     }
 }
 #else
-public class LuaOnDragEvent : LuaBaseEvent {
-
+public class LuaOnDragEvent : LuaBaseEvent 
+{
 }
 #endif

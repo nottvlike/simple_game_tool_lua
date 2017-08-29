@@ -12,7 +12,7 @@
  * */
 
 using UnityEngine;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using SLua;
 using LitJson;
@@ -23,34 +23,48 @@ public enum ResourceLoadStateType {
     Finished
 }
 
-/*
- * 线性加载资源请求结构体
- * */
-public class SingleLineResource : BaseObject {
-    public float Id;
-    public string PrefabName;
-    public LuaFunction CallBack;
-
-	public override void Reset()
-	{
-		Id = 0;
-		PrefabName = "";
-		CallBack = null;
-	}
-}
-
-public class Dependency
+/// <summary>
+/// 异步加载资源请求结构体
+/// </summary>
+public struct AsyncResourceRequest
 {
-    public bool IsLoaded;
-    public string PrefabName;
-    public string PrefabPath;
-    public string AssetbundlePath;
-    public List<Object> DependenciesObject;
+    public float Id;
+    public string ResourceName;
+    public LuaFunction CallBack;
 }
 
-public class ConfigRequest {
+[Serializable]
+public struct ConfigInfoList
+{
+    public List<ConfigInfo> Configs;
+}
+
+/// <summary>
+/// Configuration里的配置信息
+/// </summary>
+[Serializable]
+public struct ConfigInfo
+{
     public string ConfigName;
-    public string ConfigResourcePath;
+    public string ConfigPath;
+    public string Version;
+}
+
+[Serializable]
+public struct ResourceInfoList
+{
+    public List<ResourceInfo> Resources;
+}
+
+/// <summary>
+/// AssetBundleConfig里的配置信息
+/// </summary>
+[Serializable]
+public struct ResourceInfo
+{
+    public string ResourceName;
+    public string ResourcePath;
+    public bool IsFromAssetBundle;
 }
 
 public class ResourceManager : Singleton<ResourceManager> 
@@ -58,44 +72,38 @@ public class ResourceManager : Singleton<ResourceManager>
 	public string ConfigurationConfig = "Config/ConfigurationTest";
 	public string AssetBundleConfig = "AssetBundleConfigTest";
 
-	public const string PREFIX_PREFAB_PATH = "Prefab";
+	public const string PREFIX_RESOURCE_PATH = "Prefab";
 	public const string PREFIX_ASSETBUNDLE_PATH = "AssetBundle";
 	public const string SUFFIX_ASSETBUNDLE_PATH = ".assetbundle";
 
-    Dictionary<string, ConfigRequest> _configRequestDict = new Dictionary<string, ConfigRequest>();
-	Dictionary<string, ResourceRequest> _resourceRequestDict = new Dictionary<string, ResourceRequest>();
-    Dictionary<string, Dependency> _sharedAssetbundleDict = new Dictionary<string, Dependency>();
-    List<SingleLineResource> _prefabLoadRequestList = new List<SingleLineResource>();
+    Dictionary<string, ConfigInfo> _configInfoDict = new Dictionary<string, ConfigInfo>();
+    Dictionary<string, ResourceInfo> _resourceInfoDict = new Dictionary<string, ResourceInfo>();
 
-    ResourceLoadStateType _state = ResourceLoadStateType.None;
+    Dictionary<string, ResourceRequest> _resourceRequestDict = new Dictionary<string, ResourceRequest>();
+
+    List<AsyncResourceRequest> _asyncResourceRequestList = new List<AsyncResourceRequest>();
+
+    ResourceLoadStateType _resourceLoadState = ResourceLoadStateType.None;
     bool _isInit = false;
 
     public ResourceLoadStateType ResourceLoadState 
     {
         set
         {
-            _state = value;
+            _resourceLoadState = value;
 
-            if (_state == ResourceLoadStateType.Finished)
-                StartSingleLineLoad();
+            if (_resourceLoadState == ResourceLoadStateType.Finished)
+                StartLoadAsync();
         }
-        get { return _state; }
+        get { return _resourceLoadState; }
     }
 
 #if UNITY_EDITOR
-    public Dictionary<string, ResourceRequest> PrefabRequestDict
+    public Dictionary<string, ResourceInfo> ResourceInfoDict
     {
         get
         {
-            return _resourceRequestDict;
-        }
-    }
-
-    public Dictionary<string, Dependency> SharedAssetbundleDict
-    {
-        get
-        {
-            return _sharedAssetbundleDict;
+            return _resourceInfoDict;
         }
     }
 #endif
@@ -118,128 +126,162 @@ public class ResourceManager : Singleton<ResourceManager>
 
     void LoadConfigurationConfig(string prefix)
     {
-        string config = "";
+		_configInfoDict.Clear ();
+        var config = LoadConfigFileImmediatly(string.Format("{0}{1}", prefix, ConfigurationConfig));
+#if UNITY_5_3 || UNITY_5_4
+        var configInfoList = JsonUtility.FromJson<ConfigInfoList>(config);
 
-		_configRequestDict.Clear ();
-        config = LoadConfigFileByPath(string.Format("{0}{1}", prefix, ConfigurationConfig));
-
-        JsonData jsonData = JsonMapper.ToObject(config);
-        if (jsonData["Configs"].IsArray)
+#else
+        var configInfoList = JsonMapper.ToObject<ConfigInfoList>(config);
+#endif
+        for (var i = 0; i < configInfoList.Configs.Count; i++)
         {
-            for (int i = 0; i < jsonData["Configs"].Count; i++)
-            {
-                var configInfo = jsonData["Configs"][i];
-
-                var request = new ConfigRequest();
-                request.ConfigName = configInfo["ConfigName"].ToString();
-                request.ConfigResourcePath = configInfo["ResourcePath"].ToString();
-                _configRequestDict.Add(configInfo["ConfigName"].ToString(), request);
-            }
+            var configRequest = configInfoList.Configs[i];
+            _configInfoDict.Add(configRequest.ConfigName, configRequest);
         }
     }
 
     void LoadAssetBundleConfig()
     {
-		_resourceRequestDict.Clear ();
+		_resourceInfoDict.Clear ();
 
 		var txt = LoadConfigFile(AssetBundleConfig);
 		if (txt.Length <= 0)
 			return;
-
-		JsonData jsonData = JsonMapper.ToObject(txt);
-		for (int i = 0; i < jsonData["Resources"].Count; i++)
-		{
-			var prefabInfo = jsonData["Resources"][i];
-			var resourceName = prefabInfo["ResourceName"].ToString();
-			var resourcePath = prefabInfo["ResourcePath"].ToString();
-
-			var request = new ResourceRequest();
-			request.Init(resourceName, resourcePath);
-			_resourceRequestDict.Add(resourceName, request);
-		}
+#if UNITY_5_3 || UNITY_5_4
+        var resourceRequestInfoList = JsonUtility.FromJson<ResourceInfoList>(txt);
+#else
+        var resourceRequestInfoList = JsonMapper.ToObject<ResourceInfoList>(txt);
+#endif
+        for (var i = 0; i < resourceRequestInfoList.Resources.Count; i++)
+        {
+            var resourceInfo = resourceRequestInfoList.Resources[i];
+            _resourceInfoDict.Add(resourceInfo.ResourceName, resourceInfo);
+        }
     }
 
-    public string LoadConfigFileByPath(string configPath)
+    /// <summary>
+    /// 通过配置名字读取配置
+    /// </summary>
+    /// <param name="configName">配置名</param>
+    /// <returns></returns>
+    public string LoadConfigFile(string configName)
+    {
+        ConfigInfo configReq;
+        if (!_configInfoDict.TryGetValue(configName, out configReq))
+        {
+            return "";
+        }
+
+        return LoadConfigFileImmediatly(configReq.ConfigPath);
+    }
+
+    /// <summary>
+    /// 直接读取文件
+    /// </summary>
+    /// <param name="configPath">配置的全路径</param>
+    /// <returns></returns>
+    string LoadConfigFileImmediatly(string configPath)
     {
         TextAsset text = Resources.Load<TextAsset>(configPath);
         if (text != null)
             return text.text;
 
-		return FileManager.LoadFileWithString(configPath + ".txt");
+        return FileManager.LoadFileWithString(configPath + ".txt");
     }
 
-    public string LoadConfigFile(string configName)
+    /// <summary>
+    /// 同步加载资源
+    /// </summary>
+    /// <param name="resourceName"></param>
+    /// <returns></returns>
+    public GameObject Load(string resourceName)
     {
-        ConfigRequest configReq = null;
-
-        if (!_configRequestDict.TryGetValue(configName, out configReq))
+        if (_resourceLoadState == ResourceLoadStateType.Loading)
         {
-            return "";
+            Debug.Log("An resource is loading, Please wait!");
+            return null;
         }
 
-        return LoadConfigFileByPath(configReq.ConfigResourcePath);
+        ResourceRequest resourceRequest = null;
+        if (_resourceRequestDict.TryGetValue(resourceName, out resourceRequest))
+        {
+            _resourceLoadState = ResourceLoadStateType.Loading;
+            resourceRequest.Load();
+        }
+        else
+        {
+            ResourceInfo resourceInfo;
+            if (_resourceInfoDict.TryGetValue(resourceName, out resourceInfo))
+            {
+                resourceRequest = new ResourceRequest();
+                resourceRequest.Init(resourceInfo);
+
+                resourceRequest.Load();
+            }
+            else
+            {
+                Debug.Log(string.Format("No resource named {0} found!", resourceName));
+            }
+        }
+        return resourceRequest.Resource;
     }
 
-	//线性载入prefab，牺牲载入时间，保证prefab载入的速度和内存占用
-	public void SingleLineLoad(string prefabName, LuaFunction func)
+    /// <summary>
+    /// 异步加载资源
+    /// </summary>
+    /// <param name="resourceName">资源名称</param>
+    /// <param name="func">加载成功的回调</param>
+	public void LoadAsync(string resourceName, LuaFunction func)
 	{
-		var prefabLoad = PoolManager.GetInstance().Get<SingleLineResource>("SingleLineResource");
-		prefabLoad.PrefabName = prefabName;
-		prefabLoad.CallBack = func;
-		prefabLoad.Id = Time.realtimeSinceStartup;
-		_prefabLoadRequestList.Add(prefabLoad);
+		var resourceRequest = new AsyncResourceRequest();
+		resourceRequest.ResourceName = resourceName;
+		resourceRequest.CallBack = func;
+		resourceRequest.Id = Time.realtimeSinceStartup;
+		_asyncResourceRequestList.Add(resourceRequest);
 
-        StartSingleLineLoad();
+        StartLoadAsync();
 	}
 	
-	void  StartSingleLineLoad()
+	void  StartLoadAsync()
 	{
-		if (_prefabLoadRequestList.Count <= 0)
+		if (_asyncResourceRequestList.Count <= 0)
 		{
 			return;
 		}
 		
-		if (_state == ResourceLoadStateType.Loading)
+		if (_resourceLoadState == ResourceLoadStateType.Loading)
 		{
 			return;
 		}
 		
-		var request = _prefabLoadRequestList[0];
-		var prefabName = request.PrefabName;
-		var callBack = request.CallBack;
+		var asyncRequest = _asyncResourceRequestList[0];
+		var resourceName = asyncRequest.ResourceName;
+		var callBack = asyncRequest.CallBack;
 		
-        _prefabLoadRequestList.Remove(request);
-		PoolManager.GetInstance().ReleaseObject<SingleLineResource> ("SingleLineResource", request);
+        _asyncResourceRequestList.Remove(asyncRequest);
 
-        ResourceRequest prefabRequest = null;
-        if (_resourceRequestDict.TryGetValue(prefabName, out prefabRequest))
-		{
-			_state = ResourceLoadStateType.Loading;
-			prefabRequest.Load(callBack);
-		}
-		else
-		{
-			Debug.LogWarning("Couldn't find prefabRequest " + prefabName);
-		}
-	}
-
-    public bool GetSharedDependencies(string name, out Dependency dependency)
-    {
-        if (_sharedAssetbundleDict.TryGetValue(name, out dependency))
+        ResourceRequest resourceRequest = null;
+        if (_resourceRequestDict.TryGetValue(resourceName, out resourceRequest))
         {
-            return true;
+            _resourceLoadState = ResourceLoadStateType.Loading;
+            resourceRequest.LoadAsync(callBack);
         }
-
-        Debug.LogWarning("Could not found the share dependency " + name);
-        return false;
-    }
-
-    public void Clear()
-    {
-        //暂时先用foreach,clear毕竟不是很长使用
-		foreach (KeyValuePair<string, ResourceRequest> obj in _resourceRequestDict)
+        else
         {
-			obj.Value.ClearPrefab();
+            ResourceInfo resourceInfo;
+            if (_resourceInfoDict.TryGetValue(resourceName, out resourceInfo))
+            {
+                resourceRequest = new ResourceRequest();
+                resourceRequest.Init(resourceInfo);
+
+                _resourceLoadState = ResourceLoadStateType.Loading;
+                resourceRequest.LoadAsync(callBack);
+            }
+            else
+            {
+                Debug.Log(string.Format("No resource named {0} found!", resourceName));
+            }
         }
     }
 }

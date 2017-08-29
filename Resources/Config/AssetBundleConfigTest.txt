@@ -1,24 +1,14 @@
 {
 	"Resources" : [
 		{
-			"ResourceName" : "Golem",
-			"ResourcePath" : "Creature/Golem"
+            "ResourceName": "Test1",
+            "ResourcePath": "Prefab/Test1",
+            "IsFromAssetBundle": "false"
 		},
 		{
-			"ResourceName" : "Hornet",
-			"ResourcePath" : "Creature/Hornet"
-		},
-		{
-			"ResourceName" : "LevelTest",
-			"ResourcePath" : "Level/LevelTest"
-		},
-		{
-			"ResourceName" : "Fight",
-			"ResourcePath" : "UI/Fight/Fight"
-		},
-		{
-			"ResourceName" : "SceneUpdate",
-			"ResourcePath" : "UI/Update/SceneUpdate"
+            "ResourceName": "Test2",
+            "ResourcePath": "Prefab/Test2",
+            "IsFromAssetBundle": "false"
 		}
 	]
 }

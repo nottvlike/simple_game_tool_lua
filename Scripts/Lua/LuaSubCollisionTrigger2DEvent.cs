@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class LuaSubCollisionTrigger2DEvent : LuaBaseEvent
 {
-
     LuaCollisionTrigger2DEvent _mainCollision;
 
     void Awake()

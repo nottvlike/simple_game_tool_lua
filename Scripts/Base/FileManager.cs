@@ -123,12 +123,11 @@ public class FileManager {
 		//使用流的形式读取
 		StreamReader sr =null;
 		try{
-			string filepath = LuaManager.GetExternalDir() + path;
-			sr = File.OpenText(filepath);
+			sr = File.OpenText(path);
 		}catch(Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
-			Debug.Log("Failed to open file " + LuaManager.GetExternalDir() + path + " Error : " + e.Message);
+			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
 			return;
 		}
 		string line = sr.ReadToEnd();

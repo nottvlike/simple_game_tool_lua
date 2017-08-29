@@ -1,18 +1,11 @@
-﻿using UnityEngine;
-
-#if UNITY_5
-using System.Collections;
-using UnityEngine.UI;
+﻿#if UNITY_5
 using UnityEngine.EventSystems;
 
-public class LuaOnSelectEvent : LuaBaseEvent, ISelectHandler {
-
+public class LuaOnSelectEvent : LuaBaseEvent, ISelectHandler
+{
     public void OnSelect(BaseEventData data)
     {
-        if (_luaFunc != null)
-        {
-            _luaFunc.call("onSelect", data);
-        }
+        Execute("onSelect", data);
     }
 }
 #else

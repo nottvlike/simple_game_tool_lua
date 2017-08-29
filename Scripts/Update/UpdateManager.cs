@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using SLua;
+using System;
 
 public class UpdateManager : Singleton<UpdateManager>
 {
@@ -20,7 +20,7 @@ public class UpdateManager : Singleton<UpdateManager>
         None
     }
 
-    public class DownloadFileRequest : BaseObject
+    public struct DownloadFileRequest
     {
         public int Id;
         public string fileUrl;
@@ -28,16 +28,6 @@ public class UpdateManager : Singleton<UpdateManager>
         public DownloadFileType fileType;
         public OnScriptDownloadFinishedEvent onScriptDownloaded;
 		public bool isSaved;
-
-        public override void Reset()
-		{
-			Id = 0;
-			fileUrl = "";
-			filePath = "";
-			fileType = DownloadFileType.None;
-			onScriptDownloaded = null;
-			isSaved = false;
-		}
     }
 
     public delegate void OnScriptDownloadFinishedEvent(string script);
@@ -83,8 +73,8 @@ public class UpdateManager : Singleton<UpdateManager>
     public void Download(string url, string targetPath, DownloadFileType fileType, 
 	                     OnScriptDownloadFinishedEvent downloadedEvent = null, bool isSaved = false)
     {
-		var file = PoolManager.GetInstance().Get<DownloadFileRequest>("DownloadFileRequest");
-        file.Id = System.DateTime.Now.Millisecond;
+        var file = new DownloadFileRequest();
+        file.Id = DateTime.Now.Millisecond;
         file.fileUrl = url;
         file.filePath = targetPath;
         file.fileType = fileType;

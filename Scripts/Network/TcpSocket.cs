@@ -16,14 +16,14 @@ public struct Message
 
 public class TcpSocket : MonoBehaviour {
 
-	const UInt16 CACHE_SIZE = 4069;
+	const ushort CACHE_SIZE = 4069;
 	const int WAIT_OUT_TIME = 5000;
 
 	List<Message> _messageList = new List<Message> ();
-	Byte[] _recvBytes = new Byte[CACHE_SIZE];
-	Byte[] _header = new Byte[2];
+    byte[] _recvBytes = new byte[CACHE_SIZE];
+    byte[] _header = new byte[2];
 	byte[] _currentMessage;
-	UInt16 _currentMessageLength;
+    ushort _currentMessageLength;
 
 	Thread _recvThread;
 	Socket _socket;
@@ -107,12 +107,12 @@ public class TcpSocket : MonoBehaviour {
 		}
 	}
 
-	void UpackPackage(Byte[] bytes, UInt16 index)
+	void UpackPackage(byte[] bytes, ushort index)
 	{
 		while (true) {
 			if (_currentMessageLength > 0 && _currentMessageLength < CACHE_SIZE - index)
 			{
-				Byte[] data = new Byte[_currentMessageLength];
+                byte[] data = new byte[_currentMessageLength];
 				Array.Copy (bytes, index, data, 0, _currentMessageLength);
 				AddMessageToList(data, true);
 				index += _currentMessageLength;
@@ -120,24 +120,24 @@ public class TcpSocket : MonoBehaviour {
 			}
 			else if (_currentMessageLength == 0)
 			{
-				UInt16 headLengthIndex = (UInt16)(index + 2);
+                ushort headLengthIndex = (ushort)(index + 2);
 				_header[0] = bytes[index + 1];
 				_header[1] = bytes[index];
-				UInt16 length = BitConverter.ToUInt16(_header, 0);
+                ushort length = BitConverter.ToUInt16(_header, 0);
 				if (length > CACHE_SIZE - headLengthIndex)
 				{
-					_currentMessageLength = (UInt16)(length - CACHE_SIZE + headLengthIndex);
-					Byte[] data = new Byte[CACHE_SIZE - headLengthIndex];
+					_currentMessageLength = (ushort)(length - CACHE_SIZE + headLengthIndex);
+                    byte[] data = new byte[CACHE_SIZE - headLengthIndex];
 					Array.Copy (bytes, index, data, 0, CACHE_SIZE - headLengthIndex);
 					AddMessageToList(data, false);
 					break;
 				}
 				else if (length > 0 && length <= CACHE_SIZE - headLengthIndex)
 				{
-					Byte[] data = new Byte[length];
+                    byte[] data = new byte[length];
 					Array.Copy (bytes, headLengthIndex, data, 0, length);
 					AddMessageToList(data, true);
-					index = (UInt16)(headLengthIndex + length);
+					index = (ushort)(headLengthIndex + length);
 				}
 				else
 				{
@@ -146,8 +146,8 @@ public class TcpSocket : MonoBehaviour {
 			}
 			else if (_currentMessageLength >= CACHE_SIZE - index)
 			{
-				_currentMessageLength = (UInt16)(_currentMessageLength - CACHE_SIZE + index);
-				Byte[] data = new Byte[CACHE_SIZE - index];
+				_currentMessageLength = (ushort)(_currentMessageLength - CACHE_SIZE + index);
+                byte[] data = new byte[CACHE_SIZE - index];
 				Array.Copy (bytes, index, data, 0, CACHE_SIZE - index);
 				AddMessageToList(data, false);
 				break;
@@ -157,7 +157,7 @@ public class TcpSocket : MonoBehaviour {
 
 	public void Send(string str)
 	{
-		Byte[] msg = System.Text.Encoding.UTF8.GetBytes (str);
+        byte[] msg = Encoding.UTF8.GetBytes (str);
 
 		if (!_socket.Connected) 
 		{

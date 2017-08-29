@@ -38,7 +38,7 @@ public class ConfigEditor {
             //TODO:加密每一个script文件，并拷贝到PersistentDataPath
             var file = fileList[i];
             byte[] fileContent = null;
-            FileManager.LoadFileWithBytes(file, out fileContent);
+            FileManager.LoadFileWithBytes(LuaManager.GetExternalDir() + file, out fileContent);
             var size = FileManager.GetFileSize(FileSizeUnitType.Type_Kb, fileContent.Length);
             generate += "\t\t{\n";
             generate += "\t\t\tname=\"" + file.Replace(Application.dataPath + "/Resources/", "") + "\"" + ",\n";
