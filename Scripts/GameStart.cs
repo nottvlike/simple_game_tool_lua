@@ -4,7 +4,7 @@ using SLua;
 
 public class GameStart : MonoBehaviour {
 
-	public string StartScriptName = "Update/UpdateTest.txt";
+	public string StartScriptName = "Update/UpdateTest";
 
 	// Use this for initialization
 	void Start () {

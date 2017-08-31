@@ -86,6 +86,8 @@ public class ResourceManager : Singleton<ResourceManager>
     ResourceLoadStateType _resourceLoadState = ResourceLoadStateType.None;
     bool _isInit = false;
 
+    string _prefixPath = "";
+
     public ResourceLoadStateType ResourceLoadState 
     {
         set
@@ -113,21 +115,22 @@ public class ResourceManager : Singleton<ResourceManager>
         return Instance;
     }
 
-    public void Init(string prefix)
+    public void Init(string prefixPath)
     {
         if (!_isInit)
         {
             _isInit = true;
+            _prefixPath = prefixPath;
 
-            LoadConfigurationConfig(prefix);
+            LoadConfigurationConfig();
             LoadAssetBundleConfig();
         }
     }
 
-    void LoadConfigurationConfig(string prefix)
+    void LoadConfigurationConfig()
     {
 		_configInfoDict.Clear ();
-        var config = LoadConfigFileImmediatly(string.Format("{0}{1}", prefix, ConfigurationConfig));
+        var config = LoadConfigFileImmediatly(_prefixPath + ConfigurationConfig);
 #if UNITY_5_3 || UNITY_5_4
         var configInfoList = JsonUtility.FromJson<ConfigInfoList>(config);
 
@@ -173,7 +176,7 @@ public class ResourceManager : Singleton<ResourceManager>
             return "";
         }
 
-        return LoadConfigFileImmediatly(configReq.ConfigPath);
+        return LoadConfigFileImmediatly(_prefixPath + configReq.ConfigPath);
     }
 
     /// <summary>
@@ -183,10 +186,6 @@ public class ResourceManager : Singleton<ResourceManager>
     /// <returns></returns>
     string LoadConfigFileImmediatly(string configPath)
     {
-        TextAsset text = Resources.Load<TextAsset>(configPath);
-        if (text != null)
-            return text.text;
-
         return FileManager.LoadFileWithString(configPath + ".txt");
     }
 

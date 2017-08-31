@@ -101,7 +101,7 @@ public class FileManager {
     */
 	public static void LoadFileWithBytes(string path, out byte[] content)
 	{
-		content = null;
+        content = null;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 		int size = 0;
@@ -121,18 +121,18 @@ public class FileManager {
 		return;
 #else
 		//使用流的形式读取
-		StreamReader sr =null;
+		FileStream sr =null;
 		try{
-			sr = File.OpenText(path);
+			sr = File.Open(path, FileMode.Open);
 		}catch(Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
 			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
 			return;
 		}
-		string line = sr.ReadToEnd();
-		content = System.Text.Encoding.UTF8.GetBytes(line);
-		//content = System.Text.Encoding.Unicode.GetBytes (line);
+
+        content = new byte[(int)sr.Length];
+        sr.Read(content, 0, content.Length);
 		//关闭流
 		sr.Close();
 		//销毁流
@@ -166,24 +166,26 @@ public class FileManager {
 		return "";
 #else
 		//使用流的形式读取
-		string content = null;
 		StreamReader sr = null;
 		try
 		{
-			sr = File.OpenText(path);
-		}
+            FileStream fileStream = File.Open(path, FileMode.Open);
+            sr = new StreamReader(fileStream);
+        }
 		catch (Exception e)
 		{
 			//路径与名称未找到文件则直接返回空
-			Debug.Log("Failed to open file " + path + " Error : " + e.Message);
+			Debug.LogWarning("Failed to open file " + path + " Error : " + e.Message);
 			return "";
 		}
-		content = sr.ReadToEnd();
-		//关闭流
-		sr.Close();
+
+        string result = sr.ReadToEnd();
+
+        //关闭流
+        sr.Close();
 		//销毁流
 		sr.Dispose();
-		return content;
+		return result;
 #endif
 	}  
 	

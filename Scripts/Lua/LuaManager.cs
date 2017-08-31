@@ -49,7 +49,7 @@ public class LuaManager : Singleton<LuaManager>
 
     void Complete()
     {
-        l.start(_startScriptName.Replace(".txt", ""));
+        l.start(_startScriptName);
     }
 
     byte[] LoaderDelegate(string filePath)
@@ -60,14 +60,8 @@ public class LuaManager : Singleton<LuaManager>
         _sb.Append(filePath);
         _sb = _sb.Replace('.', '/');
 
-        var text = Resources.Load<TextAsset>(_sb.ToString());
-        if (text != null)
-        {
-            return text.bytes;
-        }
-
-        _sb.Append(".txt");
-        FileManager.LoadFileWithBytes(string.Format("%s%s", GetExternalDir(), _sb.ToString()), out list);
+        _sb.Append(".lua");
+        FileManager.LoadFileWithBytes(GetExternalDir() + _sb.ToString(), out list);
         if (list != null)
         {
             return list;
