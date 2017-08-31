@@ -1,0 +1,69 @@
+local host
+local socket
+
+
+local function print_request(name, args)
+	print("REQUEST", name)
+	if args then
+		for k,v in pairs(args) do
+			print(k,v)
+		end
+	end
+end
+
+local function print_response(session, args)
+	print("RESPONSE", session)
+	if args then
+		for k,v in pairs(args) do
+			print(k,v)
+		end
+	end
+end
+
+local function print_package(t, ...)
+	if t == "REQUEST" then
+		print_request(...)
+	else
+		assert(t == "RESPONSE")
+		print_response(...)
+	end
+end
+
+local last = ""
+function update(str, isLast)
+	if isLast then
+		str = last .. str
+		last = ""
+	else
+		last = last .. str
+	end
+
+	if not str then
+		return
+	end
+
+	print_package(host:dispatch(str))
+end
+
+return function()
+	if _VERSION ~= "Lua 5.3" then
+		error "Use lua 5.3"
+	end
+
+	local sproto = require 'Script.Network.sproto'
+	local proto = require 'Script.Network.proto'
+	host = sproto.new(proto.s2c):host "package"
+	local request = host:attach(sproto.new(proto.c2s))
+	
+	socket = GameObject.Find("Main Camera"):GetComponent(TcpSocket)
+	socket:Init("192.168.1.104", 8888, update)
+	socket:Connect()
+	
+	local str = request("handshake", nil, 1)
+	local package = string.pack(">s2", str)
+	socket:Send(package)
+
+	str = request("set", { what = "hello", value = "world" }, 2)
+	package = string.pack(">s2", str)
+	socket:Send(package)
+end

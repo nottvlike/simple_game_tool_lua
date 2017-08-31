@@ -1,0 +1,58 @@
+require 'Common.Script.BehaviorTree.core.Action'
+
+local move = b3.Class("Move", b3.Action)
+b3.Move = move
+
+function move:ctor()
+	b3.Action.ctor(self)
+
+	self.name = "Move"
+	self.moveDelta = 3
+	self.isRun = false
+end
+
+function move:enter(tick)
+	local target = tick.global.target
+	if target then
+		local ins = target.instance
+		self.isRun = true
+		ins.useVelocity = true
+
+		if not ins.fixedUpdateHandler then
+			LuaEventManager.addFixedUpdateEvent(ins.gameObject, function()
+				ins:FixedUpdate()
+			end)
+
+			ins.fixedUpdateHandler = ins.gameObject:GetComponent(LuaFixedUpdateEvent)
+		end
+	end
+end
+
+function move:tick(tick)
+	local target = tick.global.target
+	if target then
+		local ins = target.instance
+		local x = target.direction.x
+		local y = target.direction.y
+
+		local fixedUpdateHandler = ins.fixedUpdateHandler
+
+		if ins.useVelocity then
+			ins.velocity.x = x
+			ins.velocity.y = y
+		end
+
+		local targetDir = {}
+		targetDir.x = x
+		targetDir.y = y
+		if x == 0 and y == 0 then
+			if self.isRun then
+				self.isRun = false
+				ins:stop()
+			end
+		else
+			ins:run(targetDir)
+		end
+	end
+	return b3.MOVE
+end
